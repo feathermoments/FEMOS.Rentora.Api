@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37203.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FEMOS.Rentora.Api", "FEMOS.Rentora.Api\FEMOS.Rentora.Api.csproj", "{A439699A-690E-45F2-A972-D832353CC786}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FEMOS.Rentora.Application", "FEMOS.Rentora.Application\FEMOS.Rentora.Application.csproj", "{B8FD29F5-C1D2-403F-BF2F-24D33426433E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FEMOS.Rentora.Domain", "FEMOS.Rentora.Domain\FEMOS.Rentora.Domain.csproj", "{B7B95355-D080-4D9B-BF46-D5ABD5E61EDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FEMOS.Rentora.Infrastructure", "FEMOS.Rentora.Infrastructure\FEMOS.Rentora.Infrastructure.csproj", "{3875F8E1-6BF2-4952-B9BB-2EDA53EA6B05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FEMOS.Rentora.Shared", "FEMOS.Rentora.Shared\FEMOS.Rentora.Shared.csproj", "{120FB59D-E6D0-448F-A37A-E7EAFBCF358F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A439699A-690E-45F2-A972-D832353CC786}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A439699A-690E-45F2-A972-D832353CC786}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A439699A-690E-45F2-A972-D832353CC786}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A439699A-690E-45F2-A972-D832353CC786}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8FD29F5-C1D2-403F-BF2F-24D33426433E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8FD29F5-C1D2-403F-BF2F-24D33426433E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8FD29F5-C1D2-403F-BF2F-24D33426433E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8FD29F5-C1D2-403F-BF2F-24D33426433E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7B95355-D080-4D9B-BF46-D5ABD5E61EDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7B95355-D080-4D9B-BF46-D5ABD5E61EDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7B95355-D080-4D9B-BF46-D5ABD5E61EDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7B95355-D080-4D9B-BF46-D5ABD5E61EDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3875F8E1-6BF2-4952-B9BB-2EDA53EA6B05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3875F8E1-6BF2-4952-B9BB-2EDA53EA6B05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3875F8E1-6BF2-4952-B9BB-2EDA53EA6B05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3875F8E1-6BF2-4952-B9BB-2EDA53EA6B05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{120FB59D-E6D0-448F-A37A-E7EAFBCF358F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{120FB59D-E6D0-448F-A37A-E7EAFBCF358F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{120FB59D-E6D0-448F-A37A-E7EAFBCF358F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{120FB59D-E6D0-448F-A37A-E7EAFBCF358F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E02A605E-D638-4AD6-A957-39476417F623}
+	EndGlobalSection
+EndGlobal

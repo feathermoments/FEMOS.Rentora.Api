@@ -1,0 +1,16 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/CopilotSnapshots/E8E7728DAE0B43488997C3F687C7D3DE
+/.vs
+/FEMOS.Rentora.Api/bin/Debug/net8.0
+/FEMOS.Rentora.Api/obj
+/FEMOS.Rentora.Application/bin/Debug/net8.0
+/FEMOS.Rentora.Application/obj
+/FEMOS.Rentora.Domain/bin/Debug/net8.0
+/FEMOS.Rentora.Domain/obj
+/FEMOS.Rentora.Infrastructure/bin/Debug/net8.0
+/FEMOS.Rentora.Infrastructure/obj
+/FEMOS.Rentora.Shared/bin/Debug/net8.0
+/FEMOS.Rentora.Shared/obj

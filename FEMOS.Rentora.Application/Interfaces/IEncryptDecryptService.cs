@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FEMOS.Rentora.Application.Interfaces
+{
+    public interface IEncryptDecryptService
+    {
+        string Encrypt(string plainText, string base64Key = "");
+        string Decrypt(string cipherText, string base64Key = "");
+        string ComputeHash(string input, string key = "");
+    }
+}
