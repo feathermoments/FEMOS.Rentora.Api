@@ -3,7 +3,7 @@
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>E:\Publish\FEMOS.Rentora.Api</_PublishTargetUrl>
-    <History>True|2026-06-08T09:27:52.8103709Z||;True|2026-06-08T14:51:42.8798058+05:30||;True|2026-06-08T12:20:29.8100828+05:30||;</History>
+    <History>True|2026-06-08T17:59:16.9895408Z||;False|2026-06-08T23:27:27.5708126+05:30||;True|2026-06-08T23:15:22.2284264+05:30||;True|2026-06-08T14:57:52.8103709+05:30||;True|2026-06-08T14:51:42.8798058+05:30||;True|2026-06-08T12:20:29.8100828+05:30||;</History>
     <LastFailureDetails />
   </PropertyGroup>
 </Project>
