@@ -5,7 +5,7 @@ namespace FEMOS.Rentora.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UnitsController : ControllerBase
+    public class ReportController : ControllerBase
     {
     }
 }

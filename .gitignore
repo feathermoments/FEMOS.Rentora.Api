@@ -14,3 +14,8 @@
 /FEMOS.Rentora.Infrastructure/obj
 /FEMOS.Rentora.Shared/bin/Debug/net8.0
 /FEMOS.Rentora.Shared/obj
+/FEMOS.Rentora.Api/bin/Release/net8.0
+/FEMOS.Rentora.Application/bin/Release/net8.0
+/FEMOS.Rentora.Domain/bin/Release/net8.0
+/FEMOS.Rentora.Infrastructure/bin/Release/net8.0
+/FEMOS.Rentora.Shared/bin/Release/net8.0

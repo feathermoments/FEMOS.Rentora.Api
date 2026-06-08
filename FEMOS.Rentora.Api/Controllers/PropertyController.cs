@@ -5,7 +5,7 @@ namespace FEMOS.Rentora.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class NotificationsController : ControllerBase
+    public class PropertyController : ControllerBase
     {
     }
 }

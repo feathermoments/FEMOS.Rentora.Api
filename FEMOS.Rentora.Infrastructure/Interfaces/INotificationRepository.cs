@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FEMOS.Rentora.Application.Interfaces
+namespace FEMOS.Rentora.Infrastructure.Interfaces
 {
-    public interface INotificationService
+    public interface INotificationRepository
     {
-        Task<BaseResponseInfo> SaveUserToken(UserTokenRequestInfo objRequestInfo);
+        Task<DBResponseInfo> SaveUserToken(UserTokenRequestInfo objRequestInfo);
         Task<List<NotificationInfo>> GetUserNotificationsAsync(Guid userPublicId);
-        Task<BaseResponseInfo> SaveUserNotificationReadFlagAsync(Guid userPublicId, long notificationId);
+        Task<DBResponseInfo> SaveUserNotificationReadFlagAsync(Guid userPublicId, long notificationId);
     }
 }

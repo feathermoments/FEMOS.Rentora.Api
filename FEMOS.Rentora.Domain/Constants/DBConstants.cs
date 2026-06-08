@@ -27,6 +27,7 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string sp_ValidateUserTerms = "[FeatherMomentsDB].[dbo].[sp_ValidateUserTerms]";
 
         // Notification
+        public const string sp_SaveUserToken = "dbo.sp_SaveUserToken";
         public const string sp_GetUserNotifications = "dbo.sp_GetUserNotifications";
         public const string sp_SaveUserNotificationReadFlag = "dbo.sp_SaveUserNotificationReadFlag";
     }

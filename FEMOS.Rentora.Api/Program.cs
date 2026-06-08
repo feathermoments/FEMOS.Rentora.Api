@@ -48,7 +48,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 // Registers: Infrastructure DI, CORS, Swagger Bearer
 builder.Services.AddApplicationServices(builder.Configuration);
 
-//builder.WebHost.UseUrls("http://localhost:5044");
+//builder.WebHost.UseUrls("http://localhost:5046");
 
 // Configure CORS
 var corsUrls = config.GetValue<string>(AppSettingConstants.CorsAllowedUrls)?.Split(',');
