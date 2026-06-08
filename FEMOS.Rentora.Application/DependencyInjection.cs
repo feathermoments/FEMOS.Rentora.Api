@@ -26,6 +26,8 @@ namespace FEMOS.Rentora.Application
             // Domain services
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IEncryptDecryptService, EncryptDecryptService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITermsService, TermsService>();
             services.AddScoped<IAgreementService, AgreementService>();
             services.AddScoped<ICashfreeService, CashfreeService>();
             services.AddScoped<IExpenseService, ExpenseService>();

@@ -2,6 +2,9 @@ using FEMOS.Rentora.Api.Filters;
 using FEMOS.Rentora.Api.Middleware;
 using FEMOS.Rentora.Application;
 using FEMOS.Rentora.Domain.Constants;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +27,25 @@ builder.Services.AddSingleton<IConfigurationRoot>(provider => config);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Registers: Infrastructure DI, JWT auth, CORS, Swagger Bearer
+// JWT authentication
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = config[AppSettingConstants.JwtIssuer],
+            ValidAudience = config[AppSettingConstants.JwtAudience],
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(config[AppSettingConstants.JwtSecretKey]!)
+            )
+        };
+    });
+
+// Registers: Infrastructure DI, CORS, Swagger Bearer
 builder.Services.AddApplicationServices(builder.Configuration);
 
 //builder.WebHost.UseUrls("http://localhost:5044");
