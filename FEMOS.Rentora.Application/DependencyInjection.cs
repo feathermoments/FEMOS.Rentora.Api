@@ -28,6 +28,8 @@ namespace FEMOS.Rentora.Application
             services.AddScoped<IEncryptDecryptService, EncryptDecryptService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITermsService, TermsService>();
+            services.AddScoped<IPropertyService, PropertyService>();
+            services.AddScoped<IMasterService, MasterService>();
             services.AddScoped<IAgreementService, AgreementService>();
             services.AddScoped<ICashfreeService, CashfreeService>();
             services.AddScoped<IExpenseService, ExpenseService>();
@@ -35,7 +37,6 @@ namespace FEMOS.Rentora.Application
             services.AddScoped<IMaintenanceService, MaintenanceService>();
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<IPaymentService, PaymentService>();
-            services.AddScoped<IPropertyService, PropertyService>();
             services.AddScoped<ISubscriptionService, SubscriptionService>();
             services.AddScoped<ITenantService, TenantService>();
             services.AddScoped<IVisitorService, VisitorService>();

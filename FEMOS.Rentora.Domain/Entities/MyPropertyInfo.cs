@@ -18,6 +18,6 @@ namespace FEMOS.Rentora.Domain.Entities
         public int OccupiedUnits { get; set; }
         public int VacantUnits { get; set; }
         public int RoleId { get; set; }
-        public string RoleName { get; set; } = string.Empty;
+        public string UserRole { get; set; } = string.Empty;
     }
 }

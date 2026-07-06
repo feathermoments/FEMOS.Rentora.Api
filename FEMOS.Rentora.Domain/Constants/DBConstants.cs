@@ -29,10 +29,17 @@ namespace FEMOS.Rentora.Domain.Constants
         // Property
         public const string sp_GetMyProperties = "dbo.sp_GetMyProperties";
         public const string sp_SaveProperty = "dbo.sp_SaveProperty";
+        public const string sp_GetPropertyDetails = "dbo.sp_GetPropertyDetails";
 
         // Notification
         public const string sp_SaveUserToken = "dbo.sp_SaveUserToken";
         public const string sp_GetUserNotifications = "dbo.sp_GetUserNotifications";
         public const string sp_SaveUserNotificationReadFlag = "dbo.sp_SaveUserNotificationReadFlag";
+
+        // Master
+        public const string sp_Mst_GetPropertyTypes = "dbo.sp_Mst_GetPropertyTypes";
+        public const string sp_Mst_GetCountries = "[FeatherMomentsDB].[dbo].[sp_Mst_GetCountries]";
+        public const string sp_Mst_GetStatesByCountryId = "[FeatherMomentsDB].[dbo].[sp_Mst_GetStatesByCountryId]";
+        public const string sp_Mst_GetCitiesByStateId = "[FeatherMomentsDB].[dbo].[sp_Mst_GetCitiesByStateId]";
     }
 }

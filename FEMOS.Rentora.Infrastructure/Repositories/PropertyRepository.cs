@@ -45,10 +45,25 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                     OccupiedUnits = row.Table.Columns.Contains("OccupiedUnits") ? Convert.ToInt32(row["OccupiedUnits"])   : 0,
                     VacantUnits  = row.Table.Columns.Contains("VacantUnits")  ? Convert.ToInt32(row["VacantUnits"])       : 0,
                     RoleId       = row.Table.Columns.Contains("RoleId")       ? Convert.ToInt32(row["RoleId"])            : 0,
-                    RoleName     = row.Table.Columns.Contains("RoleName")     ? row["RoleName"]?.ToString()     ?? string.Empty : string.Empty,
+                    UserRole = row.Table.Columns.Contains("RoleName")     ? row["RoleName"]?.ToString()     ?? string.Empty : string.Empty,
                 });
             }
             return properties;
+        }
+
+        public async Task<UserPropertyInfo> GetPropertyDetailsAsync(Guid userPublicId, long propertyId)
+        {
+            var cmd = new SqlCommand(DBConstants.sp_GetPropertyDetails);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            List<UserPropertyInfo> properties = _dbHelper.ConvertDataTable<UserPropertyInfo>(dt);
+
+            if (properties == null || properties.Count == 0)
+                return null;
+            else
+                return properties[0];
         }
 
         public async Task<UserPropertyResponseInfo> SavePropertyAsync(UserPropertyRequestInfo objRequestInfo)
@@ -58,7 +73,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
 
             var propertyIdParam = new SqlParameter("@PropertyId", SqlDbType.BigInt)
             {
-                Direction = ParameterDirection.Output,
+                Direction = ParameterDirection.InputOutput,
                 Value = (object?)objRequestInfo.objUserPropertyInfo.PropertyId ?? DBNull.Value
             };
             cmd.Parameters.Add(propertyIdParam);

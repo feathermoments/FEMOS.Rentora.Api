@@ -28,6 +28,7 @@ namespace FEMOS.Rentora.Infrastructure
             services.AddScoped<ITermsRepository, TermsRepository>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddScoped<IPropertyRepository, PropertyRepository>();
+            services.AddScoped<IMasterRepository, MasterRepository>();
             services.AddScoped<IAgreementRepository, AgreementRepository>();
             return services;
         }

@@ -54,5 +54,22 @@ namespace FEMOS.Rentora.Api.Controllers
 
             return Ok(result);
         }
+
+        /// <summary>
+        /// GET /api/property/details
+        /// Returns property details associated with the authenticated user.
+        /// Response: { propertyId, propertyName, propertyType, city, state, addressLine1,
+        ///              totalUnits, occupiedUnits, vacantUnits, roleId, roleName }
+        /// </summary>
+        [HttpGet("details/{propertyId}")]
+        public async Task<IActionResult> GetPropertyDetails(int propertyId)
+        {
+            var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
+            if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
+                return Unauthorized();
+
+            var properties = await _propertyService.GetPropertyDetailsAsync(userPublicId, propertyId);
+            return Ok(properties);
+        }
     }
 }

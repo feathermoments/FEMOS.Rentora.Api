@@ -1,6 +1,4 @@
-﻿using FEMOS.Rentora.Domain.Entities;
-using FEMOS.Rentora.Domain.Requests;
-using FEMOS.Rentora.Domain.Responses;
+﻿using FEMOS.Rentora.Domain.Requests;
 using FEMOS.Rentora.Domain.Responses;
 using System;
 using System.Collections.Generic;
@@ -14,5 +12,6 @@ namespace FEMOS.Rentora.Application.Interfaces
     {
         Task<MyPropertyResponseInfo> GetMyPropertiesAsync(Guid userPublicId);
         Task<UserPropertyResponseInfo> SavePropertyAsync(UserPropertyRequestInfo objRequestInfo);
+        Task<UserPropertyResponseInfo> GetPropertyDetailsAsync(Guid userPublicId, long propertyId);
     }
 }
