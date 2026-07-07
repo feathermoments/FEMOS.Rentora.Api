@@ -66,6 +66,44 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             return propertyTypes;
         }
 
-        
+        public async Task<List<UnitTypeInfo>> GetUnitTypesAsync()
+        {
+            var cmd = new SqlCommand(DBConstants.sp_Mst_GetUnitTypes);
+            cmd.CommandType = CommandType.StoredProcedure;
+            DataTable dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            return _dbHelper.ConvertDataTable<UnitTypeInfo>(dt);
+        }
+
+        public async Task<List<BhkTypeInfo>> GetBHKTypesAsync()
+        {
+            var cmd = new SqlCommand(DBConstants.sp_Mst_GetBHKTypes);
+            cmd.CommandType = CommandType.StoredProcedure;
+            DataTable dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            return _dbHelper.ConvertDataTable<BhkTypeInfo>(dt);
+        }
+
+        public async Task<List<FurnishingTypeInfo>> GetFurnishingTypesAsync()
+        {
+            var cmd = new SqlCommand(DBConstants.sp_Mst_GetFurnishingTypes);
+            cmd.CommandType = CommandType.StoredProcedure;
+            DataTable dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            return _dbHelper.ConvertDataTable<FurnishingTypeInfo>(dt);
+        }
+
+        public async Task<List<UnitStatusTypeInfo>> GetUnitStatusTypesAsync()
+        {
+            var cmd = new SqlCommand(DBConstants.sp_Mst_GetUnitStatusTypes);
+            cmd.CommandType = CommandType.StoredProcedure;
+            DataTable dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            return _dbHelper.ConvertDataTable<UnitStatusTypeInfo>(dt);
+        }
+
+        public async Task<List<PropertyStatusTypeInfo>> GetPropertyStatusTypesAsync()
+        {
+            var cmd = new SqlCommand(DBConstants.sp_Mst_GetPropertyStatusTypes);
+            cmd.CommandType = CommandType.StoredProcedure;
+            DataTable dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            return _dbHelper.ConvertDataTable<PropertyStatusTypeInfo>(dt);
+        }
     }
 }

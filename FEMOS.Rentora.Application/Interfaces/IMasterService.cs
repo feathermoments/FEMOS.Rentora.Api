@@ -15,5 +15,11 @@ namespace FEMOS.Rentora.Application.Interfaces
         Task<CountryResponseInfo> GetCountries();
         Task<StateResponseInfo> GetStatesByCountryId(int countryId);
         Task<CityResponseInfo> GetCitiesByStateId(int stateId);
+
+        Task<UnitTypeResponseInfo> GetUnitTypesAsync();
+        Task<BhkTypeResponseInfo> GetBHKTypesAsync();
+        Task<FurnishingTypeResponseInfo> GetFurnishingTypesAsync();
+        Task<UnitStatusTypeResponseInfo> GetUnitStatusTypesAsync();
+        Task<PropertyStatusTypeResponseInfo> GetPropertyStatusTypesAsync();
     }
 }

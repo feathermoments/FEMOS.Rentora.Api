@@ -68,8 +68,8 @@ namespace FEMOS.Rentora.Api.Controllers
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
 
-            var properties = await _propertyService.GetPropertyDetailsAsync(userPublicId, propertyId);
-            return Ok(properties);
+            var propertyDetails = await _propertyService.GetPropertyDetailsAsync(userPublicId, propertyId);
+            return Ok(propertyDetails);
         }
     }
 }

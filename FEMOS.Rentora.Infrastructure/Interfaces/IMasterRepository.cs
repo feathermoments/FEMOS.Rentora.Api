@@ -10,8 +10,15 @@ namespace FEMOS.Rentora.Infrastructure.Interfaces
     public interface IMasterRepository
     {
         Task<List<PropertyTypeInfo>> GetPropertyTypes();
+        
         Task<List<CountryInfo>> GetCountries();
         Task<List<StateInfo>> GetStatesByCountryId(int countryId);
         Task<List<CityInfo>> GetCitiesByStateId(int stateId);
+
+        Task<List<UnitTypeInfo>> GetUnitTypesAsync();
+        Task<List<BhkTypeInfo>> GetBHKTypesAsync();
+        Task<List<FurnishingTypeInfo>> GetFurnishingTypesAsync();
+        Task<List<UnitStatusTypeInfo>> GetUnitStatusTypesAsync();
+        Task<List<PropertyStatusTypeInfo>> GetPropertyStatusTypesAsync();
     }
 }

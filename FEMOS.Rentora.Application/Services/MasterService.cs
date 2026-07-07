@@ -63,6 +63,59 @@ namespace FEMOS.Rentora.Application.Services
             };
         }
 
-        
+        public async Task<UnitTypeResponseInfo> GetUnitTypesAsync()
+        {
+            List<UnitTypeInfo> objUnitTypes = await _masterRepository.GetUnitTypesAsync();
+            return new UnitTypeResponseInfo
+            {
+                objUnitTypes = objUnitTypes,
+                Status = StatusConstants.Success,
+                Message = "Unit types retrieved successfully."
+            };
+        }
+
+        public async Task<BhkTypeResponseInfo> GetBHKTypesAsync()
+        {
+            List<BhkTypeInfo> objBhkTypes = await _masterRepository.GetBHKTypesAsync();
+            return new BhkTypeResponseInfo
+            {
+                objBhkTypes = objBhkTypes,
+                Status = StatusConstants.Success,
+                Message = "BHK types retrieved successfully."
+            };
+        }
+
+        public async Task<FurnishingTypeResponseInfo> GetFurnishingTypesAsync()
+        {
+            List<FurnishingTypeInfo> objFurnishingTypes = await _masterRepository.GetFurnishingTypesAsync();
+            return new FurnishingTypeResponseInfo
+            {
+                objFurnishingTypes = objFurnishingTypes,
+                Status = StatusConstants.Success,
+                Message = "Furnishing types retrieved successfully."
+            };
+        }
+
+        public async Task<UnitStatusTypeResponseInfo> GetUnitStatusTypesAsync()
+        {
+            List<UnitStatusTypeInfo> objUnitStatusTypes = await _masterRepository.GetUnitStatusTypesAsync();
+            return new UnitStatusTypeResponseInfo
+            {
+                objUnitStatusTypes = objUnitStatusTypes,
+                Status = StatusConstants.Success,
+                Message = "Unit status types retrieved successfully."
+            };
+        }
+
+        public async Task<PropertyStatusTypeResponseInfo> GetPropertyStatusTypesAsync()
+        {
+            List<PropertyStatusTypeInfo> objPropertyStatusTypes = await _masterRepository.GetPropertyStatusTypesAsync();
+            return new PropertyStatusTypeResponseInfo
+            {
+                objPropertyStatusTypes = objPropertyStatusTypes,
+                Status = StatusConstants.Success,
+                Message = "Property status types retrieved successfully."
+            };
+        }
     }
 }

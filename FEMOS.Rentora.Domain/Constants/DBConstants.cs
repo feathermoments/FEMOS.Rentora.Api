@@ -31,6 +31,11 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string sp_SaveProperty = "dbo.sp_SaveProperty";
         public const string sp_GetPropertyDetails = "dbo.sp_GetPropertyDetails";
 
+        // Unit
+        public const string USP_PropertyUnit_GetAll = "dbo.USP_PropertyUnit_GetAll";
+        public const string USP_PropertyUnit_Save = "dbo.USP_PropertyUnit_Save";
+        public const string USP_PropertyUnit_GetById = "dbo.USP_PropertyUnit_GetById";
+
         // Notification
         public const string sp_SaveUserToken = "dbo.sp_SaveUserToken";
         public const string sp_GetUserNotifications = "dbo.sp_GetUserNotifications";
@@ -41,5 +46,10 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string sp_Mst_GetCountries = "[FeatherMomentsDB].[dbo].[sp_Mst_GetCountries]";
         public const string sp_Mst_GetStatesByCountryId = "[FeatherMomentsDB].[dbo].[sp_Mst_GetStatesByCountryId]";
         public const string sp_Mst_GetCitiesByStateId = "[FeatherMomentsDB].[dbo].[sp_Mst_GetCitiesByStateId]";
+        public const string sp_Mst_GetUnitTypes = "dbo.sp_Mst_GetUnitTypes";
+        public const string sp_Mst_GetBHKTypes = "dbo.sp_Mst_GetBHKTypes";
+        public const string sp_Mst_GetFurnishingTypes = "dbo.sp_Mst_GetFurnishingTypes";
+        public const string sp_Mst_GetUnitStatusTypes = "dbo.sp_Mst_GetUnitStatusTypes";
+        public const string sp_Mst_GetPropertyStatusTypes = "dbo.sp_Mst_GetPropertyStatusTypes";
     }
 }

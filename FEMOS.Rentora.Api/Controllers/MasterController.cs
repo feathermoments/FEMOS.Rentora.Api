@@ -42,5 +42,40 @@ namespace FEMOS.Rentora.Api.Controllers
             return Ok(result);
 
         }
+
+        [HttpGet("getUnitTypes")]
+        public async Task<IActionResult> GetUnitTypes()
+        {
+            var result = await _masterService.GetUnitTypesAsync();
+            return Ok(result);
+        }
+
+        [HttpGet("getBHKTypes")]
+        public async Task<IActionResult> GetBHKTypes()
+        {
+            var result = await _masterService.GetBHKTypesAsync();
+            return Ok(result);
+        }
+
+        [HttpGet("GetFurnishingTypes")]
+        public async Task<IActionResult> GetFurnishingTypes()
+        {
+            var result = await _masterService.GetFurnishingTypesAsync();
+            return Ok(result);
+        }
+
+        [HttpGet("getUnitStatusTypes")]
+        public async Task<IActionResult> GetUnitStatusTypes()
+        {
+            var result = await _masterService.GetUnitStatusTypesAsync();
+            return Ok(result);
+        }
+
+        [HttpGet("getPropertyStatusTypes")]
+        public async Task<IActionResult> GetPropertyStatusTypes()
+        {
+            var result = await _masterService.GetPropertyStatusTypesAsync();
+            return Ok(result);
+        }
     }
 }
