@@ -57,7 +57,7 @@ namespace FEMOS.Rentora.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetFurnishingTypes")]
+        [HttpGet("getFurnishingTypes")]
         public async Task<IActionResult> GetFurnishingTypes()
         {
             var result = await _masterService.GetFurnishingTypesAsync();

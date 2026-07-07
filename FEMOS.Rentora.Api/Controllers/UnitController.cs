@@ -16,7 +16,7 @@ namespace FEMOS.Rentora.Api.Controllers
             _unitService = unitService;
         }
 
-        [HttpGet("property-units")]
+        [HttpGet("property-units/{propertyId}")]
         public async Task<IActionResult> GetPropertyUnits(long propertyId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
@@ -42,7 +42,7 @@ namespace FEMOS.Rentora.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("details")]
+        [HttpGet("details/{propertyId}/{unitId}")]
         public async Task<IActionResult> GetPropertyUnitDetails(long propertyId, long unitId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
