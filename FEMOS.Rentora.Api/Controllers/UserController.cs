@@ -1,7 +1,6 @@
 ﻿using FEMOS.Rentora.Application.Interfaces;
 using FEMOS.Rentora.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FEMOS.Rentora.Api.Controllers
@@ -50,7 +49,7 @@ namespace FEMOS.Rentora.Api.Controllers
                 return Unauthorized();
 
             if (model.Name is null &&
-                model.Email is null &&
+                model.EmailAddress is null &&
                 model.MobileNumber is null &&
                 model.ProfilePhoto is null)
             {

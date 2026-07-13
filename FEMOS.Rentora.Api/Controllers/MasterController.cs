@@ -77,5 +77,12 @@ namespace FEMOS.Rentora.Api.Controllers
             var result = await _masterService.GetPropertyStatusTypesAsync();
             return Ok(result);
         }
+
+        [HttpGet("getAgreementStatusTypes")]
+        public async Task<IActionResult> GetAgreementStatusTypes()
+        {
+            var result = await _masterService.GetAgreementStatusTypesAsync();
+            return Ok(result);
+        }
     }
 }

@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FEMOS.Rentora.Application.Interfaces
+namespace FEMOS.Rentora.Infrastructure.Interfaces
 {
-    public interface ITenantService
+    public interface ITenantRepository
     {
-        Task<PropertyTenantResponseInfo> GetPropertyTenantsAsync(Guid userPublicId, long propertyId);
-        Task<PropertyTenantResponseInfo> GetPropertyTenantDetailsAsync(Guid userPublicId, long propertyId, long tenantId);
+        Task<List<MyPropertyTenantInfo>> GetPropertyTenantsAsync(Guid userPublicId, long propertyId);
+        Task<PropertyTenantInfo> GetPropertyTenantDetailsAsync(Guid userPublicId, long propertyId, long tenantId);
         Task<PropertyTenantResponseInfo> SavePropertyTenantAsync(PropertyTenantRequestInfo objRequestInfo);
         Task<PropertyTenantAssignmentResponseInfo> SavePropertyTenantAssignmentAsync(PropertyTenantAssignmentRequestInfo objRequestInfo);
         Task<RentAgreementResponseInfo> SaveRentAgreementAsync(RentAgreementRequestInfo objRequestInfo);

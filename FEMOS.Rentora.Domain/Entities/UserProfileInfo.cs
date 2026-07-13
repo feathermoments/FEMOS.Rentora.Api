@@ -10,7 +10,7 @@ namespace FEMOS.Rentora.Domain.Entities
     public class UserProfileInfo : BaseInfo
     {
         public string? Name { get; set; }
-        public string? Email { get; set; } = string.Empty;
+        public string? EmailAddress { get; set; } = string.Empty;
         public string? MobileNumber { get; set; } = string.Empty;
         public string? ProfilePhoto { get; set; }
 

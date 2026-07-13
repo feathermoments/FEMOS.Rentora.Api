@@ -27,7 +27,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public int MaintenanceAmount { get; set; }
         public int ElectricityMeterNo { get; set; }
         public int WaterMeterNo { get; set; }
-        public int IsParkingIncluded { get; set; }
+        public bool IsParkingIncluded { get; set; }
         public int UnitStatusId { get; set; }
         public string UnitStatusName { get; set; } = string.Empty;
         public bool IsAvailable { get; set; }

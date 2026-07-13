@@ -20,5 +20,6 @@ namespace FEMOS.Rentora.Infrastructure.Interfaces
         Task<List<FurnishingTypeInfo>> GetFurnishingTypesAsync();
         Task<List<UnitStatusTypeInfo>> GetUnitStatusTypesAsync();
         Task<List<PropertyStatusTypeInfo>> GetPropertyStatusTypesAsync();
+        Task<List<AgreementStatusTypeInfo>> GetAgreementStatusTypesAsync();
     }
 }

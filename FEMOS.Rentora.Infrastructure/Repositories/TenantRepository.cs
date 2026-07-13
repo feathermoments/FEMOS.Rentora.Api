@@ -1,0 +1,172 @@
+﻿using FEMOS.Rentora.Domain.Constants;
+using FEMOS.Rentora.Domain.Entities;
+using FEMOS.Rentora.Domain.Requests;
+using FEMOS.Rentora.Domain.Responses;
+using FEMOS.Rentora.Infrastructure.Interfaces;
+using FEMOS.Rentora.Infrastructure.Persistance;
+using Microsoft.Data.SqlClient;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FEMOS.Rentora.Infrastructure.Repositories
+{
+    internal class TenantRepository : ITenantRepository
+    {
+        private readonly IDBHelper _dbHelper;
+        public TenantRepository(IDBHelper dbHelper)
+        {
+            _dbHelper = dbHelper;
+        }
+        public async Task<List<MyPropertyTenantInfo>> GetPropertyTenantsAsync(Guid userPublicId, long propertyId)
+        {
+            var cmd = new SqlCommand(DBConstants.USP_PropertyTenant_GetAll);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            return _dbHelper.ConvertDataTable<MyPropertyTenantInfo>(dt);
+        }
+
+        public async Task<PropertyTenantInfo> GetPropertyTenantDetailsAsync(Guid userPublicId, long propertyId, long tenantId)
+        {
+            var cmd = new SqlCommand(DBConstants.USP_PropertyTenant_GetById);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@TenantId", tenantId);
+            var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            List<PropertyTenantInfo> tenantDetails = _dbHelper.ConvertDataTable<PropertyTenantInfo>(dt);
+            if (tenantDetails == null || tenantDetails.Count == 0)
+            {
+                return null;
+            }
+            else
+                return tenantDetails[0];
+        }
+
+        public async Task<PropertyTenantResponseInfo> SavePropertyTenantAsync(PropertyTenantRequestInfo objRequestInfo)
+        {
+            var cmd = new SqlCommand(DBConstants.USP_PropertyTenant_Save);
+            cmd.CommandType = CommandType.StoredProcedure;
+            var tenantIdParam = new SqlParameter("@TenantId", SqlDbType.BigInt)
+            {
+                Direction = ParameterDirection.InputOutput,
+                Value = (object?)objRequestInfo.objPropertyTenantInfo.TenantId ?? DBNull.Value
+            };
+            cmd.Parameters.Add(tenantIdParam);
+            cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
+            cmd.Parameters.AddWithValue("@PropertyId", objRequestInfo.objPropertyTenantInfo.PropertyId);
+            cmd.Parameters.AddWithValue("@TenantUserId", objRequestInfo.objPropertyTenantInfo.TenantUserId);
+            cmd.Parameters.AddWithValue("@TenantCode", objRequestInfo.objPropertyTenantInfo.TenantCode);
+            cmd.Parameters.AddWithValue("@FullName", objRequestInfo.objPropertyTenantInfo.FullName);
+            cmd.Parameters.AddWithValue("@EmailHash", objRequestInfo.objPropertyTenantInfo.EmailHash);
+            cmd.Parameters.AddWithValue("@EmailEncrypted", objRequestInfo.objPropertyTenantInfo.EmailEncrypted);
+            cmd.Parameters.AddWithValue("@MobileHash", objRequestInfo.objPropertyTenantInfo.MobileHash);
+            cmd.Parameters.AddWithValue("@MobileEncrypted", objRequestInfo.objPropertyTenantInfo.MobileEncrypted);
+            cmd.Parameters.AddWithValue("@GenderId", objRequestInfo.objPropertyTenantInfo.GenderId);
+            cmd.Parameters.AddWithValue("@DateOfBirth", objRequestInfo.objPropertyTenantInfo.DateOfBirth);
+            cmd.Parameters.AddWithValue("@Occupation", objRequestInfo.objPropertyTenantInfo.Occupation);
+            cmd.Parameters.AddWithValue("@CompanyName", objRequestInfo.objPropertyTenantInfo.CompanyName);
+            cmd.Parameters.AddWithValue("@PermanentAddress", objRequestInfo.objPropertyTenantInfo.PermanentAddress);
+            cmd.Parameters.AddWithValue("@CompanyAddress", objRequestInfo.objPropertyTenantInfo.CompanyAddress);
+            cmd.Parameters.AddWithValue("@EmergencyContactName", objRequestInfo.objPropertyTenantInfo.EmergencyContactName);
+            cmd.Parameters.AddWithValue("@EmergencyContactNumber", objRequestInfo.objPropertyTenantInfo.EmergencyContactNumber);
+            cmd.Parameters.AddWithValue("@Notes", objRequestInfo.objPropertyTenantInfo.Notes);
+
+            var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            var dbResponse = await _dbHelper.GetDBResponse(result);
+
+            long? tenantId = tenantIdParam.Value != DBNull.Value
+                ? Convert.ToInt64(tenantIdParam.Value)
+                : null;
+
+            return new PropertyTenantResponseInfo
+            {
+                Status = dbResponse.Status,
+                Message = dbResponse.Message,
+                TenantId = tenantId
+            };
+        }
+
+        public async Task<PropertyTenantAssignmentResponseInfo> SavePropertyTenantAssignmentAsync(PropertyTenantAssignmentRequestInfo objRequestInfo)
+        {
+            var cmd = new SqlCommand(DBConstants.sp_SaveTenantAssignment);
+            cmd.CommandType = CommandType.StoredProcedure;
+            var tenantAssignmentIdParam = new SqlParameter("@TenantAssignmentId", SqlDbType.BigInt)
+            {
+                Direction = ParameterDirection.InputOutput,
+                Value = (object?)objRequestInfo.objTenantAssignmentInfo.TenantAssignmentId ?? DBNull.Value
+            };
+            cmd.Parameters.Add(tenantAssignmentIdParam);
+            cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
+            cmd.Parameters.AddWithValue("@PropertyId", objRequestInfo.objTenantAssignmentInfo.PropertyId);
+            cmd.Parameters.AddWithValue("@PropertyUnitId", objRequestInfo.objTenantAssignmentInfo.PropertyUnitId);
+            cmd.Parameters.AddWithValue("@TenantId", objRequestInfo.objTenantAssignmentInfo.TenantId);
+            cmd.Parameters.AddWithValue("@MoveInDate", objRequestInfo.objTenantAssignmentInfo.MoveInDate);
+            cmd.Parameters.AddWithValue("@ExpectedMoveOutDate", objRequestInfo.objTenantAssignmentInfo.ExpectedMoveOutDate);
+            cmd.Parameters.AddWithValue("@ActualMoveOutDate", objRequestInfo.objTenantAssignmentInfo.ActualMoveOutDate);
+            cmd.Parameters.AddWithValue("@TenantStatusId", objRequestInfo.objTenantAssignmentInfo.TenantStatusId);
+            cmd.Parameters.AddWithValue("@IsPrimaryTenant", objRequestInfo.objTenantAssignmentInfo.IsPrimaryTenant);
+            cmd.Parameters.AddWithValue("@IsActive", objRequestInfo.objTenantAssignmentInfo.IsActive);
+
+            var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            var dbResponse = await _dbHelper.GetDBResponse(result);
+
+            long? tenantAssignmentId = tenantAssignmentIdParam.Value != DBNull.Value
+                ? Convert.ToInt64(tenantAssignmentIdParam.Value)
+                : null;
+
+            return new PropertyTenantAssignmentResponseInfo
+            {
+                Status = dbResponse.Status,
+                Message = dbResponse.Message,
+                TenantAssignmentId = tenantAssignmentId
+            };
+        }
+        
+        public async Task<RentAgreementResponseInfo> SaveRentAgreementAsync(RentAgreementRequestInfo objRequestInfo)
+        {
+            var cmd = new SqlCommand(DBConstants.usp_SaveRentAgreement);
+            cmd.CommandType = CommandType.StoredProcedure;
+            var rentAgreementIdParam = new SqlParameter("@RentAgreementId", SqlDbType.BigInt)
+            {
+                Direction = ParameterDirection.InputOutput,
+                Value = (object?)objRequestInfo.objRentAgreementInfo.RentAgreementId ?? DBNull.Value
+            };
+            cmd.Parameters.Add(rentAgreementIdParam);
+            cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
+            cmd.Parameters.AddWithValue("@PropertyId", objRequestInfo.objRentAgreementInfo.PropertyId);
+            cmd.Parameters.AddWithValue("@UnitId", objRequestInfo.objRentAgreementInfo.UnitId);
+            cmd.Parameters.AddWithValue("@TenantId", objRequestInfo.objRentAgreementInfo.TenantId);
+            cmd.Parameters.AddWithValue("@AgreementNumber", objRequestInfo.objRentAgreementInfo.AgreementNumber);
+            cmd.Parameters.AddWithValue("@StartDate", objRequestInfo.objRentAgreementInfo.StartDate);
+            cmd.Parameters.AddWithValue("@EndDate", objRequestInfo.objRentAgreementInfo.EndDate);
+            cmd.Parameters.AddWithValue("@MonthlyRent", objRequestInfo.objRentAgreementInfo.MonthlyRent);
+            cmd.Parameters.AddWithValue("@SecurityDeposit", objRequestInfo.objRentAgreementInfo.SecurityDeposit);
+            cmd.Parameters.AddWithValue("@MaintenanceAmount", objRequestInfo.objRentAgreementInfo.MaintenanceAmount);
+            cmd.Parameters.AddWithValue("@RentDueDay", objRequestInfo.objRentAgreementInfo.RentDueDay);
+            cmd.Parameters.AddWithValue("@NoticePeriodDays", objRequestInfo.objRentAgreementInfo.NoticePeriodDays);
+            cmd.Parameters.AddWithValue("@AgreementStatusId", objRequestInfo.objRentAgreementInfo.AgreementStatusId);
+            cmd.Parameters.AddWithValue("@AgreementDocumentUrl", objRequestInfo.objRentAgreementInfo.AgreementDocumentUrl);
+            cmd.Parameters.AddWithValue("@IsActive", objRequestInfo.objRentAgreementInfo.IsActive);
+
+            var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            var dbResponse = await _dbHelper.GetDBResponse(result);
+
+            long? rentAgreementId = rentAgreementIdParam.Value != DBNull.Value
+                ? Convert.ToInt64(rentAgreementIdParam.Value)
+                : null;
+
+            return new RentAgreementResponseInfo
+            {
+                Status = dbResponse.Status,
+                Message = dbResponse.Message,
+                RentAgreementId = rentAgreementId
+            };
+        }
+    }
+}

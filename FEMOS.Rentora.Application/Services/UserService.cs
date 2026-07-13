@@ -35,17 +35,17 @@ namespace FEMOS.Rentora.Application.Services
             if (response == null)
                 return new UserProfileResponseInfo();
 
-            response.Email = _encryptDecryptService.Decrypt(response.Email);
+            response.EmailAddress = _encryptDecryptService.Decrypt(response.EmailAddress);
             response.MobileNumber = _encryptDecryptService.Decrypt(response.MobileNumber);
             return response;
         }
 
         public async Task<BaseResponseInfo> UpdateUserProfileAsync(UserProfileInfo model)
         {
-            model.EmailHash = _encryptDecryptService.ComputeHash(model.Email ?? string.Empty);
+            model.EmailHash = _encryptDecryptService.ComputeHash(model.EmailAddress ?? string.Empty);
             model.MobileHash = _encryptDecryptService.ComputeHash(model.MobileNumber ?? string.Empty);
 
-            model.EmailEncrypted = _encryptDecryptService.Encrypt(model.Email ?? string.Empty);
+            model.EmailEncrypted = _encryptDecryptService.Encrypt(model.EmailAddress ?? string.Empty);
             model.MobileEncrypted = _encryptDecryptService.Encrypt(model.MobileNumber ?? string.Empty);
 
             var dbResponse = await _userRepository.UpdateUserProfileAsync(model);

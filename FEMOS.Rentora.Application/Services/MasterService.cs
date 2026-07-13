@@ -117,5 +117,16 @@ namespace FEMOS.Rentora.Application.Services
                 Message = "Property status types retrieved successfully."
             };
         }
+
+        public async Task<AgreementStatusTypeResponseInfo> GetAgreementStatusTypesAsync()
+        {
+            List<AgreementStatusTypeInfo> objAgreementStatusTypes = await _masterRepository.GetAgreementStatusTypesAsync();
+            return new AgreementStatusTypeResponseInfo
+            {
+                objAgreementStatusTypes = objAgreementStatusTypes,
+                Status = StatusConstants.Success,
+                Message = "Agreement status types retrieved successfully."
+            };
+        }
     }
 }

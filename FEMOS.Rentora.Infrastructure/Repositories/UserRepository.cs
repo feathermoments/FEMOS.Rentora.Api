@@ -46,7 +46,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                 UserPublicId = row.Table.Columns.Contains("UserPublicId") ? (Guid)row["UserPublicId"] : Guid.Empty,
                 Name = row.Table.Columns.Contains("Name") ? row["Name"]?.ToString() ?? string.Empty : string.Empty,
                 ProfilePhoto = row.Table.Columns.Contains("ProfilePhoto") ? row["ProfilePhoto"]?.ToString() ?? string.Empty : string.Empty,
-                Email = row.Table.Columns.Contains("Email") ? row["Email"]?.ToString() ?? string.Empty : string.Empty,
+                EmailAddress = row.Table.Columns.Contains("EmailAddress") ? row["EmailAddress"]?.ToString() ?? string.Empty : string.Empty,
                 MobileNumber = row.Table.Columns.Contains("MobileNumber") ? row["MobileNumber"]?.ToString() ?? string.Empty : string.Empty
             };
 
