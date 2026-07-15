@@ -22,5 +22,6 @@ namespace FEMOS.Rentora.Application.Interfaces
         Task<UnitStatusTypeResponseInfo> GetUnitStatusTypesAsync();
         Task<PropertyStatusTypeResponseInfo> GetPropertyStatusTypesAsync();
         Task<AgreementStatusTypeResponseInfo> GetAgreementStatusTypesAsync();
+        Task<TenantStatusTypeResponseInfo> GetTenantStatusTypesAsync();
     }
 }

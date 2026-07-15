@@ -16,7 +16,7 @@ namespace FEMOS.Rentora.Api.Controllers
         }
 
         [HttpGet("property-tenants/{propertyId}")]
-        public async Task<IActionResult> GetPropertyTenants(int propertyId)
+        public async Task<IActionResult> GetPropertyTenants(long propertyId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
@@ -27,7 +27,7 @@ namespace FEMOS.Rentora.Api.Controllers
         }
 
         [HttpGet("details/{propertyId}/{tenantId}")]
-        public  async Task<IActionResult> GetPropertyTenantDetails(int propertyId, int tenantId)
+        public  async Task<IActionResult> GetPropertyTenantDetails(long propertyId, long tenantId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
@@ -66,6 +66,16 @@ namespace FEMOS.Rentora.Api.Controllers
             return Ok(result);
         }
 
+        [HttpGet("getTenantAssignment/{propertyId}/{tenantId}/{tenantAssignmentId}")]
+        public async Task<IActionResult> GetTenantAssignment(long propertyId, long tenantId, long tenantAssignmentId)
+        {
+            var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
+            if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
+                return Unauthorized();
+            var propertyTenantAssignments = await _tenantService.GetTenantAssignmentDetailsAsync(userPublicId, propertyId, tenantId, tenantAssignmentId);
+            return Ok(propertyTenantAssignments);
+        }
+
         [HttpPost("save-rent-agreement")]
         public async Task<IActionResult> SaveRentAgreement(RentAgreementRequestInfo objRequestInfo)
         {
@@ -80,5 +90,16 @@ namespace FEMOS.Rentora.Api.Controllers
             var result = await _tenantService.SaveRentAgreementAsync(objRequestInfo);
             return Ok(result);
         }
+
+        //[HttpGet("rent-agreement/{propertyId}/{tenantId}")]
+        //public async Task<IActionResult> GetRentAgreement(int propertyId, int tenant, int propertyUnitId)
+        //{
+        //    var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
+        //    if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
+        //        return Unauthorized();
+        //    var rentAgreement = await _tenantService.GetRentAgreementAsync(userPublicId, propertyId, tenant, propertyUnitId);
+        //    return Ok(rentAgreement);
+        //}
+
     }
 }

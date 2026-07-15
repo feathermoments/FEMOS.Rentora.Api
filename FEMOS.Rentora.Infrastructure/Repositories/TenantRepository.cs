@@ -60,6 +60,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.Add(tenantIdParam);
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
             cmd.Parameters.AddWithValue("@PropertyId", objRequestInfo.objPropertyTenantInfo.PropertyId);
+            cmd.Parameters.AddWithValue("@PropertyUnitId", objRequestInfo.objPropertyTenantInfo.PropertyUnitId);
             cmd.Parameters.AddWithValue("@TenantUserId", objRequestInfo.objPropertyTenantInfo.TenantUserId);
             cmd.Parameters.AddWithValue("@TenantCode", objRequestInfo.objPropertyTenantInfo.TenantCode);
             cmd.Parameters.AddWithValue("@FullName", objRequestInfo.objPropertyTenantInfo.FullName);
@@ -107,8 +108,8 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@PropertyUnitId", objRequestInfo.objTenantAssignmentInfo.PropertyUnitId);
             cmd.Parameters.AddWithValue("@TenantId", objRequestInfo.objTenantAssignmentInfo.TenantId);
             cmd.Parameters.AddWithValue("@MoveInDate", objRequestInfo.objTenantAssignmentInfo.MoveInDate);
-            cmd.Parameters.AddWithValue("@ExpectedMoveOutDate", objRequestInfo.objTenantAssignmentInfo.ExpectedMoveOutDate);
-            cmd.Parameters.AddWithValue("@ActualMoveOutDate", objRequestInfo.objTenantAssignmentInfo.ActualMoveOutDate);
+            cmd.Parameters.AddWithValue("@ExpectedMoveOutDate", objRequestInfo.objTenantAssignmentInfo.ExpectedMoveOutDate.Year > 1900 ? objRequestInfo.objTenantAssignmentInfo.ExpectedMoveOutDate : DBNull.Value);
+            cmd.Parameters.AddWithValue("@ActualMoveOutDate", objRequestInfo.objTenantAssignmentInfo.ActualMoveOutDate.Year > 1900 ? objRequestInfo.objTenantAssignmentInfo.ActualMoveOutDate : DBNull.Value);
             cmd.Parameters.AddWithValue("@TenantStatusId", objRequestInfo.objTenantAssignmentInfo.TenantStatusId);
             cmd.Parameters.AddWithValue("@IsPrimaryTenant", objRequestInfo.objTenantAssignmentInfo.IsPrimaryTenant);
             cmd.Parameters.AddWithValue("@IsActive", objRequestInfo.objTenantAssignmentInfo.IsActive);
@@ -167,6 +168,24 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                 Message = dbResponse.Message,
                 RentAgreementId = rentAgreementId
             };
+        }
+
+        public async Task<TenantAssignmentInfo> GetTenantAssignmentDetailsAsync(Guid userPublicId, long propertyId, long tenantId, long tenantAssignmentId)
+        {
+            var cmd = new SqlCommand(DBConstants.usp_GetTenantAssignment);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@TenantId", tenantId);
+            cmd.Parameters.AddWithValue("@TenantAssignmentId", tenantAssignmentId);
+            var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            List<TenantAssignmentInfo> objTenantAssignments = _dbHelper.ConvertDataTable<TenantAssignmentInfo>(dt);
+            if (objTenantAssignments == null || objTenantAssignments.Count == 0)
+            {
+                return null;
+            }
+            else
+                return objTenantAssignments[0];
         }
     }
 }

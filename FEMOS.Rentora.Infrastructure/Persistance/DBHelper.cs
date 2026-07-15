@@ -112,28 +112,31 @@ namespace FEMOS.Rentora.Infrastructure.Persistance
 
             foreach (DataColumn column in dr.Table.Columns)
             {
-                foreach (PropertyInfo pro in temp.GetProperties())
+                // 1. Direct lookup instead of a nested loop
+                PropertyInfo pro = temp.GetProperty(column.ColumnName);
+
+                // Ensure the property exists and can actually be written to
+                if (pro != null && pro.CanWrite)
                 {
-                    //in case you have a enum/GUID datatype in your model
-                    //We will check field's dataType, and convert the value in it.
-                    if (pro.Name == column.ColumnName)
+                    object value = dr[column.ColumnName];
+
+                    // 2. Handle Database Nulls safely
+                    if (value == DBNull.Value)
                     {
-                        try
-                        {
-                            //var convertedValue = GetValueByDataType(pro.PropertyType, dr[column.ColumnName]);
-                            pro.SetValue(obj, dr[column.ColumnName], null);
-                        }
-                        catch (Exception e)
-                        {
-                            //ex handle code                   
-                            //throw;
-                            var convertedValue = GetValueByDataType(pro.PropertyType, dr[column.ColumnName]);
-                            pro.SetValue(obj, convertedValue, null);
-                        }
-                        //pro.SetValue(obj, dr[column.ColumnName], null);
-                    }
-                    else
+                        pro.SetValue(obj, null, null);
                         continue;
+                    }
+
+                    try
+                    {
+                        // 3. Proactively handle type conversions (Enums, GUIDs, Nullables)
+                        object convertedValue = GetValueByDataType(pro.PropertyType, value);
+                        pro.SetValue(obj, convertedValue, null);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle or log your exception here
+                    }
                 }
             }
             return obj;

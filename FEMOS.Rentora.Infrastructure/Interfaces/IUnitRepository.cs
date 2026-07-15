@@ -14,5 +14,6 @@ namespace FEMOS.Rentora.Infrastructure.Interfaces
         Task<List<MyPropertyUnitInfo>> GetPropertyUnitsAsync(Guid userPublicId, long propertyId);
         Task<PropertyUnitResponseInfo> SavePropertyUnitAsync(PropertyUnitRequestInfo objRequestInfo);
         Task<PropertyUnitInfo> GetPropertyUnitDetailsAsync(Guid userPublicId, long propertyId, long unitId);
+        Task<List<MyPropertyUnitInfo>> GetVacantUnitsAsync(Guid userPublicId, long propertyId);
     }
 }

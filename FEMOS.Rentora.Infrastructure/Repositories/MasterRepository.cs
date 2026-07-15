@@ -113,5 +113,13 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             DataTable dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
             return _dbHelper.ConvertDataTable<AgreementStatusTypeInfo>(dt);
         }
+
+        public async Task<List<TenantStatusTypeInfo>> GetTenantStatusTypesAsync()
+        {
+            var cmd = new SqlCommand(DBConstants.sp_Mst_GetTenantStatusTypes);
+            cmd.CommandType = CommandType.StoredProcedure;
+            DataTable dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            return _dbHelper.ConvertDataTable<TenantStatusTypeInfo>(dt);
+        }
     }
 }

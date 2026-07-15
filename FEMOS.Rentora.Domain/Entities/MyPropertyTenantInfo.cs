@@ -8,9 +8,10 @@ namespace FEMOS.Rentora.Domain.Entities
 {
     public class MyPropertyTenantInfo
     {
-        public int TenantId { get; set; }
-        public int PropertyId { get; set; }
-        public int PropertyUnitId { get; set; }
+        public long TenantId { get; set; }
+        public long PropertyId { get; set; }
+        public long PropertyUnitId { get; set; }
+        public long TenantAssignmentId { get; set; }
         public string UnitNumber { get; set; } = string.Empty;
         public string FullName { get; set; } = string.Empty;
         public string MobileNumber { get; set; } = string.Empty;

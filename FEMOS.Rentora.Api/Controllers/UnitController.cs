@@ -52,5 +52,16 @@ namespace FEMOS.Rentora.Api.Controllers
             var propertyUnitDetails = await _unitService.GetPropertyUnitDetailsAsync(userPublicId, propertyId, unitId);
             return Ok(propertyUnitDetails);
         }
+
+        [HttpGet("getVacantUnits/{propertyId}")]
+        public async Task<IActionResult> GetVacantUnits(long propertyId)
+        {
+            var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
+            if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
+                return Unauthorized();
+
+            var vacantUnits = await _unitService.GetVacantUnitsAsync(userPublicId, propertyId);
+            return Ok(vacantUnits);
+        }
     }
 }

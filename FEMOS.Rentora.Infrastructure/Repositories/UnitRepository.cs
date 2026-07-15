@@ -49,6 +49,16 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             return _dbHelper.ConvertDataTable<MyPropertyUnitInfo>(dt);
         }
 
+        public async Task<List<MyPropertyUnitInfo>> GetVacantUnitsAsync(Guid userPublicId, long propertyId)
+        {
+            var cmd = new SqlCommand(DBConstants.USP_PropertyUnit_GetVacantUnits);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            return _dbHelper.ConvertDataTable<MyPropertyUnitInfo>(dt); 
+        }
+
         public async Task<PropertyUnitResponseInfo> SavePropertyUnitAsync(PropertyUnitRequestInfo objRequestInfo)
         {
             var cmd = new SqlCommand(DBConstants.USP_PropertyUnit_Save);

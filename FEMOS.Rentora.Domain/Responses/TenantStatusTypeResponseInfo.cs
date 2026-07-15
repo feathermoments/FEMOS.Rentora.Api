@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace FEMOS.Rentora.Domain.Responses
 {
-    public class PropertyTenantAssignmentResponseInfo : BaseResponseInfo
+    public class TenantStatusTypeResponseInfo : BaseResponseInfo
     {
-        public long? TenantAssignmentId { get; set; }
-        public TenantAssignmentInfo objTenantAssignmentInfo { get; set; }
+        public List<TenantStatusTypeInfo> objTenantStatusTypes { get; set; } = new List<TenantStatusTypeInfo>();
     }
 }

@@ -37,6 +37,15 @@ namespace FEMOS.Rentora.Application.Services
             return objResponseInfo;
         }
 
+        public async Task<PropertyUnitResponseInfo> GetVacantUnitsAsync(Guid userPublicId, long propertyId)
+        {
+            PropertyUnitResponseInfo objResponseInfo = new PropertyUnitResponseInfo();
+            objResponseInfo.objMyPropertyUnits = await _unitRepository.GetVacantUnitsAsync(userPublicId, propertyId);
+            objResponseInfo.Status = StatusConstants.Success;
+            objResponseInfo.Message = "Vacant property units retrieved successfully.";
+            return objResponseInfo;
+        }
+
         public async Task<PropertyUnitResponseInfo> SavePropertyUnitAsync(PropertyUnitRequestInfo objRequestInfo)
         {
             return await _unitRepository.SavePropertyUnitAsync(objRequestInfo);

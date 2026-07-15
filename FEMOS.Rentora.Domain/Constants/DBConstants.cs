@@ -38,6 +38,7 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string USP_PropertyUnit_GetAll = "dbo.USP_PropertyUnit_GetAll";
         public const string USP_PropertyUnit_Save = "dbo.USP_PropertyUnit_Save";
         public const string USP_PropertyUnit_GetById = "dbo.USP_PropertyUnit_GetById";
+        public const string USP_PropertyUnit_GetVacantUnits = "dbo.USP_PropertyUnit_GetVacantUnits";
 
         // Tenant
         public const string USP_PropertyTenant_GetAll = "dbo.USP_PropertyTenant_GetAll";
@@ -45,6 +46,7 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string USP_PropertyTenant_GetById = "dbo.USP_PropertyTenant_GetById";
         public const string sp_SaveTenantAssignment = "dbo.sp_SaveTenantAssignment";
         public const string usp_SaveRentAgreement = "dbo.usp_SaveRentAgreement";
+        public const string usp_GetTenantAssignment = "dbo.usp_GetTenantAssignment";
 
         // Notification
         public const string sp_SaveUserToken = "dbo.sp_SaveUserToken";
@@ -62,5 +64,6 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string sp_Mst_GetUnitStatusTypes = "dbo.sp_Mst_GetUnitStatusTypes";
         public const string sp_Mst_GetPropertyStatusTypes = "dbo.sp_Mst_GetPropertyStatusTypes";
         public const string sp_Mst_GetAgreementStatusTypes = "dbo.sp_Mst_GetAgreementStatusTypes";
+        public const string sp_Mst_GetTenantStatusTypes = "dbo.sp_Mst_GetTenantStatusTypes";
     }
 }

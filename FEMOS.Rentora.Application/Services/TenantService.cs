@@ -123,5 +123,22 @@ namespace FEMOS.Rentora.Application.Services
         {
             return await _tenantRepository.SaveRentAgreementAsync(objRequestInfo);
         }
+
+        public async Task<PropertyTenantAssignmentResponseInfo> GetTenantAssignmentDetailsAsync(Guid userPublicId, long propertyId, long tenantId, long tenantAssignmentId)
+        {
+            PropertyTenantAssignmentResponseInfo objResponseInfo = new PropertyTenantAssignmentResponseInfo();
+            objResponseInfo.objTenantAssignmentInfo = await _tenantRepository.GetTenantAssignmentDetailsAsync(userPublicId, propertyId, tenantId, tenantAssignmentId);
+            if (objResponseInfo.objTenantAssignmentInfo != null)
+            {
+                objResponseInfo.Status = StatusConstants.Success;
+                objResponseInfo.Message = "Tenant assignment details retrieved successfully.";
+            }
+            else
+            {
+                objResponseInfo.Status = StatusConstants.Failure;
+                objResponseInfo.Message = "Tenant assignment not found.";
+            }
+            return objResponseInfo;
+        }
     }
 }
