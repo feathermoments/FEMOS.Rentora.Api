@@ -119,11 +119,6 @@ namespace FEMOS.Rentora.Application.Services
             return await _tenantRepository.SavePropertyTenantAssignmentAsync(objRequestInfo);
         }
 
-        public async Task<RentAgreementResponseInfo> SaveRentAgreementAsync(RentAgreementRequestInfo objRequestInfo)
-        {
-            return await _tenantRepository.SaveRentAgreementAsync(objRequestInfo);
-        }
-
         public async Task<PropertyTenantAssignmentResponseInfo> GetTenantAssignmentDetailsAsync(Guid userPublicId, long propertyId, long tenantId, long tenantAssignmentId)
         {
             PropertyTenantAssignmentResponseInfo objResponseInfo = new PropertyTenantAssignmentResponseInfo();
@@ -137,6 +132,30 @@ namespace FEMOS.Rentora.Application.Services
             {
                 objResponseInfo.Status = StatusConstants.Failure;
                 objResponseInfo.Message = "Tenant assignment not found.";
+            }
+            return objResponseInfo;
+        }
+
+        public async Task<TenantResponseInfo> SearchTenantAsync(Guid userPublicId, string searchText)
+        {
+            TenantResponseInfo objResponseInfo = new TenantResponseInfo();
+            string searchTextHash = _encryptDecryptService.ComputeHash(searchText);
+            List<TenantInfo> objTenants = await _tenantRepository.SearchTenantAsync(userPublicId, searchText, searchTextHash);
+            foreach(TenantInfo tenantInfo in objTenants)
+            {
+                tenantInfo.MobileNumber = _encryptDecryptService.Decrypt(tenantInfo.MobileNumber);
+                tenantInfo.EmailAddress = _encryptDecryptService.Decrypt(tenantInfo.EmailAddress);
+            }
+            if (objTenants != null && objTenants.Count > 0)
+            {
+                objResponseInfo.objTenant = objTenants[0];
+                objResponseInfo.Status = StatusConstants.Success;
+                objResponseInfo.Message = "Tenants retrieved successfully.";
+            }
+            else
+            {
+                objResponseInfo.Status = StatusConstants.Failure;
+                objResponseInfo.Message = "No tenants found.";
             }
             return objResponseInfo;
         }

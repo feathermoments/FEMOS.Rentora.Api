@@ -108,8 +108,8 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@PropertyUnitId", objRequestInfo.objTenantAssignmentInfo.PropertyUnitId);
             cmd.Parameters.AddWithValue("@TenantId", objRequestInfo.objTenantAssignmentInfo.TenantId);
             cmd.Parameters.AddWithValue("@MoveInDate", objRequestInfo.objTenantAssignmentInfo.MoveInDate);
-            cmd.Parameters.AddWithValue("@ExpectedMoveOutDate", objRequestInfo.objTenantAssignmentInfo.ExpectedMoveOutDate.Year > 1900 ? objRequestInfo.objTenantAssignmentInfo.ExpectedMoveOutDate : DBNull.Value);
-            cmd.Parameters.AddWithValue("@ActualMoveOutDate", objRequestInfo.objTenantAssignmentInfo.ActualMoveOutDate.Year > 1900 ? objRequestInfo.objTenantAssignmentInfo.ActualMoveOutDate : DBNull.Value);
+            cmd.Parameters.AddWithValue("@ExpectedMoveOutDate", objRequestInfo.objTenantAssignmentInfo.ExpectedMoveOutDate?.Year > 1900 ? objRequestInfo.objTenantAssignmentInfo.ExpectedMoveOutDate : DBNull.Value);
+            cmd.Parameters.AddWithValue("@ActualMoveOutDate", objRequestInfo.objTenantAssignmentInfo.ActualMoveOutDate?.Year > 1900 ? objRequestInfo.objTenantAssignmentInfo.ActualMoveOutDate : DBNull.Value);
             cmd.Parameters.AddWithValue("@TenantStatusId", objRequestInfo.objTenantAssignmentInfo.TenantStatusId);
             cmd.Parameters.AddWithValue("@IsPrimaryTenant", objRequestInfo.objTenantAssignmentInfo.IsPrimaryTenant);
             cmd.Parameters.AddWithValue("@IsActive", objRequestInfo.objTenantAssignmentInfo.IsActive);
@@ -129,47 +129,6 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             };
         }
         
-        public async Task<RentAgreementResponseInfo> SaveRentAgreementAsync(RentAgreementRequestInfo objRequestInfo)
-        {
-            var cmd = new SqlCommand(DBConstants.usp_SaveRentAgreement);
-            cmd.CommandType = CommandType.StoredProcedure;
-            var rentAgreementIdParam = new SqlParameter("@RentAgreementId", SqlDbType.BigInt)
-            {
-                Direction = ParameterDirection.InputOutput,
-                Value = (object?)objRequestInfo.objRentAgreementInfo.RentAgreementId ?? DBNull.Value
-            };
-            cmd.Parameters.Add(rentAgreementIdParam);
-            cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
-            cmd.Parameters.AddWithValue("@PropertyId", objRequestInfo.objRentAgreementInfo.PropertyId);
-            cmd.Parameters.AddWithValue("@UnitId", objRequestInfo.objRentAgreementInfo.UnitId);
-            cmd.Parameters.AddWithValue("@TenantId", objRequestInfo.objRentAgreementInfo.TenantId);
-            cmd.Parameters.AddWithValue("@AgreementNumber", objRequestInfo.objRentAgreementInfo.AgreementNumber);
-            cmd.Parameters.AddWithValue("@StartDate", objRequestInfo.objRentAgreementInfo.StartDate);
-            cmd.Parameters.AddWithValue("@EndDate", objRequestInfo.objRentAgreementInfo.EndDate);
-            cmd.Parameters.AddWithValue("@MonthlyRent", objRequestInfo.objRentAgreementInfo.MonthlyRent);
-            cmd.Parameters.AddWithValue("@SecurityDeposit", objRequestInfo.objRentAgreementInfo.SecurityDeposit);
-            cmd.Parameters.AddWithValue("@MaintenanceAmount", objRequestInfo.objRentAgreementInfo.MaintenanceAmount);
-            cmd.Parameters.AddWithValue("@RentDueDay", objRequestInfo.objRentAgreementInfo.RentDueDay);
-            cmd.Parameters.AddWithValue("@NoticePeriodDays", objRequestInfo.objRentAgreementInfo.NoticePeriodDays);
-            cmd.Parameters.AddWithValue("@AgreementStatusId", objRequestInfo.objRentAgreementInfo.AgreementStatusId);
-            cmd.Parameters.AddWithValue("@AgreementDocumentUrl", objRequestInfo.objRentAgreementInfo.AgreementDocumentUrl);
-            cmd.Parameters.AddWithValue("@IsActive", objRequestInfo.objRentAgreementInfo.IsActive);
-
-            var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
-            var dbResponse = await _dbHelper.GetDBResponse(result);
-
-            long? rentAgreementId = rentAgreementIdParam.Value != DBNull.Value
-                ? Convert.ToInt64(rentAgreementIdParam.Value)
-                : null;
-
-            return new RentAgreementResponseInfo
-            {
-                Status = dbResponse.Status,
-                Message = dbResponse.Message,
-                RentAgreementId = rentAgreementId
-            };
-        }
-
         public async Task<TenantAssignmentInfo> GetTenantAssignmentDetailsAsync(Guid userPublicId, long propertyId, long tenantId, long tenantAssignmentId)
         {
             var cmd = new SqlCommand(DBConstants.usp_GetTenantAssignment);
@@ -186,6 +145,18 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             }
             else
                 return objTenantAssignments[0];
+        }
+
+        public async Task<List<TenantInfo>> SearchTenantAsync(Guid userPublicId, string searchText, string searchTextHash)
+        {
+            var cmd = new SqlCommand(DBConstants.usp_SearchTenant);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@SearchText", searchText);
+            cmd.Parameters.AddWithValue("@SearchTextHash", searchTextHash);
+            var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            List<TenantInfo> objTenants = _dbHelper.ConvertDataTable<TenantInfo>(dt);
+            return objTenants;
         }
     }
 }

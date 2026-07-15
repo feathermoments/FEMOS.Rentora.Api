@@ -41,6 +41,7 @@ namespace FEMOS.Rentora.Application
             services.AddScoped<ITenantService, TenantService>();
             services.AddScoped<IVisitorService, VisitorService>();
             services.AddScoped<IUnitService, UnitService>();
+            services.AddScoped<IRentService, RentService>();
 
             return services;
         }

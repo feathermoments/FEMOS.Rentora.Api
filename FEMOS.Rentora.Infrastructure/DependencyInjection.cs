@@ -33,6 +33,7 @@ namespace FEMOS.Rentora.Infrastructure
             services.AddScoped<IUnitRepository, UnitRepository>();
             services.AddScoped<ITenantRepository, TenantRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IRentRepository, RentRepository>();
             return services;
         }
     }

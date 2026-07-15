@@ -18,8 +18,8 @@ namespace FEMOS.Rentora.Domain.Entities
         public decimal SecurityDeposit { get; set; }
         public decimal MaintenanceAmount { get; set; }
         public DateTime MoveInDate { get; set; }
-        public DateTime ExpectedMoveOutDate { get; set; }
-        public DateTime ActualMoveOutDate { get; set; }
+        public DateTime? ExpectedMoveOutDate { get; set; } = DateTime.MinValue;
+        public DateTime? ActualMoveOutDate { get; set; } = DateTime.MinValue;
         public int TenantStatusId { get; set; }
         public bool IsPrimaryTenant { get; set; }
         public bool IsActive { get; set; }

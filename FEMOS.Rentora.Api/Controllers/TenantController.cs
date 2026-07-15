@@ -76,30 +76,16 @@ namespace FEMOS.Rentora.Api.Controllers
             return Ok(propertyTenantAssignments);
         }
 
-        [HttpPost("save-rent-agreement")]
-        public async Task<IActionResult> SaveRentAgreement(RentAgreementRequestInfo objRequestInfo)
+        
+        [HttpGet("search-tenant/{searchText}")]
+        public async Task<IActionResult> SearchTenant(string searchText)
         {
-            if (objRequestInfo == null)
-            {
-                throw new ArgumentNullException(nameof(objRequestInfo));
-            }
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
-            objRequestInfo.UserPublicId = userPublicId;
-            var result = await _tenantService.SaveRentAgreementAsync(objRequestInfo);
-            return Ok(result);
+            var tenants = await _tenantService.SearchTenantAsync(userPublicId, searchText);
+            return Ok(tenants);
         }
-
-        //[HttpGet("rent-agreement/{propertyId}/{tenantId}")]
-        //public async Task<IActionResult> GetRentAgreement(int propertyId, int tenant, int propertyUnitId)
-        //{
-        //    var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
-        //    if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
-        //        return Unauthorized();
-        //    var rentAgreement = await _tenantService.GetRentAgreementAsync(userPublicId, propertyId, tenant, propertyUnitId);
-        //    return Ok(rentAgreement);
-        //}
 
     }
 }

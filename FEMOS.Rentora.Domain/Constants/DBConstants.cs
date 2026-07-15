@@ -47,6 +47,7 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string sp_SaveTenantAssignment = "dbo.sp_SaveTenantAssignment";
         public const string usp_SaveRentAgreement = "dbo.usp_SaveRentAgreement";
         public const string usp_GetTenantAssignment = "dbo.usp_GetTenantAssignment";
+        public const string usp_SearchTenant = "dbo.usp_SearchTenant";
 
         // Notification
         public const string sp_SaveUserToken = "dbo.sp_SaveUserToken";
