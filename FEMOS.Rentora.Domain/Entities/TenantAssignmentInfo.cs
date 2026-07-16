@@ -20,7 +20,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public DateTime MoveInDate { get; set; }
         public DateTime? ExpectedMoveOutDate { get; set; } = DateTime.MinValue;
         public DateTime? ActualMoveOutDate { get; set; } = DateTime.MinValue;
-        public int TenantStatusId { get; set; }
+        public int TenantAssignmentStatusId { get; set; }
         public bool IsPrimaryTenant { get; set; }
         public bool IsActive { get; set; }
     }

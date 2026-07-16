@@ -129,12 +129,12 @@ namespace FEMOS.Rentora.Application.Services
             };
         }
 
-        public async Task<TenantStatusTypeResponseInfo> GetTenantStatusTypesAsync()
+        public async Task<TenantAssignmentStatusTypeResponseInfo> GetTenantAssignmentStatusTypesAsync()
         {
-            List<TenantStatusTypeInfo> objTenantStatusTypes = await _masterRepository.GetTenantStatusTypesAsync();
-            return new TenantStatusTypeResponseInfo
+            List<TenantAssignmentStatusTypeInfo> objTenantAssignmentStatusTypes = await _masterRepository.GetTenantAssignmentStatusTypesAsync();
+            return new TenantAssignmentStatusTypeResponseInfo
             {
-                objTenantStatusTypes = objTenantStatusTypes,
+                objTenantAssignmentStatusTypes = objTenantAssignmentStatusTypes,
                 Status = StatusConstants.Success,
                 Message = "Tenant status types retrieved successfully."
             };

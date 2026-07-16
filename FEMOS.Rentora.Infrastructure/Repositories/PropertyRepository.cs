@@ -82,7 +82,6 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@PropertyCode",       (object?)objRequestInfo.objUserPropertyInfo.PropertyCode ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@PropertyName",       objRequestInfo.objUserPropertyInfo.PropertyName);
             cmd.Parameters.AddWithValue("@PropertyTypeId",     objRequestInfo.objUserPropertyInfo.PropertyTypeId);
-            cmd.Parameters.AddWithValue("@PropertyStatusId",   objRequestInfo.objUserPropertyInfo.PropertyStatusId);
             cmd.Parameters.AddWithValue("@Description",        (object?)objRequestInfo.objUserPropertyInfo.Description ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@AddressLine1",       objRequestInfo.objUserPropertyInfo.AddressLine1);
             cmd.Parameters.AddWithValue("@AddressLine2",       (object?)objRequestInfo.objUserPropertyInfo.AddressLine2 ?? DBNull.Value);

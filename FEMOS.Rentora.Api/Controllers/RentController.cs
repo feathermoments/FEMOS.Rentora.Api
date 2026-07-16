@@ -30,15 +30,15 @@ namespace FEMOS.Rentora.Api.Controllers
             return Ok(result);
         }
 
-        //[HttpGet("rent-agreement/{propertyId}/{tenantId}")]
-        //public async Task<IActionResult> GetRentAgreement(int propertyId, int tenant, int propertyUnitId)
-        //{
-        //    var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
-        //    if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
-        //        return Unauthorized();
-        //    var rentAgreement = await _tenantService.GetRentAgreementAsync(userPublicId, propertyId, tenant, propertyUnitId);
-        //    return Ok(rentAgreement);
-        //}
+        [HttpGet("agreement-details/{tenantAssignmentId}")]
+        public async Task<IActionResult> GetRentAgreement(long tenantAssignmentId)
+        {
+            var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
+            if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
+                return Unauthorized();
+            var rentAgreement = await _rentService.GetRentAgreementAsync(userPublicId, tenantAssignmentId);
+            return Ok(rentAgreement);
+        }
 
     }
 }

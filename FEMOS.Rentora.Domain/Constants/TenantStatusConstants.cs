@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FEMOS.Rentora.Domain.Constants
 {
-    public static class TenantStatusConstants
+    public static class TenantAssignmentStatusConstants
     {
         public const string Pending = "Pending";
 

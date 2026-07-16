@@ -1,4 +1,5 @@
 ﻿using FEMOS.Rentora.Domain.Constants;
+using FEMOS.Rentora.Domain.Entities;
 using FEMOS.Rentora.Domain.Requests;
 using FEMOS.Rentora.Domain.Responses;
 using FEMOS.Rentora.Infrastructure.Interfaces;
@@ -20,6 +21,22 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             _dbHelper = dbHelper;
         }
 
+        public async Task<RentAgreementInfo> GetRentAgreementAsync(Guid userPublicId, long TenantAssignmentId)
+        {
+            var cmd = new SqlCommand(DBConstants.usp_GetRentAgreement);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@TenantAssignmentId", TenantAssignmentId);
+            var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            List<RentAgreementInfo> objRentAgreements = _dbHelper.ConvertDataTable<RentAgreementInfo>(dt);
+            if (objRentAgreements == null || objRentAgreements.Count == 0)
+            {
+                return null;
+            }
+            else
+                return objRentAgreements[0];
+        }
+
         public async Task<RentAgreementResponseInfo> SaveRentAgreementAsync(RentAgreementRequestInfo objRequestInfo)
         {
             var cmd = new SqlCommand(DBConstants.usp_SaveRentAgreement);
@@ -31,9 +48,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             };
             cmd.Parameters.Add(rentAgreementIdParam);
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
-            cmd.Parameters.AddWithValue("@PropertyId", objRequestInfo.objRentAgreementInfo.PropertyId);
-            cmd.Parameters.AddWithValue("@UnitId", objRequestInfo.objRentAgreementInfo.UnitId);
-            cmd.Parameters.AddWithValue("@TenantId", objRequestInfo.objRentAgreementInfo.TenantId);
+            cmd.Parameters.AddWithValue("@TenantAssignmentId", objRequestInfo.objRentAgreementInfo.TenantAssignmentId);
             cmd.Parameters.AddWithValue("@AgreementNumber", objRequestInfo.objRentAgreementInfo.AgreementNumber);
             cmd.Parameters.AddWithValue("@StartDate", objRequestInfo.objRentAgreementInfo.StartDate);
             cmd.Parameters.AddWithValue("@EndDate", objRequestInfo.objRentAgreementInfo.EndDate);

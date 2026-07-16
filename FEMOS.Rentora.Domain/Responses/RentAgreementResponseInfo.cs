@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FEMOS.Rentora.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace FEMOS.Rentora.Domain.Responses
     public class RentAgreementResponseInfo : BaseResponseInfo
     {
         public long? RentAgreementId { get; set; }
+        public RentAgreementInfo objRentAgreementInfo { get; set; }
     }
 }
     

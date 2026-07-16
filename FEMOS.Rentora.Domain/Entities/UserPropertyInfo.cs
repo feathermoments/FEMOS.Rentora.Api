@@ -5,32 +5,31 @@ namespace FEMOS.Rentora.Domain.Entities
     public class UserPropertyInfo
     {
         // Primary
-        public long? PropertyId { get; set; }
+        public long PropertyId { get; set; }
         public long OwnerUserId { get; set; }
-        public string? PropertyCode { get; set; }
+        public string PropertyCode { get; set; }
         public string PropertyName { get; set; } = string.Empty;
-        public short PropertyTypeId { get; set; }
-        public short PropertyStatusId { get; set; } = 1;
+        public int PropertyTypeId { get; set; }
 
         // Description and Address
-        public string? Description { get; set; }
+        public string Description { get; set; }
         public string AddressLine1 { get; set; } = string.Empty;
-        public string? AddressLine2 { get; set; }
-        public string? Landmark { get; set; }
+        public string AddressLine2 { get; set; }
+        public string Landmark { get; set; }
 
         // Location Details
-        public long? CityId { get; set; }
-        public long? StateId { get; set; }
-        public long? CountryId { get; set; }
-        public string? Pincode { get; set; }
-        public decimal? Latitude { get; set; }
-        public decimal? Longitude { get; set; }
+        public long CityId { get; set; }
+        public long StateId { get; set; }
+        public long CountryId { get; set; }
+        public string Pincode { get; set; } = string.Empty;
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
 
         // Property Specifications
-        public int? TotalFloors { get; set; }
-        public int? TotalUnits { get; set; }
-        public int? TotalParkingSlots { get; set; }
-        public short? BuiltYear { get; set; }
+        public int TotalFloors { get; set; }
+        public int TotalUnits { get; set; }
+        public int TotalParkingSlots { get; set; }
+        public short BuiltYear { get; set; }
 
         // Flags
         public bool IsVerified { get; set; } = false;

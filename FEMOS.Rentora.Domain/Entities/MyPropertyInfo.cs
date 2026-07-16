@@ -10,6 +10,7 @@ namespace FEMOS.Rentora.Domain.Entities
     {
         public int PropertyId { get; set; }
         public string PropertyName { get; set; } = string.Empty;
+        public int PropertyTypeId { get; set; }
         public string PropertyType { get; set; } = string.Empty;
         public string City { get; set; } = string.Empty;
         public string State { get; set; } = string.Empty;

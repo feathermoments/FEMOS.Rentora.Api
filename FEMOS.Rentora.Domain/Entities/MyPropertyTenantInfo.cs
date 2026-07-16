@@ -19,10 +19,12 @@ namespace FEMOS.Rentora.Domain.Entities
         public decimal MonthlyRent { get; set; }
         public DateTime AgreementStartDate { get; set; }
         public DateTime AgreementEndDate { get; set; }
+        public int AgreementStatusId { get; set; }
+        public string AgreementStatus { get; set; } = string.Empty;
         public DateTime MoveInDate { get; set; }
         public DateTime MoveOutDate { get; set; }
-        public int TenantStatusId { get; set; }
-        public string TenantStatus { get; set; } = string.Empty;
+        public int TenantAssignmentStatusId { get; set; }
+        public string TenantAssignmentStatus { get; set; } = string.Empty;
         public bool IsPrimaryTenant { get; set; }
     }
 }

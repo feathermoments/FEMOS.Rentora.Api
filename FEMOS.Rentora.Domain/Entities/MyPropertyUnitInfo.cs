@@ -10,7 +10,7 @@ namespace FEMOS.Rentora.Domain.Entities
     {
         public long UnitId { get; set; }
         public long PropertyId { get; set; }
-        public long UnitNumber { get; set; }
+        public string UnitNumber { get; set; } = string.Empty;
         public long TenantId { get; set; }
         public string FullName { get; set; } = String.Empty;
         public int FloorNo { get; set; }

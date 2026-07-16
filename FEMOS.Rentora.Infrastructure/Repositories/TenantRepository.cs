@@ -110,7 +110,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@MoveInDate", objRequestInfo.objTenantAssignmentInfo.MoveInDate);
             cmd.Parameters.AddWithValue("@ExpectedMoveOutDate", objRequestInfo.objTenantAssignmentInfo.ExpectedMoveOutDate?.Year > 1900 ? objRequestInfo.objTenantAssignmentInfo.ExpectedMoveOutDate : DBNull.Value);
             cmd.Parameters.AddWithValue("@ActualMoveOutDate", objRequestInfo.objTenantAssignmentInfo.ActualMoveOutDate?.Year > 1900 ? objRequestInfo.objTenantAssignmentInfo.ActualMoveOutDate : DBNull.Value);
-            cmd.Parameters.AddWithValue("@TenantStatusId", objRequestInfo.objTenantAssignmentInfo.TenantStatusId);
+            cmd.Parameters.AddWithValue("@TenantAssignmentStatusId", objRequestInfo.objTenantAssignmentInfo.TenantAssignmentStatusId);
             cmd.Parameters.AddWithValue("@IsPrimaryTenant", objRequestInfo.objTenantAssignmentInfo.IsPrimaryTenant);
             cmd.Parameters.AddWithValue("@IsActive", objRequestInfo.objTenantAssignmentInfo.IsActive);
 

@@ -85,10 +85,10 @@ namespace FEMOS.Rentora.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("getTenantStatusTypes")]
-        public async Task<IActionResult> GetTenantStatusTypes()
+        [HttpGet("getTenantAssignmentStatusTypes")]
+        public async Task<IActionResult> GetTenantAssignmentStatusTypes()
         {
-            var result = await _masterService.GetTenantStatusTypesAsync();
+            var result = await _masterService.GetTenantAssignmentStatusTypesAsync();
             return Ok(result);
         }
     }
