@@ -21,6 +21,23 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             _dbHelper = dbHelper;
         }
 
+        public async Task<BaseResponseInfo> DeleteRentAgreementAsync(Guid userPublicId, long RentAgreementId, long TenantAssignmentId)
+        {
+            var cmd = new SqlCommand(DBConstants.usp_DeleteRentAgreement);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@RentAgreementId", RentAgreementId);
+            cmd.Parameters.AddWithValue("@TenantAssignmentId", TenantAssignmentId);
+            var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            var dbResponse = await _dbHelper.GetDBResponse(result);
+            BaseResponseInfo baseResponseInfo = new BaseResponseInfo()
+            {
+                Status = dbResponse.Status,
+                Message = dbResponse.Message
+            };
+            return baseResponseInfo;
+        }
+
         public async Task<RentAgreementInfo> GetRentAgreementAsync(Guid userPublicId, long TenantAssignmentId)
         {
             var cmd = new SqlCommand(DBConstants.usp_GetRentAgreement);

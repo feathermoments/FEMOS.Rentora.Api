@@ -17,5 +17,7 @@ namespace FEMOS.Rentora.Application.Interfaces
         Task<PropertyTenantAssignmentResponseInfo> SavePropertyTenantAssignmentAsync(PropertyTenantAssignmentRequestInfo objRequestInfo);
         Task<PropertyTenantAssignmentResponseInfo> GetTenantAssignmentDetailsAsync(Guid userPublicId, long propertyId, long tenantId, long tenantAssignmentId);
         Task<TenantResponseInfo> SearchTenantAsync(Guid userPublicId, string searchText);
+        Task<BaseResponseInfo> DeletePropertyTenantAsync(Guid userPublicId, long propertyId, long tenantId);
+        Task<BaseResponseInfo> DeleteTenantAssignmentAsync(Guid userPublicId, long propertyId, long tenantAssignmentId);
     }
 }

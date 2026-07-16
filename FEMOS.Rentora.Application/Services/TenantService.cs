@@ -159,5 +159,15 @@ namespace FEMOS.Rentora.Application.Services
             }
             return objResponseInfo;
         }
+
+        public async Task<BaseResponseInfo> DeletePropertyTenantAsync(Guid userPublicId, long propertyId, long tenantId)
+        {
+            return await _tenantRepository.DeletePropertyTenantAsync(userPublicId, propertyId, tenantId);
+        }
+
+        public async Task<BaseResponseInfo> DeleteTenantAssignmentAsync(Guid userPublicId, long propertyId, long tenantAssignmentId)
+        {
+            return await _tenantRepository.DeleteTenantAssignmentAsync(userPublicId, propertyId, tenantAssignmentId);
+        }
     }
 }

@@ -87,5 +87,24 @@ namespace FEMOS.Rentora.Api.Controllers
             return Ok(tenants);
         }
 
+        [HttpDelete("delete-property-tenant/{propertyId}/{tenantId}")]
+        public async Task<IActionResult> DeletePropertyTenant(long propertyId, long tenantId)
+        {
+            var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
+            if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
+                return Unauthorized();
+            var result = await _tenantService.DeletePropertyTenantAsync(userPublicId, propertyId, tenantId);
+            return Ok(result);
+        }
+
+        [HttpDelete("delete-tenant-assignment/{propertyId}/{tenantAssignmentId}")]
+        public async Task<IActionResult> DeleteTenantAssignment(long propertyId, long tenantAssignmentId)
+        {
+            var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
+            if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
+                return Unauthorized();
+            var result = await _tenantService.DeleteTenantAssignmentAsync(userPublicId, propertyId, tenantAssignmentId);
+            return Ok(result);
+        }
     }
 }

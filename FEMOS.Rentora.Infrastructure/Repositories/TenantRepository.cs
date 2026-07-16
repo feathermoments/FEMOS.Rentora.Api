@@ -158,5 +158,39 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             List<TenantInfo> objTenants = _dbHelper.ConvertDataTable<TenantInfo>(dt);
             return objTenants;
         }
+
+        public async Task<BaseResponseInfo> DeletePropertyTenantAsync(Guid userPublicId, long propertyId, long tenantId)
+        {
+            var cmd = new SqlCommand(DBConstants.usp_DeletePropertyTenant);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@TenantId", tenantId);
+            var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            var dbResponse = await _dbHelper.GetDBResponse(result);
+            BaseResponseInfo baseResponseInfo = new BaseResponseInfo()
+            {
+                Status = dbResponse.Status,
+                Message = dbResponse.Message
+            };
+            return baseResponseInfo;
+        }
+
+        public async Task<BaseResponseInfo> DeleteTenantAssignmentAsync(Guid userPublicId, long propertyId, long tenantAssignmentId)
+        {
+            var cmd = new SqlCommand(DBConstants.usp_DeleteTenantAssignment);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@TenantAssignmentId", tenantAssignmentId);
+            var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            var dbResponse = await _dbHelper.GetDBResponse(result);
+            BaseResponseInfo baseResponseInfo = new BaseResponseInfo()
+            {
+                Status = dbResponse.Status,
+                Message = dbResponse.Message
+            };
+            return baseResponseInfo;
+        }
     }
 }

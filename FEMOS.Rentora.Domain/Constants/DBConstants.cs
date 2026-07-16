@@ -47,6 +47,8 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string sp_SaveTenantAssignment = "dbo.sp_SaveTenantAssignment";
         public const string usp_GetTenantAssignment = "dbo.usp_GetTenantAssignment";
         public const string usp_SearchTenant = "dbo.usp_SearchTenant";
+        public const string usp_DeletePropertyTenant = "dbo.usp_DeletePropertyTenant";
+        public const string usp_DeleteTenantAssignment = "dbo.usp_DeleteTenantAssignment";
 
         // Notification
         public const string sp_SaveUserToken = "dbo.sp_SaveUserToken";
@@ -69,5 +71,6 @@ namespace FEMOS.Rentora.Domain.Constants
         // Rent
         public const string usp_SaveRentAgreement = "dbo.usp_SaveRentAgreement";
         public const string usp_GetRentAgreement = "dbo.usp_GetRentAgreement";
+        public const string usp_DeleteRentAgreement = "dbo.usp_DeleteRentAgreement";
     }
 }

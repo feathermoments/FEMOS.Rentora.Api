@@ -20,6 +20,11 @@ namespace FEMOS.Rentora.Application.Services
             _rentRepository = rentRepository;
         }
 
+        public async Task<BaseResponseInfo> DeleteRentAgreementAsync(Guid userPublicId, long RentAgreementId, long TenantAssignmentId)
+        {
+            return await _rentRepository.DeleteRentAgreementAsync(userPublicId, RentAgreementId, TenantAssignmentId);
+        }
+
         public async Task<RentAgreementResponseInfo> GetRentAgreementAsync(Guid userPublicId, long TenantAssignmentId)
         {
             RentAgreementResponseInfo objResponseInfo = new RentAgreementResponseInfo();
