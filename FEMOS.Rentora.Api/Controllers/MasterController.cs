@@ -43,6 +43,13 @@ namespace FEMOS.Rentora.Api.Controllers
 
         }
 
+        [HttpGet("getUnitTypesByPropertyType/{propertyTypeId}")]
+        public async Task<IActionResult> GetUnitTypesByPropertyType(int propertyTypeId)
+        {
+            var result = await _masterService.GetUnitTypeByPropertyTypeAsync(propertyTypeId);
+            return Ok(result);
+        }
+
         [HttpGet("getUnitTypes")]
         public async Task<IActionResult> GetUnitTypes()
         {

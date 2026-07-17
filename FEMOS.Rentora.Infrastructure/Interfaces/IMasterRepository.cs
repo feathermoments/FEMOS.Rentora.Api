@@ -14,7 +14,7 @@ namespace FEMOS.Rentora.Infrastructure.Interfaces
         Task<List<CountryInfo>> GetCountries();
         Task<List<StateInfo>> GetStatesByCountryId(int countryId);
         Task<List<CityInfo>> GetCitiesByStateId(int stateId);
-
+        Task<List<UnitTypeInfo>> GetUnitTypeByPropertyTypeAsync(int propertyTypeId);
         Task<List<UnitTypeInfo>> GetUnitTypesAsync();
         Task<List<BhkTypeInfo>> GetBHKTypesAsync();
         Task<List<FurnishingTypeInfo>> GetFurnishingTypesAsync();

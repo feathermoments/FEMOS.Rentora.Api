@@ -41,6 +41,17 @@ namespace FEMOS.Rentora.Application.Services
             };
         }
 
+        public async Task<UnitTypeResponseInfo> GetUnitTypeByPropertyTypeAsync(int propertyTypeId)
+        {
+            List<UnitTypeInfo> objUnitTypes = await _masterRepository.GetUnitTypeByPropertyTypeAsync(propertyTypeId);
+            return new UnitTypeResponseInfo
+            {
+                objUnitTypes = objUnitTypes,
+                Status = StatusConstants.Success,
+                Message = "Unit types retrieved successfully."
+            };
+        }
+
         public async Task<CountryResponseInfo> GetCountries()
         {
             List<CountryInfo> objCountries = await _masterRepository.GetCountries();

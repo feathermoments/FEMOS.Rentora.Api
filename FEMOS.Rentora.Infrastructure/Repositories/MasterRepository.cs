@@ -39,6 +39,15 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             return _dbHelper.ConvertDataTable<StateInfo>(dt);
         }
 
+        public async Task<List<UnitTypeInfo>> GetUnitTypeByPropertyTypeAsync(int propertyTypeId)
+        {
+            var cmd = new SqlCommand(DBConstants.sp_Mst_GetUnitTypesByPropertyType);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@PropertyTypeId", propertyTypeId);
+            DataTable dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            return _dbHelper.ConvertDataTable<UnitTypeInfo>(dt);
+        }
+
         public async Task<List<CountryInfo>> GetCountries()
         {
             var cmd = new SqlCommand(DBConstants.sp_Mst_GetCountries);

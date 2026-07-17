@@ -30,24 +30,8 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
 
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
 
-            var properties = new List<MyPropertyInfo>();
-            foreach (DataRow row in dt.Rows)
-            {
-                properties.Add(new MyPropertyInfo
-                {
-                    PropertyId   = row.Table.Columns.Contains("PropertyId")   ? Convert.ToInt32(row["PropertyId"])        : 0,
-                    PropertyName = row.Table.Columns.Contains("PropertyName") ? row["PropertyName"]?.ToString() ?? string.Empty : string.Empty,
-                    PropertyType = row.Table.Columns.Contains("PropertyType") ? row["PropertyType"]?.ToString() ?? string.Empty : string.Empty,
-                    City         = row.Table.Columns.Contains("City")         ? row["City"]?.ToString()         ?? string.Empty : string.Empty,
-                    State        = row.Table.Columns.Contains("State")        ? row["State"]?.ToString()        ?? string.Empty : string.Empty,
-                    AddressLine1 = row.Table.Columns.Contains("AddressLine1") ? row["AddressLine1"]?.ToString() ?? string.Empty : string.Empty,
-                    TotalUnits   = row.Table.Columns.Contains("TotalUnits")   ? Convert.ToInt32(row["TotalUnits"])        : 0,
-                    OccupiedUnits = row.Table.Columns.Contains("OccupiedUnits") ? Convert.ToInt32(row["OccupiedUnits"])   : 0,
-                    VacantUnits  = row.Table.Columns.Contains("VacantUnits")  ? Convert.ToInt32(row["VacantUnits"])       : 0,
-                    RoleId       = row.Table.Columns.Contains("RoleId")       ? Convert.ToInt32(row["RoleId"])            : 0,
-                    UserRole = row.Table.Columns.Contains("RoleName")     ? row["RoleName"]?.ToString()     ?? string.Empty : string.Empty,
-                });
-            }
+            var properties = _dbHelper.ConvertDataTable<MyPropertyInfo>(dt);
+            
             return properties;
         }
 
