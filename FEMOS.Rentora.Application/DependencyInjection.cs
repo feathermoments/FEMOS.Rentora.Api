@@ -1,6 +1,9 @@
 ﻿using FEMOS.Rentora.Application.Identity;
 using FEMOS.Rentora.Application.Interfaces;
+using FEMOS.Rentora.Application.Interfaces.Dashboard;
 using FEMOS.Rentora.Application.Services;
+using FEMOS.Rentora.Application.Services.Factories;
+using FEMOS.Rentora.Application.Services.Widgets;
 using FEMOS.Rentora.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,6 +45,23 @@ namespace FEMOS.Rentora.Application
             services.AddScoped<IVisitorService, VisitorService>();
             services.AddScoped<IUnitService, UnitService>();
             services.AddScoped<IRentService, RentService>();
+            services.AddScoped<IMenuService, MenuService>();
+            services.AddScoped<IDashboardService, DashboardService>();
+
+            // Dashboard widgets - register all implementations
+            services.AddScoped<IDashboardWidget, PropertySummaryWidget>();
+            services.AddScoped<IDashboardWidget, RentSummaryWidget>();
+            services.AddScoped<IDashboardWidget, RecentPaymentsWidget>();
+            services.AddScoped<IDashboardWidget, OpenRequestsWidget>();
+            services.AddScoped<IDashboardWidget, UpcomingRenewalsWidget>();
+            services.AddScoped<IDashboardWidget, MyHomeWidget>();
+            services.AddScoped<IDashboardWidget, AgreementWidget>();
+            services.AddScoped<IDashboardWidget, MyRequestsWidget>();
+            services.AddScoped<IDashboardWidget, StaffSummaryWidget>();
+            services.AddScoped<IDashboardWidget, ReportSummaryWidget>();
+
+            // Dashboard widget factory
+            services.AddScoped<DashboardWidgetFactory>();
 
             return services;
         }

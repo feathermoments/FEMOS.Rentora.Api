@@ -50,6 +50,20 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                 return properties[0];
         }
 
+        public async Task<UserPropertyMemberInfo> GetUserPropertyRole(Guid userPublicId, long propertyId)
+        {
+            var cmd = new SqlCommand(DBConstants.sp_GetUserPropertyRole);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            List<UserPropertyMemberInfo> roles = _dbHelper.ConvertDataTable<UserPropertyMemberInfo>(dt);
+            if (roles == null || roles.Count == 0)
+                return null;
+            else
+                return roles[0];
+        }
+
         public async Task<UserPropertyResponseInfo> SavePropertyAsync(UserPropertyRequestInfo objRequestInfo)
         {
             var cmd = new SqlCommand(DBConstants.sp_SaveProperty);
@@ -84,7 +98,6 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@IsPublicListing",    objRequestInfo.objUserPropertyInfo.IsPublicListing);
             cmd.Parameters.AddWithValue("@AllowPreBooking",    objRequestInfo.objUserPropertyInfo.AllowPreBooking);
             cmd.Parameters.AddWithValue("@IsActive",           objRequestInfo.objUserPropertyInfo.IsActive);
-            cmd.Parameters.AddWithValue("@IsDeleted",          objRequestInfo.objUserPropertyInfo.IsDeleted);
             cmd.Parameters.AddWithValue("@UserPublicId",       objRequestInfo.UserPublicId);
 
             var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);

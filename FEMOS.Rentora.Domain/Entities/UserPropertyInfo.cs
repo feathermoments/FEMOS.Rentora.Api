@@ -36,6 +36,5 @@ namespace FEMOS.Rentora.Domain.Entities
         public bool IsPublicListing { get; set; } = false;
         public bool AllowPreBooking { get; set; } = false;
         public bool IsActive { get; set; } = true;
-        public bool IsDeleted { get; set; } = false;
     }
 }

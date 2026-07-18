@@ -33,6 +33,7 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string sp_GetMyProperties = "dbo.sp_GetMyProperties";
         public const string sp_SaveProperty = "dbo.sp_SaveProperty";
         public const string sp_GetPropertyDetails = "dbo.sp_GetPropertyDetails";
+        public const string sp_GetUserPropertyRole = "dbo.sp_GetUserPropertyRole";
 
         // Unit
         public const string USP_PropertyUnit_GetAll = "dbo.USP_PropertyUnit_GetAll";
@@ -73,5 +74,22 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string usp_SaveRentAgreement = "dbo.usp_SaveRentAgreement";
         public const string usp_GetRentAgreement = "dbo.usp_GetRentAgreement";
         public const string usp_DeleteRentAgreement = "dbo.usp_DeleteRentAgreement";
+
+        //Menu
+        public const string USP_GetUserMenus = "dbo.USP_GetUserMenus";
+        public const string USP_GetUserMenuPermissions = "dbo.USP_GetUserMenuPermissions";
+
+        // Dashboard
+        public const string USP_Dashboard_GetWidgetsByRole = "dbo.USP_Dashboard_GetWidgetsByRole";
+        public const string USP_Dashboard_PropertySummary = "dbo.USP_Dashboard_PropertySummary";
+        public const string USP_Dashboard_RentSummary = "dbo.USP_Dashboard_RentSummary";
+        public const string USP_Dashboard_RecentPayments = "dbo.USP_Dashboard_RecentPayments";
+        public const string USP_Dashboard_OpenRequests = "dbo.USP_Dashboard_OpenRequests";
+        public const string USP_Dashboard_UpcomingRenewals = "dbo.USP_Dashboard_UpcomingRenewals";
+        public const string USP_Dashboard_MyHome = "dbo.USP_Dashboard_MyHome";
+        public const string USP_Dashboard_Agreement = "dbo.USP_Dashboard_Agreement";
+        public const string USP_Dashboard_MyRequests = "dbo.USP_Dashboard_MyRequests";
+        public const string USP_Dashboard_StaffSummary = "dbo.USP_Dashboard_StaffSummary";
+        public const string USP_Dashboard_ReportSummary = "dbo.USP_Dashboard_ReportSummary";
     }
 }
