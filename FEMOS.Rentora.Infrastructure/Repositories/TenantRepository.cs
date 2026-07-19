@@ -60,7 +60,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.Add(tenantIdParam);
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
             cmd.Parameters.AddWithValue("@PropertyId", objRequestInfo.objPropertyTenantInfo.PropertyId);
-            cmd.Parameters.AddWithValue("@PropertyUnitId", objRequestInfo.objPropertyTenantInfo.PropertyUnitId);
+            cmd.Parameters.AddWithValue("@UnitId", objRequestInfo.objPropertyTenantInfo.UnitId);
             cmd.Parameters.AddWithValue("@TenantUserId", objRequestInfo.objPropertyTenantInfo.TenantUserId);
             cmd.Parameters.AddWithValue("@TenantCode", objRequestInfo.objPropertyTenantInfo.TenantCode);
             cmd.Parameters.AddWithValue("@FullName", objRequestInfo.objPropertyTenantInfo.FullName);
@@ -105,7 +105,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.Add(tenantAssignmentIdParam);
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
             cmd.Parameters.AddWithValue("@PropertyId", objRequestInfo.objTenantAssignmentInfo.PropertyId);
-            cmd.Parameters.AddWithValue("@PropertyUnitId", objRequestInfo.objTenantAssignmentInfo.PropertyUnitId);
+            cmd.Parameters.AddWithValue("@UnitId", objRequestInfo.objTenantAssignmentInfo.UnitId);
             cmd.Parameters.AddWithValue("@TenantId", objRequestInfo.objTenantAssignmentInfo.TenantId);
             cmd.Parameters.AddWithValue("@MoveInDate", objRequestInfo.objTenantAssignmentInfo.MoveInDate);
             cmd.Parameters.AddWithValue("@ExpectedMoveOutDate", objRequestInfo.objTenantAssignmentInfo.ExpectedMoveOutDate?.Year > 1900 ? objRequestInfo.objTenantAssignmentInfo.ExpectedMoveOutDate : DBNull.Value);
