@@ -48,7 +48,7 @@ namespace FEMOS.Rentora.Infrastructure.Interfaces
         /// <summary>
         /// Retrieves agreement data.
         /// </summary>
-        Task<AgreementInfo> GetAgreementAsync(long propertyId, Guid userPublicId);
+        Task<MyAgreementInfo> GetAgreementAsync(long propertyId, Guid userPublicId);
 
         /// <summary>
         /// Retrieves my requests data.

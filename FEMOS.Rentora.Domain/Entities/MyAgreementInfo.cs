@@ -1,6 +1,6 @@
 namespace FEMOS.Rentora.Domain.Entities
 {
-    public class AgreementInfo
+    public class MyAgreementInfo
     {
         public long RentAgreementId { get; set; }
         public string AgreementNumber { get; set; }
@@ -11,6 +11,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public decimal MonthlyRent { get; set; }
         public decimal SecurityDeposit { get; set; }
         public int NoticePeriodDays { get; set; }
+        public int LockInPeriodDays { get; set; }
         public int RentDueDay { get; set; }
         public string AgreementHealth { get; set; }
         public bool CanRenew { get; set; }

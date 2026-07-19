@@ -18,5 +18,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public decimal SecurityDeposit { get; set; }
         public string FullName { get; set; }
         public DateTime OccupancySince { get; set; }
+
+        public PropertyMemberInfo objOwnerInfo { get; set; }
     }
 }

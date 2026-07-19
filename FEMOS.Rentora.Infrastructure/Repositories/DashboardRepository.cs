@@ -139,11 +139,16 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@PropertyId", propertyId);
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
 
-            var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
-            var data = _dbHelper.ConvertDataTable<MyHomeInfo>(dt);
+            var ds = await _dbHelper.GetDataSetBySQLCommandAsync(cmd);
+            var data = _dbHelper.ConvertDataTable<MyHomeInfo>(ds.Tables[0]);
             if (data != null && data.Any())
             {
-                return data.FirstOrDefault();
+                var myHomeInfo = data.FirstOrDefault();
+                if (ds.Tables.Count > 1 && ds.Tables[1].Rows.Count > 0)
+                {
+                    myHomeInfo.objOwnerInfo = _dbHelper.ConvertDataTable<PropertyMemberInfo>(ds.Tables[1]).FirstOrDefault();
+                }
+                return myHomeInfo;
             }
             else
             {
@@ -151,7 +156,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             }
         }
 
-        public async Task<AgreementInfo> GetAgreementAsync(long propertyId, Guid userPublicId)
+        public async Task<MyAgreementInfo> GetAgreementAsync(long propertyId, Guid userPublicId)
         {
             var cmd = new SqlCommand(DBConstants.USP_Dashboard_Agreement);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -159,7 +164,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
 
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
-            var data = _dbHelper.ConvertDataTable<AgreementInfo>(dt);
+            var data = _dbHelper.ConvertDataTable<MyAgreementInfo>(dt);
             if (data != null && data.Any())
             {
                 return data.FirstOrDefault();
