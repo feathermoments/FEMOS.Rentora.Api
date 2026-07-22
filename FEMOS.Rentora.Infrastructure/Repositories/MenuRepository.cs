@@ -26,7 +26,14 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@UserPublicId", UserPublicId);
             cmd.Parameters.AddWithValue("@PropertyId", PropertyId);
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
-            return _dbHelper.ConvertDataTable<MenuInfo>(dt);
+            List<MenuInfo> menuList = _dbHelper.ConvertDataTable<MenuInfo>(dt);
+            List<MenuInfo> parentMenus = menuList.Where(m => m.IsBottomMenu).ToList();
+            parentMenus.AddRange(menuList.Where(m => m.ParentMenuId == 0 && !m.IsBottomMenu).ToList());
+            foreach (var parentMenu in parentMenus.Where(x => !x.IsBottomMenu))
+            {
+                parentMenu.objSubMenus = menuList.Where(m => m.ParentMenuId == parentMenu.MenuId).ToList();
+            }
+            return parentMenus;
         }
 
         public async Task<List<MenuPermissionInfo>> GetUserMenuPermissionsAsync(Guid UserPublicId, long PropertyId)
