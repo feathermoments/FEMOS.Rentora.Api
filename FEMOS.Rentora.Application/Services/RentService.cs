@@ -15,9 +15,11 @@ namespace FEMOS.Rentora.Application.Services
     internal class RentService : IRentService
     {
         private readonly IRentRepository _rentRepository;
-        public RentService(IRentRepository rentRepository)
+        private readonly IEncryptDecryptService _encryptDecryptService;
+        public RentService(IRentRepository rentRepository, IEncryptDecryptService encryptDecryptService)
         {
             _rentRepository = rentRepository;
+            _encryptDecryptService = encryptDecryptService;
         }
 
         public async Task<BaseResponseInfo> DeleteRentAgreementAsync(Guid userPublicId, long RentAgreementId, long TenantAssignmentId)
@@ -52,6 +54,27 @@ namespace FEMOS.Rentora.Application.Services
         public async Task<RentAgreementResponseInfo> SaveRentAgreementAsync(RentAgreementRequestInfo objRequestInfo)
         {
             return await _rentRepository.SaveRentAgreementAsync(objRequestInfo);
+        }
+
+        public async Task<FilterRentInvoiceResponseInfo> GetRentInvoicesAsync(FilterRentInvoiceRequestInfo objRequestInfo)
+        {
+            return await _rentRepository.GetRentInvoicesAsync(objRequestInfo);
+        }
+
+        public async Task<RentInvoiceResponseInfo> GetRentInvoiceDetailsAsync(Guid userPublicId, long propertyId, long rentInvoiceId)
+        {
+            RentInvoiceResponseInfo objResponseInfo = await _rentRepository.GetRentInvoiceDetailsAsync(userPublicId, propertyId, rentInvoiceId);
+            if(objResponseInfo.objPropertyOwnerInfo != null)
+            {
+                objResponseInfo.objPropertyOwnerInfo.MobileNumber = _encryptDecryptService.Decrypt(objResponseInfo.objPropertyOwnerInfo.MobileNumber);
+                objResponseInfo.objPropertyOwnerInfo.EmailAddress = _encryptDecryptService.Decrypt(objResponseInfo.objPropertyOwnerInfo.EmailAddress);
+            }
+            if (objResponseInfo.objPropertyTenantInfo != null)
+            {
+                objResponseInfo.objPropertyTenantInfo.MobileNumber = _encryptDecryptService.Decrypt(objResponseInfo.objPropertyTenantInfo.MobileNumber);
+                objResponseInfo.objPropertyTenantInfo.EmailAddress = _encryptDecryptService.Decrypt(objResponseInfo.objPropertyTenantInfo.EmailAddress);
+            }
+            return objResponseInfo;
         }
     }
 }

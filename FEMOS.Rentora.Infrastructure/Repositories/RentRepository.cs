@@ -16,8 +16,8 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
     internal class RentRepository : IRentRepository
     {
         private readonly IDBHelper _dbHelper;
-        public RentRepository(IDBHelper dbHelper) 
-        { 
+        public RentRepository(IDBHelper dbHelper)
+        {
             _dbHelper = dbHelper;
         }
 
@@ -91,6 +91,72 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                 Message = dbResponse.Message,
                 RentAgreementId = rentAgreementId
             };
+        }
+
+        public async Task<FilterRentInvoiceResponseInfo> GetRentInvoicesAsync(FilterRentInvoiceRequestInfo objRequestInfo)
+        {
+            var cmd = new SqlCommand(DBConstants.USP_RentInvoice_List);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
+            cmd.Parameters.AddWithValue("@PropertyId", objRequestInfo.objFilterInfo.PropertyId);
+            cmd.Parameters.AddWithValue("@UnitId", (object?)objRequestInfo.objFilterInfo.UnitId ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@TenantAssignmentId", (object?)objRequestInfo.objFilterInfo.TenantAssignmentId ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@RentAgreementId", (object?)objRequestInfo.objFilterInfo.RentAgreementId ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@InvoiceStatusId", (object?)objRequestInfo.objFilterInfo.InvoiceStatusId ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@PaymentStatusId", (object?)objRequestInfo.objFilterInfo.PaymentStatusId ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@BillingYear", (object?)objRequestInfo.objFilterInfo.BillingYear ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@BillingMonth", (object?)objRequestInfo.objFilterInfo.BillingMonth ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@FromDueDate", (object?)objRequestInfo.objFilterInfo.FromDueDate ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@ToDueDate", (object?)objRequestInfo.objFilterInfo.ToDueDate ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@OutstandingOnly", objRequestInfo.objFilterInfo.OutstandingOnly);
+            cmd.Parameters.AddWithValue("@OverDueOnly", objRequestInfo.objFilterInfo.OverDueOnly);
+            cmd.Parameters.AddWithValue("@SearchText", (object?)objRequestInfo.objFilterInfo.SearchText ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@PageNumber", objRequestInfo.objFilterInfo.PageNumber);
+            cmd.Parameters.AddWithValue("@PageSize", objRequestInfo.objFilterInfo.PageSize);
+            var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            List<RentInvoiceInfo> objRentInvoices = _dbHelper.ConvertDataTable<RentInvoiceInfo>(dt);
+            return new FilterRentInvoiceResponseInfo()
+            {
+                Status = "Success",
+                Message = "Rent invoices retrieved successfully.",
+                objRentInvoices = objRentInvoices
+            };
+        }
+
+        public async Task<RentInvoiceResponseInfo> GetRentInvoiceDetailsAsync(Guid userPublicId, long propertyId, long rentInvoiceId)
+        {
+            var cmd = new SqlCommand(DBConstants.USP_RentInvoice_GetDetails);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@RentInvoiceId", rentInvoiceId);
+            var ds = await _dbHelper.GetDataSetBySQLCommandAsync(cmd);
+            List<RentInvoiceInfo> objRentInvoices = _dbHelper.ConvertDataTable<RentInvoiceInfo>(ds.Tables[0]);
+            if (objRentInvoices != null && objRentInvoices.Count > 0)
+            {
+                RentInvoiceResponseInfo objResponseInfo = new RentInvoiceResponseInfo()
+                {
+                    objRentInvoiceInfo = objRentInvoices[0],
+                    objRentAgreementInfo = _dbHelper.ConvertDataTable<RentAgreementInfo>(ds.Tables[1])?.FirstOrDefault(),
+                    objPropertyUnitInfo = _dbHelper.ConvertDataTable<PropertyUnitInfo>(ds.Tables[2])?.FirstOrDefault(),
+                    objPropertyOwnerInfo = _dbHelper.ConvertDataTable<PropertyMemberInfo>(ds.Tables[3])?.FirstOrDefault(),
+                    objPropertyTenantInfo = _dbHelper.ConvertDataTable<PropertyMemberInfo>(ds.Tables[4])?.FirstOrDefault(),
+                    obRentPaymentInfo = _dbHelper.ConvertDataTable<RentPaymentInfo>(ds.Tables[5])?.FirstOrDefault(),
+                    objRentPaymentSummaryInfo = _dbHelper.ConvertDataTable<RentPaymentSummaryInfo>(ds.Tables[6])?.FirstOrDefault(),
+                    Status = StatusConstants.Success,
+                    Message = "Rent invoice details retrieved successfully."
+                };
+                return objResponseInfo;
+            }
+            else
+            {
+                RentInvoiceResponseInfo objResponseInfo = new RentInvoiceResponseInfo()
+                {
+                    Status = "Failed",
+                    Message = "Rent invoice not found.",
+                };
+                return objResponseInfo;
+            }
         }
     }
 }

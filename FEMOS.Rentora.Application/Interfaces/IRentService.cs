@@ -1,4 +1,5 @@
-﻿using FEMOS.Rentora.Domain.Requests;
+﻿using FEMOS.Rentora.Domain.Entities;
+using FEMOS.Rentora.Domain.Requests;
 using FEMOS.Rentora.Domain.Responses;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,8 @@ namespace FEMOS.Rentora.Application.Interfaces
         Task<RentAgreementResponseInfo> SaveRentAgreementAsync(RentAgreementRequestInfo objRequestInfo);
         Task<RentAgreementResponseInfo> GetRentAgreementAsync(Guid userPublicId, long TenantAssignmentId);
         Task<BaseResponseInfo> DeleteRentAgreementAsync(Guid userPublicId, long RentAgreementId, long TenantAssignmentId);
+        Task<FilterRentInvoiceResponseInfo> GetRentInvoicesAsync(FilterRentInvoiceRequestInfo objRequestInfo);
+
+        Task<RentInvoiceResponseInfo> GetRentInvoiceDetailsAsync(Guid userPublicId, long propertyId, long rentInvoiceId);
     }
 }

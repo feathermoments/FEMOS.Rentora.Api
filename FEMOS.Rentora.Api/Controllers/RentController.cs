@@ -1,5 +1,6 @@
 ﻿using FEMOS.Rentora.Application.Interfaces;
 using FEMOS.Rentora.Domain.Requests;
+using FEMOS.Rentora.Domain.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -50,5 +51,29 @@ namespace FEMOS.Rentora.Api.Controllers
             return Ok(result);
         }
 
+        [HttpPost("get-rent-invoices")]
+        public async Task<IActionResult> GetRentInvoices(FilterRentInvoiceRequestInfo objRequestInfo)
+        {
+            if (objRequestInfo == null)
+            {
+                throw new ArgumentNullException(nameof(objRequestInfo));
+            }
+            var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
+            if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
+                return Unauthorized();
+            objRequestInfo.UserPublicId = userPublicId;
+            var result = await _rentService.GetRentInvoicesAsync(objRequestInfo);
+            return Ok(result);
+        }
+
+        [HttpGet("get-rent-invoice-details/{propertyId}/{rentInvoiceId}")]
+        public async Task<IActionResult> GetRentInvoiceDetailsAsync(long propertyId, long rentInvoiceId)
+        {
+            var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
+            if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
+                return Unauthorized();
+            var rentAgreement = await _rentService.GetRentInvoiceDetailsAsync(userPublicId, propertyId, rentInvoiceId);
+            return Ok(rentAgreement);
+        } 
     }
 }
