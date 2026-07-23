@@ -98,5 +98,12 @@ namespace FEMOS.Rentora.Api.Controllers
             var result = await _masterService.GetTenantAssignmentStatusTypesAsync();
             return Ok(result);
         }
+
+        [HttpGet("getPaymentMethods")]
+                public async Task<IActionResult> GetPaymentMethods()
+        {
+            var result = await _masterService.GetPaymentMethodsAsync();
+            return Ok(result);
+        }
     }
 }

@@ -150,5 +150,16 @@ namespace FEMOS.Rentora.Application.Services
                 Message = "Tenant status types retrieved successfully."
             };
         }
+
+        public async Task<PaymentMethodResponseInfo> GetPaymentMethodsAsync()
+        {
+            List<PaymentMethodInfo> objPaymentMethods = await _masterRepository.GetPaymentMethodsAsync();
+            return new PaymentMethodResponseInfo
+            {
+                objPaymentMethods = objPaymentMethods,
+                Status = StatusConstants.Success,
+                Message = "Payment methods retrieved successfully."
+            };
+        }
     }
 }

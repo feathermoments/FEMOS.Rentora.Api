@@ -158,5 +158,58 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                 return objResponseInfo;
             }
         }
+
+        public async Task<RentPaymentResponseInfo> SaveRentPaymentAsync(RentPaymentRequestInfo objRequestInfo)
+        {
+            var cmd = new SqlCommand(DBConstants.USP_RentPayment_Save);
+            cmd.CommandType = CommandType.StoredProcedure;
+            var transactionGuidParam = new SqlParameter("@TransactionGuid", SqlDbType.UniqueIdentifier)
+            {
+                Direction = ParameterDirection.InputOutput,
+                Value = (object?)objRequestInfo.obRentPaymentInfo.TransactionGuid ?? DBNull.Value
+            };
+            cmd.Parameters.Add(transactionGuidParam);
+
+            DataTable tvp = new DataTable();
+            tvp.Columns.Add("RentInvoiceId", typeof(long));
+            tvp.Columns.Add("OutstandingAmount", typeof(decimal));
+            tvp.Columns.Add("PaidAmount", typeof(decimal));
+
+            foreach (var item in objRequestInfo.obRentPaymentInfo.Invoices)
+            {
+                tvp.Rows.Add(item.RentInvoiceId, item.OutstandingAmount, item.PaidAmount);
+            }
+
+            SqlParameter paymentInvoicesParam = new SqlParameter("@PaymentInvoices", SqlDbType.Structured);
+            paymentInvoicesParam.TypeName = "dbo.TVP_RentPaymentInvoice";
+            paymentInvoicesParam.Value = tvp;
+            cmd.Parameters.Add(paymentInvoicesParam);
+
+            cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
+            cmd.Parameters.AddWithValue("@PaymentAmount", objRequestInfo.obRentPaymentInfo.PaymentAmount);
+            cmd.Parameters.AddWithValue("@PaymentMethodId", objRequestInfo.obRentPaymentInfo.PaymentMethodId);
+            cmd.Parameters.AddWithValue("@PaymentDate", objRequestInfo.obRentPaymentInfo.PaymentDate);
+            cmd.Parameters.AddWithValue("@TransactionReferenceNo", objRequestInfo.obRentPaymentInfo.TransactionReferenceNo);
+            cmd.Parameters.AddWithValue("@ReferenceNumber", objRequestInfo.obRentPaymentInfo.ReferenceNumber);
+            cmd.Parameters.AddWithValue("@GatewayName", objRequestInfo.obRentPaymentInfo.GatewayName);
+            cmd.Parameters.AddWithValue("@GatewayTransactionId", objRequestInfo.obRentPaymentInfo.GatewayTransactionId);
+            cmd.Parameters.AddWithValue("@GatewayResponse", objRequestInfo.obRentPaymentInfo.GatewayResponse);
+            cmd.Parameters.AddWithValue("@IsOnlinePayment", objRequestInfo.obRentPaymentInfo.IsOnlinePayment);
+            cmd.Parameters.AddWithValue("@Remarks", objRequestInfo.obRentPaymentInfo.Remarks);
+
+            var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            var dbResponse = await _dbHelper.GetDBResponse(result);
+
+            Guid? transactionGuid = transactionGuidParam.Value != DBNull.Value
+                ? (Guid?)transactionGuidParam.Value
+                : null;
+
+            return new RentPaymentResponseInfo
+            {
+                Status = dbResponse.Status,
+                Message = dbResponse.Message,
+                TransactionGuid = transactionGuid
+            };
+        }
     }
 }

@@ -74,6 +74,21 @@ namespace FEMOS.Rentora.Api.Controllers
                 return Unauthorized();
             var rentAgreement = await _rentService.GetRentInvoiceDetailsAsync(userPublicId, propertyId, rentInvoiceId);
             return Ok(rentAgreement);
-        } 
+        }
+
+        [HttpPost("save-rent-payment")]
+        public async Task<IActionResult> SaveRentPayment(RentPaymentRequestInfo objRequestInfo)
+        {
+            if (objRequestInfo == null)
+            {
+                throw new ArgumentNullException(nameof(objRequestInfo));
+            }
+            var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
+            if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
+                return Unauthorized();
+            objRequestInfo.UserPublicId = userPublicId;
+            var result = await _rentService.SaveRentPaymentAsync(objRequestInfo);
+            return Ok(result);
+        }
     }
 }
