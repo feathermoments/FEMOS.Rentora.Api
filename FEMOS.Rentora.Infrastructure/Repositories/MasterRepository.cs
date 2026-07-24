@@ -138,5 +138,21 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             DataTable dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
             return _dbHelper.ConvertDataTable<PaymentMethodInfo>(dt);
         }
+
+        public async Task<List<BillingCycleTypeInfo>> GetBillingCycleTypesAsync()
+        {
+            var cmd = new SqlCommand(DBConstants.USP_Mst_GetBillingCycleTypes);
+            cmd.CommandType = CommandType.StoredProcedure;
+            DataTable dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            return _dbHelper.ConvertDataTable<BillingCycleTypeInfo>(dt);
+        }
+
+        public async Task<List<ProrationTypeInfo>> GetProrationTypesAsync()
+        {
+            var cmd = new SqlCommand(DBConstants.USP_Mst_GetProrationTypes);
+            cmd.CommandType = CommandType.StoredProcedure;
+            DataTable dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            return _dbHelper.ConvertDataTable<ProrationTypeInfo>(dt);
+        }
     }
 }

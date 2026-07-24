@@ -81,5 +81,15 @@ namespace FEMOS.Rentora.Application.Services
         {
             return await _rentRepository.SaveRentPaymentAsync(objRequestInfo);
         }
+
+        public async Task<FilterRentPaymentResponseInfo> GetRentPaymentsAsync(FilterRentPaymentRequestInfo objRequestInfo)
+        {
+            return await _rentRepository.GetRentPaymentsAsync(objRequestInfo);
+        }
+
+        public async Task<BaseResponseInfo> UpdateRentPaymentActionAsync(RentPaymentActionRequestInfo objRequestInfo)
+        {
+            return await _rentRepository.UpdateRentPaymentActionAsync(objRequestInfo);
+        }
     }
 }

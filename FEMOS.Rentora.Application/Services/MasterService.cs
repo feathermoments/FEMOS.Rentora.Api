@@ -161,5 +161,27 @@ namespace FEMOS.Rentora.Application.Services
                 Message = "Payment methods retrieved successfully."
             };
         }
+
+        public async Task<BillingCycleTypeResponseInfo> GetBillingCycleTypesAsync()
+        {
+            List<BillingCycleTypeInfo> objBillingCycleTypes = await _masterRepository.GetBillingCycleTypesAsync();
+            return new BillingCycleTypeResponseInfo
+            {
+                objBillingCycleTypes = objBillingCycleTypes,
+                Status = StatusConstants.Success,
+                Message = "Billing cycle types retrieved successfully."
+            };
+        }
+
+        public async Task<ProrationTypeResponseInfo> GetProrationTypesAsync()
+        {
+            List<ProrationTypeInfo> objProrationTypes = await _masterRepository.GetProrationTypesAsync();
+            return new ProrationTypeResponseInfo
+            {
+                objProrationTypes = objProrationTypes,
+                Status = StatusConstants.Success,
+                Message = "Proration types retrieved successfully."
+            };
+        }
     }
 }

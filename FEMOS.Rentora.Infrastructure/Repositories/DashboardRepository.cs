@@ -84,6 +84,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                 RecentPaymentInfo objRecentPaymentInfo = new RecentPaymentInfo()
                 {
                     TotalPayments = data.Count(),
+                    TotalAmount = data.Where(x=>x.Status == "Verified" || x.Status == "Paid" || x.Status == "Partially Paid").Sum(x=>x.Amount),
                     RecentPayments = data
                 };
                 return objRecentPaymentInfo;

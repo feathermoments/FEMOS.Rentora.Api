@@ -3,6 +3,7 @@ namespace FEMOS.Rentora.Domain.Entities
     public class RecentPaymentInfo
     {
         public int TotalPayments { get; set; }
+        public decimal TotalAmount { get; set; }
         public List<RecentPaymentDetailInfo> RecentPayments { get; set; }
     }
     public class RecentPaymentDetailInfo
@@ -14,5 +15,6 @@ namespace FEMOS.Rentora.Domain.Entities
         public DateTime PaymentDate { get; set; }
         public string PaymentMethod { get; set; }
         public string Status { get; set; }
+        public string UnitNumber { get; set; }
     }
 }

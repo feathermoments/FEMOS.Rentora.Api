@@ -100,9 +100,23 @@ namespace FEMOS.Rentora.Api.Controllers
         }
 
         [HttpGet("getPaymentMethods")]
-                public async Task<IActionResult> GetPaymentMethods()
+        public async Task<IActionResult> GetPaymentMethods()
         {
             var result = await _masterService.GetPaymentMethodsAsync();
+            return Ok(result);
+        }
+
+        [HttpGet("getProrationTypes")]
+        public async Task<IActionResult> GetProrationTypes()
+        {
+            var result = await _masterService.GetProrationTypesAsync();
+            return Ok(result);
+        }
+
+        [HttpGet("getBillingCycleTypes")]
+        public async Task<IActionResult> GetBillingCycleTypes()
+        {
+            var result = await _masterService.GetBillingCycleTypesAsync();
             return Ok(result);
         }
     }

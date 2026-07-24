@@ -40,7 +40,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
 
         public async Task<RentAgreementInfo> GetRentAgreementAsync(Guid userPublicId, long TenantAssignmentId)
         {
-            var cmd = new SqlCommand(DBConstants.usp_GetRentAgreement);
+            var cmd = new SqlCommand(DBConstants.usp_RentAgreement_Get);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
             cmd.Parameters.AddWithValue("@TenantAssignmentId", TenantAssignmentId);
@@ -56,7 +56,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
 
         public async Task<RentAgreementResponseInfo> SaveRentAgreementAsync(RentAgreementRequestInfo objRequestInfo)
         {
-            var cmd = new SqlCommand(DBConstants.usp_SaveRentAgreement);
+            var cmd = new SqlCommand(DBConstants.usp_RentAgreement_Save);
             cmd.CommandType = CommandType.StoredProcedure;
             var rentAgreementIdParam = new SqlParameter("@RentAgreementId", SqlDbType.BigInt)
             {
@@ -77,6 +77,10 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@AgreementStatusId", objRequestInfo.objRentAgreementInfo.AgreementStatusId);
             cmd.Parameters.AddWithValue("@AgreementDocumentUrl", objRequestInfo.objRentAgreementInfo.AgreementDocumentUrl);
             cmd.Parameters.AddWithValue("@IsActive", objRequestInfo.objRentAgreementInfo.IsActive);
+            cmd.Parameters.AddWithValue("@BillingCycleTypeId", objRequestInfo.objRentAgreementInfo.BillingCycleTypeId);
+            cmd.Parameters.AddWithValue("@ProrationTypeId", objRequestInfo.objRentAgreementInfo.ProrationTypeId);
+            cmd.Parameters.AddWithValue("@BillingCycleStartDay", objRequestInfo.objRentAgreementInfo.BillingCycleStartDay);
+            cmd.Parameters.AddWithValue("@PreviousRentAgreementId", objRequestInfo.objRentAgreementInfo.PreviousRentAgreementId);
 
             var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
             var dbResponse = await _dbHelper.GetDBResponse(result);
@@ -209,6 +213,45 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                 Status = dbResponse.Status,
                 Message = dbResponse.Message,
                 TransactionGuid = transactionGuid
+            };
+        }
+
+        public async Task<FilterRentPaymentResponseInfo> GetRentPaymentsAsync(FilterRentPaymentRequestInfo objRequestInfo)
+        {
+            var cmd = new SqlCommand(DBConstants.USP_RentPayment_List);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
+            cmd.Parameters.AddWithValue("@PropertyId", objRequestInfo.objFilterInfo.PropertyId);
+            cmd.Parameters.AddWithValue("@UnitId", (object?)objRequestInfo.objFilterInfo.UnitId ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@InvoiceStatusId", (object?)objRequestInfo.objFilterInfo.InvoiceStatusId ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@PaymentStatusId", (object?)objRequestInfo.objFilterInfo.PaymentStatusId ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@SearchText", (object?)objRequestInfo.objFilterInfo.SearchText ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@PageNumber", objRequestInfo.objFilterInfo.PageNumber);
+            cmd.Parameters.AddWithValue("@PageSize", objRequestInfo.objFilterInfo.PageSize);
+            var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            List<RentPaymentInfo> objRentPayments = _dbHelper.ConvertDataTable<RentPaymentInfo>(dt);
+            return new FilterRentPaymentResponseInfo()
+            {
+                Status = "Success",
+                Message = "Rent payments retrieved successfully.",
+                objRentPayments = objRentPayments
+            };
+        }
+
+        public async Task<BaseResponseInfo> UpdateRentPaymentActionAsync(RentPaymentActionRequestInfo objRequestInfo)
+        {
+            var cmd = new SqlCommand(DBConstants.USP_RentPayment_Action);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
+            cmd.Parameters.AddWithValue("@TransactionGuid", objRequestInfo.TransactionGuid);
+            cmd.Parameters.AddWithValue("@ActionTaken", objRequestInfo.ActionTaken);
+            cmd.Parameters.AddWithValue("@RentPaymentId", (object?)objRequestInfo.RentPaymentId ?? DBNull.Value);
+            var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            var dbResponse = await _dbHelper.GetDBResponse(result);
+            return new BaseResponseInfo
+            {
+                Status = dbResponse.Status,
+                Message = dbResponse.Message
             };
         }
     }

@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace FEMOS.Rentora.Domain.Entities
 {
@@ -34,6 +36,27 @@ namespace FEMOS.Rentora.Domain.Entities
         public Guid TransactionGuid { get; set; }
 
         public List<RentPaymentInvoiceInfo> Invoices { get; set; }
+
+        public int TotalRecords { get; set; }
+        public long RentInvoiceId { get; set; }
+        public long PaidByUserId { get; set; }
+        public decimal PaidAmount { get; set; }
+        public DateTime PaidOn { get; set; }
+        public string? PaymentGatewayTransactionId { get; set; }
+        public long ReceivedBy { get; set; }
+        public DateTime ReceivedOn { get; set; }
+        public DateTime ReversedOn { get; set; }
+        public long ReversedBy { get; set; }
+        public string? ReverseReason { get; set; }
+        public string? AgreementNumber { get; set; }
+        public long PropertyId { get; set; }
+        public string? PropertyName { get; set; }
+        public long UnitId { get; set; }
+        public string? UnitNumber { get; set; }
+        public long TenantAssignmentId { get; set; }
+        public long TenantId { get; set; }
+        public string? TenantName { get; set; }
+        public short PaymentStatusId { get; set; }
     }
 
     public class RentPaymentInvoiceInfo
