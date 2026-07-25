@@ -10,5 +10,6 @@ namespace FEMOS.Rentora.Domain.Responses
     public class RentPaymentResponseInfo : BaseResponseInfo
     {
         public Guid? TransactionGuid { get; set; }
+        public RentPaymentInfo objRentPaymentInfo { get; set; }
     }
 }

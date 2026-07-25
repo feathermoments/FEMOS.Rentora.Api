@@ -40,7 +40,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
 
         public async Task<RentAgreementInfo> GetRentAgreementAsync(Guid userPublicId, long TenantAssignmentId)
         {
-            var cmd = new SqlCommand(DBConstants.usp_RentAgreement_Get);
+            var cmd = new SqlCommand(DBConstants.usp_RentAgreement_Details);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
             cmd.Parameters.AddWithValue("@TenantAssignmentId", TenantAssignmentId);
@@ -129,7 +129,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
 
         public async Task<RentInvoiceResponseInfo> GetRentInvoiceDetailsAsync(Guid userPublicId, long propertyId, long rentInvoiceId)
         {
-            var cmd = new SqlCommand(DBConstants.USP_RentInvoice_GetDetails);
+            var cmd = new SqlCommand(DBConstants.USP_RentInvoice_Details);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
             cmd.Parameters.AddWithValue("@PropertyId", propertyId);
@@ -225,6 +225,8 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@UnitId", (object?)objRequestInfo.objFilterInfo.UnitId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@InvoiceStatusId", (object?)objRequestInfo.objFilterInfo.InvoiceStatusId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@PaymentStatusId", (object?)objRequestInfo.objFilterInfo.PaymentStatusId ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@BillingYear", (object?)objRequestInfo.objFilterInfo.BillingYear ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@BillingMonth", (object?)objRequestInfo.objFilterInfo.BillingMonth ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@SearchText", (object?)objRequestInfo.objFilterInfo.SearchText ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@PageNumber", objRequestInfo.objFilterInfo.PageNumber);
             cmd.Parameters.AddWithValue("@PageSize", objRequestInfo.objFilterInfo.PageSize);
@@ -253,6 +255,36 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                 Status = dbResponse.Status,
                 Message = dbResponse.Message
             };
+        }
+
+        public async Task<RentPaymentResponseInfo> GetRentPaymentDetailsAsync(Guid userPublicId, long propertyId, long rentPaymentId)
+        {
+            var cmd = new SqlCommand(DBConstants.USP_RentPayment_Details);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@RentPaymentId", rentPaymentId);
+            var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            List<RentPaymentInfo> objRentPayments = _dbHelper.ConvertDataTable<RentPaymentInfo>(dt);
+            if (objRentPayments != null && objRentPayments.Count > 0)
+            {
+                RentPaymentResponseInfo objResponseInfo = new RentPaymentResponseInfo()
+                {
+                    objRentPaymentInfo = _dbHelper.ConvertDataTable<RentPaymentInfo>(dt)?.FirstOrDefault(),
+                    Status = StatusConstants.Success,
+                    Message = "Rent invoice details retrieved successfully."
+                };
+                return objResponseInfo;
+            }
+            else
+            {
+                RentPaymentResponseInfo objResponseInfo = new RentPaymentResponseInfo()
+                {
+                    Status = "Failed",
+                    Message = "Rent invoice not found.",
+                };
+                return objResponseInfo;
+            }
         }
     }
 }

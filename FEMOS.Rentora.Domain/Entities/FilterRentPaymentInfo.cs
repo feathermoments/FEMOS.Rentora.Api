@@ -10,5 +10,7 @@ namespace FEMOS.Rentora.Domain.Entities
     {
         public int? InvoiceStatusId { get; set; }
         public int? PaymentStatusId { get; set; }
+        public int? BillingYear { get; set; }
+        public int? BillingMonth { get; set; }
     }
 }

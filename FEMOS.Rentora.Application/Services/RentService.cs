@@ -22,6 +22,7 @@ namespace FEMOS.Rentora.Application.Services
             _encryptDecryptService = encryptDecryptService;
         }
 
+        //Agreement
         public async Task<BaseResponseInfo> DeleteRentAgreementAsync(Guid userPublicId, long RentAgreementId, long TenantAssignmentId)
         {
             return await _rentRepository.DeleteRentAgreementAsync(userPublicId, RentAgreementId, TenantAssignmentId);
@@ -56,6 +57,7 @@ namespace FEMOS.Rentora.Application.Services
             return await _rentRepository.SaveRentAgreementAsync(objRequestInfo);
         }
 
+        //Invoice
         public async Task<FilterRentInvoiceResponseInfo> GetRentInvoicesAsync(FilterRentInvoiceRequestInfo objRequestInfo)
         {
             return await _rentRepository.GetRentInvoicesAsync(objRequestInfo);
@@ -77,6 +79,7 @@ namespace FEMOS.Rentora.Application.Services
             return objResponseInfo;
         }
 
+        //Payment
         public async Task<RentPaymentResponseInfo> SaveRentPaymentAsync(RentPaymentRequestInfo objRequestInfo)
         {
             return await _rentRepository.SaveRentPaymentAsync(objRequestInfo);
@@ -90,6 +93,17 @@ namespace FEMOS.Rentora.Application.Services
         public async Task<BaseResponseInfo> UpdateRentPaymentActionAsync(RentPaymentActionRequestInfo objRequestInfo)
         {
             return await _rentRepository.UpdateRentPaymentActionAsync(objRequestInfo);
+        }
+
+        public async Task<RentPaymentResponseInfo> GetRentPaymentDetailsAsync(Guid userPublicId, long propertyId, long rentPaymentId)
+        {
+            RentPaymentResponseInfo objResponseInfo = await _rentRepository.GetRentPaymentDetailsAsync(userPublicId, propertyId, rentPaymentId);
+            if (objResponseInfo.objRentPaymentInfo != null)
+            {
+                objResponseInfo.objRentPaymentInfo.MobileNumber = _encryptDecryptService.Decrypt(objResponseInfo.objRentPaymentInfo.MobileNumber);
+                objResponseInfo.objRentPaymentInfo.EmailAddress = _encryptDecryptService.Decrypt(objResponseInfo.objRentPaymentInfo.EmailAddress);
+            }
+            return objResponseInfo;
         }
     }
 }

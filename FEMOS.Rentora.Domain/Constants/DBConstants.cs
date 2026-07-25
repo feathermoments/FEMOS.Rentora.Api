@@ -75,13 +75,14 @@ namespace FEMOS.Rentora.Domain.Constants
 
         // Rent
         public const string usp_RentAgreement_Save = "dbo.usp_RentAgreement_Save";
-        public const string usp_RentAgreement_Get = "dbo.usp_RentAgreement_Get";
+        public const string usp_RentAgreement_Details = "dbo.usp_RentAgreement_Details";
         public const string usp_DeleteRentAgreement = "dbo.usp_DeleteRentAgreement";
         public const string USP_RentPayment_Save = "dbo.USP_RentPayment_Save";
         public const string USP_RentInvoice_List = "dbo.USP_RentInvoice_List";
-        public const string USP_RentInvoice_GetDetails = "USP_RentInvoice_GetDetails";
+        public const string USP_RentInvoice_Details = "USP_RentInvoice_Details";
         public const string USP_RentPayment_List = "dbo.USP_RentPayment_List";
         public const string USP_RentPayment_Action = "dbo.USP_RentPayment_Action";
+        public const string USP_RentPayment_Details = "USP_RentPayment_Details";
 
         //Menu
         public const string USP_GetUserMenus = "dbo.USP_GetUserMenus";

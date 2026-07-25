@@ -67,7 +67,7 @@ namespace FEMOS.Rentora.Api.Controllers
         }
 
         [HttpGet("get-rent-invoice-details/{propertyId}/{rentInvoiceId}")]
-        public async Task<IActionResult> GetRentInvoiceDetailsAsync(long propertyId, long rentInvoiceId)
+        public async Task<IActionResult> GetRentInvoiceDetails(long propertyId, long rentInvoiceId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
@@ -119,6 +119,16 @@ namespace FEMOS.Rentora.Api.Controllers
             objRequestInfo.UserPublicId = userPublicId;
             var result = await _rentService.UpdateRentPaymentActionAsync(objRequestInfo);
             return Ok(result);
+        }
+
+        [HttpGet("get-rent-payment-details/{propertyId}/{rentPaymentId}")]
+        public async Task<IActionResult> GetRentPaymentDetails(long propertyId, long rentPaymentId)
+        {
+            var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
+            if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
+                return Unauthorized();
+            var rentAgreement = await _rentService.GetRentPaymentDetailsAsync(userPublicId, propertyId, rentPaymentId);
+            return Ok(rentAgreement);
         }
     }
 }

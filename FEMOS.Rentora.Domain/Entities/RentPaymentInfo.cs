@@ -56,6 +56,8 @@ namespace FEMOS.Rentora.Domain.Entities
         public long TenantAssignmentId { get; set; }
         public long TenantId { get; set; }
         public string? TenantName { get; set; }
+        public string? MobileNumber { get; set; }
+        public string? EmailAddress { get; set; }
         public short PaymentStatusId { get; set; }
     }
 
