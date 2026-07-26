@@ -11,6 +11,8 @@ namespace FEMOS.Rentora.Domain.Entities
         public string PropertyName { get; set; } = string.Empty;
         public int PropertyTypeId { get; set; }
 
+        public string? PropertyType { get; set; }
+
         // Description and Address
         public string Description { get; set; }
         public string AddressLine1 { get; set; } = string.Empty;
@@ -19,8 +21,11 @@ namespace FEMOS.Rentora.Domain.Entities
 
         // Location Details
         public long CityId { get; set; }
+        public string? City { get; set; }
         public long StateId { get; set; }
+        public string? State { get; set; }
         public long CountryId { get; set; }
+        public string? Country { get; set; }
         public string Pincode { get; set; } = string.Empty;
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
@@ -29,7 +34,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public int TotalFloors { get; set; }
         public int TotalUnits { get; set; }
         public int TotalParkingSlots { get; set; }
-        public short BuiltYear { get; set; }
+        public int BuiltYear { get; set; }
 
         // Flags
         public bool IsVerified { get; set; } = false;
