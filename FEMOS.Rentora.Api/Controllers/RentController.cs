@@ -130,5 +130,20 @@ namespace FEMOS.Rentora.Api.Controllers
             var rentAgreement = await _rentService.GetRentPaymentDetailsAsync(userPublicId, propertyId, rentPaymentId);
             return Ok(rentAgreement);
         }
+
+        [HttpPost("get-rent-agreements")]
+        public async Task<IActionResult> GetRentAgreements(FilterRentAgreementRequestInfo objRequestInfo)
+        {
+            if (objRequestInfo == null)
+            {
+                throw new ArgumentNullException(nameof(objRequestInfo));
+            }
+            var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
+            if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
+                return Unauthorized();
+            objRequestInfo.UserPublicId = userPublicId;
+            var result = await _rentService.GetRentAgreementsAsync(objRequestInfo);
+            return Ok(result);
+        }
     }
 }

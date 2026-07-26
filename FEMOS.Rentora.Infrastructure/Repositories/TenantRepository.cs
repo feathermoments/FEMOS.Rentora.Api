@@ -23,7 +23,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
         }
         public async Task<List<MyPropertyTenantInfo>> GetPropertyTenantsAsync(Guid userPublicId, long propertyId)
         {
-            var cmd = new SqlCommand(DBConstants.USP_PropertyTenant_GetAll);
+            var cmd = new SqlCommand(DBConstants.USP_PropertyTenant_List);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
             cmd.Parameters.AddWithValue("@PropertyId", propertyId);
@@ -33,7 +33,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
 
         public async Task<PropertyTenantInfo> GetPropertyTenantDetailsAsync(Guid userPublicId, long propertyId, long tenantId)
         {
-            var cmd = new SqlCommand(DBConstants.USP_PropertyTenant_GetById);
+            var cmd = new SqlCommand(DBConstants.USP_PropertyTenant_Details);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
             cmd.Parameters.AddWithValue("@PropertyId", propertyId);
@@ -149,7 +149,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
 
         public async Task<List<TenantInfo>> SearchTenantAsync(Guid userPublicId, string searchText, string searchTextHash)
         {
-            var cmd = new SqlCommand(DBConstants.usp_SearchTenant);
+            var cmd = new SqlCommand(DBConstants.usp_PropertyTenant_Search);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
             cmd.Parameters.AddWithValue("@SearchText", searchText);
@@ -161,7 +161,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
 
         public async Task<BaseResponseInfo> DeletePropertyTenantAsync(Guid userPublicId, long propertyId, long tenantId)
         {
-            var cmd = new SqlCommand(DBConstants.usp_DeletePropertyTenant);
+            var cmd = new SqlCommand(DBConstants.usp_PropertyTenant_Delete);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
             cmd.Parameters.AddWithValue("@PropertyId", propertyId);

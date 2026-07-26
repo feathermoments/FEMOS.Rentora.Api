@@ -36,19 +36,19 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string sp_GetUserPropertyRole = "dbo.sp_GetUserPropertyRole";
 
         // Unit
-        public const string USP_PropertyUnit_GetAll = "dbo.USP_PropertyUnit_GetAll";
+        public const string USP_PropertyUnit_List = "dbo.USP_PropertyUnit_List";
         public const string USP_PropertyUnit_Save = "dbo.USP_PropertyUnit_Save";
-        public const string USP_PropertyUnit_GetById = "dbo.USP_PropertyUnit_GetById";
+        public const string USP_PropertyUnit_Details = "dbo.USP_PropertyUnit_Details";
         public const string USP_PropertyUnit_GetVacantUnits = "dbo.USP_PropertyUnit_GetVacantUnits";
 
         // Tenant
-        public const string USP_PropertyTenant_GetAll = "dbo.USP_PropertyTenant_GetAll";
+        public const string USP_PropertyTenant_List = "dbo.USP_PropertyTenant_List";
         public const string USP_PropertyTenant_Save = "dbo.USP_PropertyTenant_Save";
-        public const string USP_PropertyTenant_GetById = "dbo.USP_PropertyTenant_GetById";
+        public const string USP_PropertyTenant_Details = "dbo.USP_PropertyTenant_Details";
         public const string sp_SaveTenantAssignment = "dbo.sp_SaveTenantAssignment";
         public const string usp_GetTenantAssignment = "dbo.usp_GetTenantAssignment";
-        public const string usp_SearchTenant = "dbo.usp_SearchTenant";
-        public const string usp_DeletePropertyTenant = "dbo.usp_DeletePropertyTenant";
+        public const string usp_PropertyTenant_Search = "dbo.usp_PropertyTenant_Search";
+        public const string usp_PropertyTenant_Delete = "dbo.usp_PropertyTenant_Delete";
         public const string usp_DeleteTenantAssignment = "dbo.usp_DeleteTenantAssignment";
 
         // Notification
@@ -83,6 +83,7 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string USP_RentPayment_List = "dbo.USP_RentPayment_List";
         public const string USP_RentPayment_Action = "dbo.USP_RentPayment_Action";
         public const string USP_RentPayment_Details = "USP_RentPayment_Details";
+        public const string USP_RentAgreement_List = "dbo.USP_RentAgreement_List";
 
         //Menu
         public const string USP_GetUserMenus = "dbo.USP_GetUserMenus";

@@ -286,5 +286,26 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                 return objResponseInfo;
             }
         }
+
+        public async Task<FilterRentAgreementResponseInfo> GetRentAgreementsAsync(FilterRentAgreementRequestInfo objRequestInfo)
+        {
+            var cmd = new SqlCommand(DBConstants.USP_RentAgreement_List);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
+            cmd.Parameters.AddWithValue("@PropertyId", objRequestInfo.objFilterInfo.PropertyId);
+            cmd.Parameters.AddWithValue("@UnitId", (object?)objRequestInfo.objFilterInfo.UnitId ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@TenantId", (object?)objRequestInfo.objFilterInfo.TenantId ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@SearchText", (object?)objRequestInfo.objFilterInfo.SearchText ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@PageNumber", objRequestInfo.objFilterInfo.PageNumber);
+            cmd.Parameters.AddWithValue("@PageSize", objRequestInfo.objFilterInfo.PageSize);
+            var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            List<RentAgreementInfo> objRentAgreements = _dbHelper.ConvertDataTable<RentAgreementInfo>(dt);
+            return new FilterRentAgreementResponseInfo()
+            {
+                Status = "Success",
+                Message = "Rent agreements retrieved successfully.",
+                objRentAgreements = objRentAgreements
+            };
+        }
     }
 }

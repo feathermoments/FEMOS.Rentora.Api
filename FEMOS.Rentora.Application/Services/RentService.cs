@@ -105,5 +105,10 @@ namespace FEMOS.Rentora.Application.Services
             }
             return objResponseInfo;
         }
+
+        public async Task<FilterRentAgreementResponseInfo> GetRentAgreementsAsync(FilterRentAgreementRequestInfo objRequestInfo)
+        {
+            return await _rentRepository.GetRentAgreementsAsync(objRequestInfo);
+        }
     }
 }

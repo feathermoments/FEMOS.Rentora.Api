@@ -25,7 +25,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
 
         public async Task<PropertyUnitInfo> GetPropertyUnitDetailsAsync(Guid userPublicId, long propertyId, long unitId)
         {
-            var cmd = new SqlCommand(DBConstants.USP_PropertyUnit_GetById);
+            var cmd = new SqlCommand(DBConstants.USP_PropertyUnit_Details);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
             cmd.Parameters.AddWithValue("@PropertyId", propertyId);
@@ -41,7 +41,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
 
         public async Task<List<MyPropertyUnitInfo>> GetPropertyUnitsAsync(Guid userPublicId, long propertyId)
         {
-            var cmd = new SqlCommand(DBConstants.USP_PropertyUnit_GetAll);
+            var cmd = new SqlCommand(DBConstants.USP_PropertyUnit_List);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
             cmd.Parameters.AddWithValue("@PropertyId", propertyId);
