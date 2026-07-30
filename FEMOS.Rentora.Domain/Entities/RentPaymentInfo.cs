@@ -16,6 +16,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public string PaymentMethod { get; set; }
         public string TransactionReferenceNo { get; set; }
         public decimal PaymentAmount { get; set; }
+        public int PaymentTypeId { get; set; }
         public string PaymentStatus { get; set; }
         /// <summary>
         /// save fields for audit purpose, who paid the amount
@@ -36,6 +37,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public Guid TransactionGuid { get; set; }
 
         public List<RentPaymentInvoiceInfo> Invoices { get; set; }
+        public long RentAgreementId { get; set; }
 
         public int TotalRecords { get; set; }
         public long RentInvoiceId { get; set; }
@@ -59,6 +61,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public string? MobileNumber { get; set; }
         public string? EmailAddress { get; set; }
         public short PaymentStatusId { get; set; }
+        public string? PaymentTypeName { get; set; }
     }
 
     public class RentPaymentInvoiceInfo

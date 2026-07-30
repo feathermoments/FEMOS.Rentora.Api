@@ -191,6 +191,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
 
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
             cmd.Parameters.AddWithValue("@PaymentAmount", objRequestInfo.obRentPaymentInfo.PaymentAmount);
+            cmd.Parameters.AddWithValue("@PaymentTypeId", objRequestInfo.obRentPaymentInfo.PaymentTypeId);
             cmd.Parameters.AddWithValue("@PaymentMethodId", objRequestInfo.obRentPaymentInfo.PaymentMethodId);
             cmd.Parameters.AddWithValue("@PaymentDate", objRequestInfo.obRentPaymentInfo.PaymentDate);
             cmd.Parameters.AddWithValue("@TransactionReferenceNo", objRequestInfo.obRentPaymentInfo.TransactionReferenceNo);
@@ -200,6 +201,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@GatewayResponse", objRequestInfo.obRentPaymentInfo.GatewayResponse);
             cmd.Parameters.AddWithValue("@IsOnlinePayment", objRequestInfo.obRentPaymentInfo.IsOnlinePayment);
             cmd.Parameters.AddWithValue("@Remarks", objRequestInfo.obRentPaymentInfo.Remarks);
+            cmd.Parameters.AddWithValue("@RentAgreementId", objRequestInfo.obRentPaymentInfo.RentAgreementId);
 
             var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
             var dbResponse = await _dbHelper.GetDBResponse(result);
