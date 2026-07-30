@@ -18,6 +18,10 @@ namespace FEMOS.Rentora.Domain.Entities
         public DateTime EndDate { get; set; }
         public decimal MonthlyRent { get; set; }
         public decimal SecurityDeposit { get; set; }
+        public decimal RequiredDepositAmount { get; set; }
+        public decimal CollectedAmount { get; set; }
+        public decimal PendingDepositAmount { get; set; }
+        public string? DepositStatus { get; set; }
         public decimal MaintenanceAmount { get; set; }
         public int RentDueDay { get; set; }
         public int NoticePeriodDays { get; set; }
