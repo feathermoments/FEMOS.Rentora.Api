@@ -64,5 +64,10 @@ namespace FEMOS.Rentora.Infrastructure.Interfaces
         /// Retrieves report summary data.
         /// </summary>
         Task<ReportSummaryInfo> GetReportSummaryAsync(long propertyId, Guid userPublicId);
+
+        /// <summary>
+        /// Retrieves security deposit summary data.
+        /// </summary>
+        Task<SecurityDepositSummaryInfo> GetSecurityDepositSummaryAsync(long propertyId, Guid userPublicId);
     }
 }

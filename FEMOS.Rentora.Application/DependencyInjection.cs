@@ -59,6 +59,7 @@ namespace FEMOS.Rentora.Application
             services.AddScoped<IDashboardWidget, MyRequestsWidget>();
             services.AddScoped<IDashboardWidget, StaffSummaryWidget>();
             services.AddScoped<IDashboardWidget, ReportSummaryWidget>();
+            services.AddScoped<IDashboardWidget, SecurityDepositSummaryWidget>();
 
             // Dashboard widget factory
             services.AddScoped<DashboardWidgetFactory>();

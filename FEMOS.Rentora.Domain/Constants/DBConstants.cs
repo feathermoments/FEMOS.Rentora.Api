@@ -101,5 +101,6 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string USP_Dashboard_MyRequests = "dbo.USP_Dashboard_MyRequests";
         public const string USP_Dashboard_StaffSummary = "dbo.USP_Dashboard_StaffSummary";
         public const string USP_Dashboard_ReportSummary = "dbo.USP_Dashboard_ReportSummary";
+        public const string USP_Dashboard_SecurityDepositSummary = "dbo.USP_Dashboard_SecurityDepositSummary";
     }
 }

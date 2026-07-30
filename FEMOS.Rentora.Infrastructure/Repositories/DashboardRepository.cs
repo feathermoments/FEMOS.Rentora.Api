@@ -237,6 +237,25 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                 return null;
             }
         }
+
+        public async Task<SecurityDepositSummaryInfo> GetSecurityDepositSummaryAsync(long propertyId, Guid userPublicId)
+        {
+            var cmd = new SqlCommand(DBConstants.USP_Dashboard_SecurityDepositSummary);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+
+            var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            var data = _dbHelper.ConvertDataTable<SecurityDepositSummaryInfo>(dt);
+            if (data != null && data.Any())
+            {
+                return data.FirstOrDefault();
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }
 
