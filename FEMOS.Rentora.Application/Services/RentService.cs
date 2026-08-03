@@ -58,7 +58,7 @@ namespace FEMOS.Rentora.Application.Services
         }
 
         //Invoice
-        public async Task<FilterRentInvoiceResponseInfo> GetRentInvoicesAsync(FilterRentInvoiceRequestInfo objRequestInfo)
+        public async Task<FilterRentInvoiceResponseInfo> GetRentInvoicesAsync(FilterRequestInfo objRequestInfo)
         {
             return await _rentRepository.GetRentInvoicesAsync(objRequestInfo);
         }
@@ -85,7 +85,7 @@ namespace FEMOS.Rentora.Application.Services
             return await _rentRepository.SaveRentPaymentAsync(objRequestInfo);
         }
 
-        public async Task<FilterRentPaymentResponseInfo> GetRentPaymentsAsync(FilterRentPaymentRequestInfo objRequestInfo)
+        public async Task<FilterRentPaymentResponseInfo> GetRentPaymentsAsync(FilterRequestInfo objRequestInfo)
         {
             return await _rentRepository.GetRentPaymentsAsync(objRequestInfo);
         }
@@ -106,9 +106,24 @@ namespace FEMOS.Rentora.Application.Services
             return objResponseInfo;
         }
 
-        public async Task<FilterRentAgreementResponseInfo> GetRentAgreementsAsync(FilterRentAgreementRequestInfo objRequestInfo)
+        public async Task<FilterRentAgreementResponseInfo> GetRentAgreementsAsync(FilterRequestInfo objRequestInfo)
         {
             return await _rentRepository.GetRentAgreementsAsync(objRequestInfo);
+        }
+
+        public async Task<FilterTenantSecurityDepositResponseInfo> GetTenantSecurityDepositsAsync(FilterRequestInfo objRequestInfo)
+        {
+            return await _rentRepository.GetTenantSecurityDepositsAsync(objRequestInfo);
+        }
+
+        public async Task<TenantSecurityDepositResponseInfo> GetTenantSecurityDepositDetailsAsync(Guid userPublicId, long tenantSecurityDepositId, long rentAgreementId, long tenantAssignmentId)
+        {
+            return await _rentRepository.GetTenantSecurityDepositDetailsAsync(userPublicId, tenantSecurityDepositId, rentAgreementId, tenantAssignmentId);
+        }
+
+        public async Task<DepositTransactionListResponseInfo> GetTenantSecurityDepositTransactionsAsync(Guid userPublicId, long tenantSecurityDepositId, long rentAgreementId, long tenantAssignmentId)
+        {
+            return await _rentRepository.GetTenantSecurityDepositTransactionsAsync(userPublicId, tenantSecurityDepositId, rentAgreementId, tenantAssignmentId);
         }
     }
 }

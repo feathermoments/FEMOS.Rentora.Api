@@ -84,6 +84,9 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string USP_RentPayment_Action = "dbo.USP_RentPayment_Action";
         public const string USP_RentPayment_Details = "USP_RentPayment_Details";
         public const string USP_RentAgreement_List = "dbo.USP_RentAgreement_List";
+        public const string USP_TenantSecurityDeposit_List = "dbo.USP_TenantSecurityDeposit_List";
+        public const string USP_TenantSecurityDeposit_Get = "dbo.USP_TenantSecurityDeposit_Get";
+        public const string USP_TenantSecurityDeposit_TransactionList = "dbo.USP_TenantSecurityDeposit_TransactionList";
 
         //Menu
         public const string USP_GetUserMenus = "dbo.USP_GetUserMenus";

@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace FEMOS.Rentora.Domain.Entities
 {
-    public class FilterRentInvoiceInfo : BaseFilterInfo
+    public class FilterInfo
     {
+        public long PropertyId { get; set; }
+        public long? UnitId { get; set; }
+        public long? TenantId { get; set; }
         public int? InvoiceStatusId { get; set; }
         public int? PaymentStatusId { get; set; }
 
@@ -21,5 +24,9 @@ namespace FEMOS.Rentora.Domain.Entities
         public bool OutstandingOnly { get; set; } = false;
         public bool OverDueOnly { get; set; } = false;
 
+        public string? SearchText { get; set; } = null;
+
+        public int PageNumber { get; set; } = 1;
+        public int PageSize { get; set; } = 20;
     }
 }

@@ -14,6 +14,8 @@ namespace FEMOS.Rentora.Domain.Entities
         public decimal RequiredDepositAmount { get; set; }
         public decimal CollectedAmount { get; set; }
         public decimal PendingDepositAmount { get; set; }
+        public string DepositStatus { get; set; }
+        public string PaymentStatusCode { get; set; }
         public int NoticePeriodDays { get; set; }
         public int LockInPeriodDays { get; set; }
         public int RentDueDay { get; set; }

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace FEMOS.Rentora.Domain.Requests
 {
-    public class FilterRentAgreementRequestInfo : BaseRequestInfo
+    public class FilterRequestInfo : BaseRequestInfo
     {
-        public FilterRentAgreementInfo objFilterInfo { get; set; }
+        public FilterInfo objFilterInfo { get; set; }
     }
 }

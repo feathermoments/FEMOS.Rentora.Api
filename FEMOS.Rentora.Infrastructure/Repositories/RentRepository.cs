@@ -97,7 +97,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             };
         }
 
-        public async Task<FilterRentInvoiceResponseInfo> GetRentInvoicesAsync(FilterRentInvoiceRequestInfo objRequestInfo)
+        public async Task<FilterRentInvoiceResponseInfo> GetRentInvoicesAsync(FilterRequestInfo objRequestInfo)
         {
             var cmd = new SqlCommand(DBConstants.USP_RentInvoice_List);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -218,7 +218,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             };
         }
 
-        public async Task<FilterRentPaymentResponseInfo> GetRentPaymentsAsync(FilterRentPaymentRequestInfo objRequestInfo)
+        public async Task<FilterRentPaymentResponseInfo> GetRentPaymentsAsync(FilterRequestInfo objRequestInfo)
         {
             var cmd = new SqlCommand(DBConstants.USP_RentPayment_List);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -289,7 +289,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             }
         }
 
-        public async Task<FilterRentAgreementResponseInfo> GetRentAgreementsAsync(FilterRentAgreementRequestInfo objRequestInfo)
+        public async Task<FilterRentAgreementResponseInfo> GetRentAgreementsAsync(FilterRequestInfo objRequestInfo)
         {
             var cmd = new SqlCommand(DBConstants.USP_RentAgreement_List);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -307,6 +307,70 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                 Status = "Success",
                 Message = "Rent agreements retrieved successfully.",
                 objRentAgreements = objRentAgreements
+            };
+        }
+
+        public async Task<FilterTenantSecurityDepositResponseInfo> GetTenantSecurityDepositsAsync(FilterRequestInfo objRequestInfo)
+        {
+            var cmd = new SqlCommand(DBConstants.USP_TenantSecurityDeposit_List);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
+            cmd.Parameters.AddWithValue("@PropertyId", objRequestInfo.objFilterInfo.PropertyId);
+            cmd.Parameters.AddWithValue("@UnitId", objRequestInfo.objFilterInfo.UnitId);
+            var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            List<TenantSecurityDepositInfo> objTenantSecurityDeposits = _dbHelper.ConvertDataTable<TenantSecurityDepositInfo>(dt);
+            return new FilterTenantSecurityDepositResponseInfo()
+            {
+                Status = StatusConstants.Success,
+                Message = "Tenant security deposits retrieved successfully.",
+                objTenantSecurityDeposits = objTenantSecurityDeposits ?? new List<TenantSecurityDepositInfo>()
+            };
+        }
+
+        public async Task<TenantSecurityDepositResponseInfo> GetTenantSecurityDepositDetailsAsync(Guid userPublicId, long tenantSecurityDepositId, long rentAgreementId, long tenantAssignmentId)
+        {
+            var cmd = new SqlCommand(DBConstants.USP_TenantSecurityDeposit_Get);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@TenantSecurityDepositId", tenantSecurityDepositId);
+            cmd.Parameters.AddWithValue("@RentAgreementId", rentAgreementId);
+            cmd.Parameters.AddWithValue("@TenantAssignmentId", tenantAssignmentId);
+            var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            List<TenantSecurityDepositInfo> objTenantSecurityDeposits = _dbHelper.ConvertDataTable<TenantSecurityDepositInfo>(dt);
+            if (objTenantSecurityDeposits != null && objTenantSecurityDeposits.Count > 0)
+            {
+                return new TenantSecurityDepositResponseInfo()
+                {
+                    objTenantSecurityDepositInfo = objTenantSecurityDeposits[0],
+                    Status = StatusConstants.Success,
+                    Message = "Tenant security deposit details retrieved successfully."
+                };
+            }
+            else
+            {
+                return new TenantSecurityDepositResponseInfo()
+                {
+                    Status = StatusConstants.Failure,
+                    Message = "Tenant security deposit not found."
+                };
+            }
+        }
+
+        public async Task<DepositTransactionListResponseInfo> GetTenantSecurityDepositTransactionsAsync(Guid userPublicId, long tenantSecurityDepositId, long rentAgreementId, long tenantAssignmentId)
+        {
+            var cmd = new SqlCommand(DBConstants.USP_TenantSecurityDeposit_TransactionList);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@TenantSecurityDepositId", tenantSecurityDepositId);
+            cmd.Parameters.AddWithValue("@RentAgreementId", rentAgreementId);
+            cmd.Parameters.AddWithValue("@TenantAssignmentId", tenantAssignmentId);
+            var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            List<DepositTransactionInfo> objDepositTransactions = _dbHelper.ConvertDataTable<DepositTransactionInfo>(dt);
+            return new DepositTransactionListResponseInfo()
+            {
+                Status = StatusConstants.Success,
+                Message = "Tenant security deposit transactions retrieved successfully.",
+                objDepositTransactions = objDepositTransactions ?? new List<DepositTransactionInfo>()
             };
         }
     }
