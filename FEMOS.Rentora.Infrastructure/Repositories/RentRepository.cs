@@ -110,8 +110,8 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@PaymentStatusId", (object?)objRequestInfo.objFilterInfo.PaymentStatusId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@BillingYear", (object?)objRequestInfo.objFilterInfo.BillingYear ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@BillingMonth", (object?)objRequestInfo.objFilterInfo.BillingMonth ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@FromDueDate", (object?)objRequestInfo.objFilterInfo.FromDueDate ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@ToDueDate", (object?)objRequestInfo.objFilterInfo.ToDueDate ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@FromDueDate", (object?)objRequestInfo.objFilterInfo.FromDate ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@ToDueDate", (object?)objRequestInfo.objFilterInfo.ToDate ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@OutstandingOnly", objRequestInfo.objFilterInfo.OutstandingOnly);
             cmd.Parameters.AddWithValue("@OverDueOnly", objRequestInfo.objFilterInfo.OverDueOnly);
             cmd.Parameters.AddWithValue("@SearchText", (object?)objRequestInfo.objFilterInfo.SearchText ?? DBNull.Value);

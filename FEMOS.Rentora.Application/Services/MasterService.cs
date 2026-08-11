@@ -183,5 +183,16 @@ namespace FEMOS.Rentora.Application.Services
                 Message = "Proration types retrieved successfully."
             };
         }
+
+        public async Task<UtilityTypeResponseInfo> GetUtilityTypesAsync()
+        {
+            List<UtilityTypeInfo> objUtilityTypes = await _masterRepository.GetUtilityTypesAsync();
+            return new UtilityTypeResponseInfo
+            {
+                objUtilityTypes = objUtilityTypes,
+                Status = StatusConstants.Success,
+                Message = "Utility types retrieved successfully."
+            };
+        }
     }
 }

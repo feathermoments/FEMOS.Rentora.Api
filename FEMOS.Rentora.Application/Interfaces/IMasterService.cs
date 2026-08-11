@@ -26,5 +26,6 @@ namespace FEMOS.Rentora.Application.Interfaces
         Task<PaymentMethodResponseInfo> GetPaymentMethodsAsync();
         Task<BillingCycleTypeResponseInfo> GetBillingCycleTypesAsync();
         Task<ProrationTypeResponseInfo> GetProrationTypesAsync();
+        Task<UtilityTypeResponseInfo> GetUtilityTypesAsync();
     }
 }

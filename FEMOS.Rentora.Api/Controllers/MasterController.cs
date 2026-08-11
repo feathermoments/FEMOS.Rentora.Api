@@ -1,4 +1,5 @@
 ﻿using FEMOS.Rentora.Application.Interfaces;
+using FEMOS.Rentora.Application.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -119,5 +120,13 @@ namespace FEMOS.Rentora.Api.Controllers
             var result = await _masterService.GetBillingCycleTypesAsync();
             return Ok(result);
         }
+
+        [HttpGet("getUtilityTypes")]
+        public async Task<IActionResult> GetUtilityTypes()
+        {
+            var result = await _masterService.GetUtilityTypesAsync();
+            return Ok(result);
+        }
     }
 }
+

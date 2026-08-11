@@ -19,12 +19,16 @@ namespace FEMOS.Rentora.Domain.Entities
         public int? BillingYear { get; set; }
         public int? BillingMonth { get; set; }
 
-        public DateTime? FromDueDate { get; set; }
-        public DateTime? ToDueDate { get; set; }
+        public DateTime? FromDate { get; set; }
+        public DateTime? ToDate { get; set; }
         public bool OutstandingOnly { get; set; } = false;
         public bool OverDueOnly { get; set; } = false;
 
         public string? SearchText { get; set; } = null;
+
+        // Utility Charges Filter
+        public short? UtilityTypeId { get; set; }
+        public bool? IsInvoiced { get; set; }
 
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 20;

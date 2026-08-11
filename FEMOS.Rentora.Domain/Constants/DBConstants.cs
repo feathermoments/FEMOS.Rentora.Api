@@ -88,6 +88,13 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string USP_TenantSecurityDeposit_Get = "dbo.USP_TenantSecurityDeposit_Get";
         public const string USP_TenantSecurityDeposit_TransactionList = "dbo.USP_TenantSecurityDeposit_TransactionList";
 
+        // Utility Charges
+        public const string USP_RentUtilityCharge_Save = "dbo.USP_RentUtilityCharge_Save";
+        public const string USP_RentUtilityCharge_Delete = "dbo.USP_RentUtilityCharge_Delete";
+        public const string USP_RentUtilityCharge_Details = "dbo.USP_RentUtilityCharge_Details";
+        public const string USP_RentUtilityCharge_List = "dbo.USP_RentUtilityCharge_List";
+        public const string sp_Mst_GetUtilityTypes = "dbo.sp_Mst_GetUtilityTypes";
+
         //Menu
         public const string USP_GetUserMenus = "dbo.USP_GetUserMenus";
         public const string USP_GetUserMenuPermissions = "dbo.USP_GetUserMenuPermissions";
@@ -107,3 +114,4 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string USP_Dashboard_SecurityDepositSummary = "dbo.USP_Dashboard_SecurityDepositSummary";
     }
 }
+

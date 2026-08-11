@@ -154,5 +154,13 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             DataTable dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
             return _dbHelper.ConvertDataTable<ProrationTypeInfo>(dt);
         }
+
+        public async Task<List<UtilityTypeInfo>> GetUtilityTypesAsync()
+        {
+            var cmd = new SqlCommand(DBConstants.sp_Mst_GetUtilityTypes);
+            cmd.CommandType = CommandType.StoredProcedure;
+            DataTable dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            return _dbHelper.ConvertDataTable<UtilityTypeInfo>(dt);
+        }
     }
 }
