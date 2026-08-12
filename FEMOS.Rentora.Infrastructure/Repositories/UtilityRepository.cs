@@ -28,7 +28,6 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
 
             var cmd = new SqlCommand(DBConstants.USP_RentUtilityCharge_Save);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@UniqueId", objUtilityCharge.UniqueId);
             var userIdParam = new SqlParameter("@UniqueId", SqlDbType.UniqueIdentifier)
             {
                 Direction = ParameterDirection.InputOutput,
