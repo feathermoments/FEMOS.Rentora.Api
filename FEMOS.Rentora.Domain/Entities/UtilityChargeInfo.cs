@@ -13,6 +13,8 @@ namespace FEMOS.Rentora.Domain.Entities
         public Guid UniqueId { get; set; }
         public long RentInvoiceId { get; set; }
         public long TenantAssignmentId { get; set; }
+        public string? TenantName { get; set; }
+        public string? UnitNumber { get; set; }
         public short UtilityTypeId { get; set; }
         public string? UtilityType { get; set; }
         public bool IsMeterBased { get; set; }
@@ -26,8 +28,8 @@ namespace FEMOS.Rentora.Domain.Entities
         public decimal TaxAmount { get; set; }
         public decimal DiscountAmount { get; set; }
         public decimal TotalAmount { get; set; }
-        public string Remarks { get; set; }
-        public string ChargeStatus { get; set; }
+        public string? Remarks { get; set; }
+        public string? ChargeStatus { get; set; }
         public bool CanEdit { get; set; }
         public bool CanDelete { get; set; }
         public DateTime CreatedOn { get; set; }

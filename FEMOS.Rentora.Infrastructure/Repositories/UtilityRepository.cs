@@ -135,6 +135,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@PropertyId", objRequestInfo.objFilterInfo.PropertyId);
             cmd.Parameters.AddWithValue("@UnitId", (object?)objRequestInfo.objFilterInfo.UnitId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@TenantAssignmentId", objRequestInfo.objFilterInfo.TenantAssignmentId ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@RentInvoiceId", objRequestInfo.objFilterInfo.RentInvoiceId ?? (object)DBNull.Value);
             cmd.Parameters.AddWithValue("@UtilityTypeId", objRequestInfo.objFilterInfo.UtilityTypeId ?? (object)DBNull.Value);
             cmd.Parameters.AddWithValue("@IsInvoiced", objRequestInfo.objFilterInfo.IsInvoiced ?? (object)DBNull.Value);
             cmd.Parameters.AddWithValue("@FromDate", objRequestInfo.objFilterInfo.FromDate ?? (object)DBNull.Value);

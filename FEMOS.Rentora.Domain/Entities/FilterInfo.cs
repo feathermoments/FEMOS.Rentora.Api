@@ -28,6 +28,7 @@ namespace FEMOS.Rentora.Domain.Entities
 
         // Utility Charges Filter
         public short? UtilityTypeId { get; set; }
+        public long? RentInvoiceId { get; set; }
         public bool? IsInvoiced { get; set; }
 
         public int PageNumber { get; set; } = 1;

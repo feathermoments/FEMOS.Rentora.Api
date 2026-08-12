@@ -30,8 +30,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public string TenantName { get; set; }
         public decimal RentAmount { get; set; }
         public decimal MaintenanceAmount { get; set; }
-        public decimal ElectricityAmount { get; set; }
-        public decimal WaterAmount { get; set; }
+        public decimal UtilityCharges { get; set; }
         public decimal PenaltyAmount { get; set; }
         public decimal DiscountAmount { get; set; }
         public decimal TotalAmount { get; set; }
