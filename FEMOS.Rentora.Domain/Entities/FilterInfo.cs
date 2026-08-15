@@ -33,7 +33,6 @@ namespace FEMOS.Rentora.Domain.Entities
 
         // Termination Request Filter
         public short? TerminationRequestStatusId { get; set; }
-        public int? RequestedByUserId { get; set; }
 
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 20;

@@ -125,10 +125,10 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
 
             var cmd = new SqlCommand(DBConstants.USP_RentAgreement_TerminationRequest_Create);
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
             cmd.Parameters.AddWithValue("@RentAgreementId", objRequestInfo.objTerminationRequestInfo.RentAgreementId);
             cmd.Parameters.AddWithValue("@TerminationDate", objRequestInfo.objTerminationRequestInfo.TerminationDate);
             cmd.Parameters.AddWithValue("@Reason", string.IsNullOrEmpty(objRequestInfo.objTerminationRequestInfo.Reason) ? DBNull.Value : objRequestInfo.objTerminationRequestInfo.Reason);
-            cmd.Parameters.AddWithValue("@RequestedByUserId", objRequestInfo.objTerminationRequestInfo.RequestedByUserId);
             cmd.Parameters.AddWithValue("@Notes", string.IsNullOrEmpty(objRequestInfo.objTerminationRequestInfo.Notes) ? DBNull.Value : objRequestInfo.objTerminationRequestInfo.Notes);
 
             var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
@@ -158,7 +158,6 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@RentAgreementId", (object?)objRequestInfo.objFilterInfo.RentAgreementId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@TenantAssignmentId", (object?)objRequestInfo.objFilterInfo.TenantAssignmentId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@TerminationRequestStatusId", (object?)objRequestInfo.objFilterInfo.TerminationRequestStatusId ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@RequestedByUserId", (object?)objRequestInfo.objFilterInfo.RequestedByUserId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@FromDate", (object?)objRequestInfo.objFilterInfo.FromDate ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@ToDate", (object?)objRequestInfo.objFilterInfo.ToDate ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@PageNumber", objRequestInfo.objFilterInfo.PageNumber);
@@ -189,7 +188,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             var cmd = new SqlCommand(DBConstants.USP_RentAgreement_TerminationRequest_Get);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
-            cmd.Parameters.AddWithValue("@TerminationRequestUniqueId", terminationRequestUniqueId);
+            cmd.Parameters.AddWithValue("@UniqueId", terminationRequestUniqueId);
 
             DataTable dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
 

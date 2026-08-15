@@ -18,8 +18,12 @@ namespace FEMOS.Rentora.Domain.Entities
         public string Reason { get; set; }
         public int? ActionedByUserId { get; set; }
         public DateTime? ActionedOn { get; set; }
-        public string ActionRemarks { get; set; }
+        public string? ActionRemarks { get; set; }
         public DateTime? CompletedOn { get; set; }
         public string Notes { get; set; }
+        public string? TenantName { get; set; }
+        public string? UnitNumber { get; set; }
+        public string? RentTerminationRequestStatus { get; set; }
+        public string? AgreementStatus { get; set; }
     }
 }
