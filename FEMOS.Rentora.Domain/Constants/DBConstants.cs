@@ -95,6 +95,15 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string USP_RentUtilityCharge_List = "dbo.USP_RentUtilityCharge_List";
         public const string sp_Mst_GetUtilityTypes = "dbo.sp_Mst_GetUtilityTypes";
 
+        // Rent Agreement Termination
+        public const string USP_RentAgreement_TerminationRequest_Create = "dbo.USP_RentAgreement_TerminationRequest_Create";
+        public const string USP_RentAgreement_TerminationRequest_List = "dbo.USP_RentAgreement_TerminationRequest_List";
+        public const string USP_RentAgreement_TerminationRequest_Get = "dbo.USP_RentAgreement_TerminationRequest_Get";
+        public const string USP_RentAgreement_TerminationRequest_Approve = "dbo.USP_RentAgreement_TerminationRequest_Approve";
+        public const string USP_RentAgreement_TerminationRequest_Reject = "dbo.USP_RentAgreement_TerminationRequest_Reject";
+        public const string USP_RentAgreement_TerminationRequest_Cancel = "dbo.USP_RentAgreement_TerminationRequest_Cancel";
+        public const string sp_Mst_Get_RentTerminationRequestStatuses = "dbo.sp_Mst_Get_RentTerminationRequestStatuses";
+
         //Menu
         public const string USP_GetUserMenus = "dbo.USP_GetUserMenus";
         public const string USP_GetUserMenuPermissions = "dbo.USP_GetUserMenuPermissions";

@@ -21,7 +21,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             _dbHelper = dbHelper;
         }
 
-        public async Task<FilterRentInvoiceResponseInfo> GetRentInvoicesAsync(FilterRequestInfo objRequestInfo)
+        public async Task<FilterResponseInfo> GetRentInvoicesAsync(FilterRequestInfo objRequestInfo)
         {
             var cmd = new SqlCommand(DBConstants.USP_RentInvoice_List);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -43,11 +43,11 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@PageSize", objRequestInfo.objFilterInfo.PageSize);
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
             List<RentInvoiceInfo> objRentInvoices = _dbHelper.ConvertDataTable<RentInvoiceInfo>(dt);
-            return new FilterRentInvoiceResponseInfo()
+            return new FilterResponseInfo()
             {
                 Status = "Success",
                 Message = "Rent invoices retrieved successfully.",
-                objRentInvoices = objRentInvoices
+                objFilterData = objRentInvoices
             };
         }
 
@@ -142,7 +142,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             };
         }
 
-        public async Task<FilterRentPaymentResponseInfo> GetRentPaymentsAsync(FilterRequestInfo objRequestInfo)
+        public async Task<FilterResponseInfo> GetRentPaymentsAsync(FilterRequestInfo objRequestInfo)
         {
             var cmd = new SqlCommand(DBConstants.USP_RentPayment_List);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -158,11 +158,11 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@PageSize", objRequestInfo.objFilterInfo.PageSize);
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
             List<RentPaymentInfo> objRentPayments = _dbHelper.ConvertDataTable<RentPaymentInfo>(dt);
-            return new FilterRentPaymentResponseInfo()
+            return new FilterResponseInfo()
             {
                 Status = "Success",
                 Message = "Rent payments retrieved successfully.",
-                objRentPayments = objRentPayments
+                objFilterData = objRentPayments
             };
         }
 
@@ -213,7 +213,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             }
         }
 
-        public async Task<FilterRentAgreementResponseInfo> GetRentAgreementsAsync(FilterRequestInfo objRequestInfo)
+        public async Task<FilterResponseInfo> GetRentAgreementsAsync(FilterRequestInfo objRequestInfo)
         {
             var cmd = new SqlCommand(DBConstants.USP_RentAgreement_List);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -226,15 +226,15 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@PageSize", objRequestInfo.objFilterInfo.PageSize);
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
             List<RentAgreementInfo> objRentAgreements = _dbHelper.ConvertDataTable<RentAgreementInfo>(dt);
-            return new FilterRentAgreementResponseInfo()
+            return new FilterResponseInfo()
             {
                 Status = "Success",
                 Message = "Rent agreements retrieved successfully.",
-                objRentAgreements = objRentAgreements
+                objFilterData = objRentAgreements
             };
         }
 
-        public async Task<FilterTenantSecurityDepositResponseInfo> GetTenantSecurityDepositsAsync(FilterRequestInfo objRequestInfo)
+        public async Task<FilterResponseInfo> GetTenantSecurityDepositsAsync(FilterRequestInfo objRequestInfo)
         {
             var cmd = new SqlCommand(DBConstants.USP_TenantSecurityDeposit_List);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -243,11 +243,11 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@UnitId", objRequestInfo.objFilterInfo.UnitId);
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
             List<TenantSecurityDepositInfo> objTenantSecurityDeposits = _dbHelper.ConvertDataTable<TenantSecurityDepositInfo>(dt);
-            return new FilterTenantSecurityDepositResponseInfo()
+            return new FilterResponseInfo()
             {
                 Status = StatusConstants.Success,
                 Message = "Tenant security deposits retrieved successfully.",
-                objTenantSecurityDeposits = objTenantSecurityDeposits ?? new List<TenantSecurityDepositInfo>()
+                objFilterData = objTenantSecurityDeposits ?? new List<TenantSecurityDepositInfo>()
             };
         }
 

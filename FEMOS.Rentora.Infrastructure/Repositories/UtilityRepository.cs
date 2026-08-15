@@ -125,9 +125,9 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             return objResponseInfo;
         }
 
-        public async Task<FilterUtilityChargeResponseInfo> GetUtilityChargesAsync(FilterRequestInfo objRequestInfo)
+        public async Task<FilterResponseInfo> GetUtilityChargesAsync(FilterRequestInfo objRequestInfo)
         {
-            FilterUtilityChargeResponseInfo objResponseInfo = new FilterUtilityChargeResponseInfo();
+            FilterResponseInfo objResponseInfo = new FilterResponseInfo();
 
             var cmd = new SqlCommand(DBConstants.USP_RentUtilityCharge_List);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -147,13 +147,13 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
 
             if (dt != null && dt.Rows.Count > 0)
             {
-                objResponseInfo.objUtilityCharges = _dbHelper.ConvertDataTable<UtilityChargeInfo>(dt);
+                objResponseInfo.objFilterData = _dbHelper.ConvertDataTable<UtilityChargeInfo>(dt);
                 objResponseInfo.Status = StatusConstants.Success;
                 objResponseInfo.Message = "Utility charges retrieved successfully.";
             }
             else
             {
-                objResponseInfo.objUtilityCharges = new List<UtilityChargeInfo>();
+                objResponseInfo.objFilterData = new List<UtilityChargeInfo>();
                 objResponseInfo.Status = StatusConstants.Success;
                 objResponseInfo.Message = "No utility charges found.";
             }

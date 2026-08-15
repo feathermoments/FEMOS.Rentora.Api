@@ -27,5 +27,6 @@ namespace FEMOS.Rentora.Application.Interfaces
         Task<BillingCycleTypeResponseInfo> GetBillingCycleTypesAsync();
         Task<ProrationTypeResponseInfo> GetProrationTypesAsync();
         Task<UtilityTypeResponseInfo> GetUtilityTypesAsync();
+        Task<RentTerminationRequestStatusResponseInfo> GetRentTerminationRequestStatusesAsync();
     }
 }

@@ -194,5 +194,16 @@ namespace FEMOS.Rentora.Application.Services
                 Message = "Utility types retrieved successfully."
             };
         }
+
+        public async Task<RentTerminationRequestStatusResponseInfo> GetRentTerminationRequestStatusesAsync()
+        {
+            List<RentTerminationRequestStatusInfo> objTerminationRequestStatuses = await _masterRepository.GetRentTerminationRequestStatusesAsync();
+            return new RentTerminationRequestStatusResponseInfo
+            {
+                objTerminationRequestStatuses = objTerminationRequestStatuses,
+                Status = StatusConstants.Success,
+                Message = "Termination request statuses retrieved successfully."
+            };
+        }
     }
 }

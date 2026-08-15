@@ -33,7 +33,7 @@ namespace FEMOS.Rentora.Application.Services
             return await _utilityRepository.GetUtilityChargeDetailsAsync(userPublicId, utilityChargeUniqueId);
         }
 
-        public async Task<FilterUtilityChargeResponseInfo> GetUtilityChargesAsync(FilterRequestInfo objRequestInfo)
+        public async Task<FilterResponseInfo> GetUtilityChargesAsync(FilterRequestInfo objRequestInfo)
         {
             return await _utilityRepository.GetUtilityChargesAsync(objRequestInfo);
         }

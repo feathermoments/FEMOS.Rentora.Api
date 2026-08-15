@@ -14,6 +14,12 @@ namespace FEMOS.Rentora.Infrastructure.Interfaces
         Task<RentAgreementResponseInfo> SaveRentAgreementAsync(RentAgreementRequestInfo objRequestInfo);
         Task<RentAgreementInfo> GetRentAgreementAsync(Guid userPublicId, long TenantAssignmentId);
         Task<BaseResponseInfo> DeleteRentAgreementAsync(Guid userPublicId, long RentAgreementId, long TenantAssignmentId);
-        Task<FilterRentAgreementResponseInfo> GetRentAgreementsAsync(FilterRequestInfo objRequestInfo);
+        Task<FilterResponseInfo> GetRentAgreementsAsync(FilterRequestInfo objRequestInfo);
+        Task<RentAgreementTerminationRequestResponseInfo> CreateTerminationRequestAsync(CreateRentAgreementTerminationRequestInfo objRequestInfo);
+        Task<FilterResponseInfo> GetTerminationRequestsAsync(FilterRequestInfo objRequestInfo);
+        Task<RentAgreementTerminationRequestResponseInfo> GetTerminationRequestDetailsAsync(Guid userPublicId, Guid terminationRequestUniqueId);
+        Task<BaseResponseInfo> ApproveTerminationRequestAsync(Guid userPublicId, Guid terminationRequestUniqueId, string actionRemarks);
+        Task<BaseResponseInfo> RejectTerminationRequestAsync(Guid userPublicId, Guid terminationRequestUniqueId, string actionRemarks);
+        Task<BaseResponseInfo> CancelTerminationRequestAsync(Guid userPublicId, Guid terminationRequestUniqueId, string actionRemarks);
     }
 }

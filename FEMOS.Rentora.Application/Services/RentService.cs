@@ -23,7 +23,7 @@ namespace FEMOS.Rentora.Application.Services
         }
 
         //Invoice
-        public async Task<FilterRentInvoiceResponseInfo> GetRentInvoicesAsync(FilterRequestInfo objRequestInfo)
+        public async Task<FilterResponseInfo> GetRentInvoicesAsync(FilterRequestInfo objRequestInfo)
         {
             return await _rentRepository.GetRentInvoicesAsync(objRequestInfo);
         }
@@ -50,7 +50,7 @@ namespace FEMOS.Rentora.Application.Services
             return await _rentRepository.SaveRentPaymentAsync(objRequestInfo);
         }
 
-        public async Task<FilterRentPaymentResponseInfo> GetRentPaymentsAsync(FilterRequestInfo objRequestInfo)
+        public async Task<FilterResponseInfo> GetRentPaymentsAsync(FilterRequestInfo objRequestInfo)
         {
             return await _rentRepository.GetRentPaymentsAsync(objRequestInfo);
         }
@@ -71,7 +71,7 @@ namespace FEMOS.Rentora.Application.Services
             return objResponseInfo;
         }
 
-        public async Task<FilterTenantSecurityDepositResponseInfo> GetTenantSecurityDepositsAsync(FilterRequestInfo objRequestInfo)
+        public async Task<FilterResponseInfo> GetTenantSecurityDepositsAsync(FilterRequestInfo objRequestInfo)
         {
             return await _rentRepository.GetTenantSecurityDepositsAsync(objRequestInfo);
         }

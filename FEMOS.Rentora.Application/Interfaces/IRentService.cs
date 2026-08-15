@@ -11,17 +11,17 @@ namespace FEMOS.Rentora.Application.Interfaces
 {
     public interface IRentService
     {
-        Task<FilterRentInvoiceResponseInfo> GetRentInvoicesAsync(FilterRequestInfo objRequestInfo);
+        Task<FilterResponseInfo> GetRentInvoicesAsync(FilterRequestInfo objRequestInfo);
 
         Task<RentInvoiceResponseInfo> GetRentInvoiceDetailsAsync(Guid userPublicId, long propertyId, long rentInvoiceId);
 
         Task<RentPaymentResponseInfo> SaveRentPaymentAsync(RentPaymentRequestInfo objRequestInfo);
 
-        Task<FilterRentPaymentResponseInfo> GetRentPaymentsAsync(FilterRequestInfo objRequestInfo);
+        Task<FilterResponseInfo> GetRentPaymentsAsync(FilterRequestInfo objRequestInfo);
 
         Task<BaseResponseInfo> UpdateRentPaymentActionAsync(RentPaymentActionRequestInfo objRequestInfo);
         Task<RentPaymentResponseInfo> GetRentPaymentDetailsAsync(Guid userPublicId, long propertyId, long rentPaymentId);
-        Task<FilterTenantSecurityDepositResponseInfo> GetTenantSecurityDepositsAsync(FilterRequestInfo objRequestInfo);
+        Task<FilterResponseInfo> GetTenantSecurityDepositsAsync(FilterRequestInfo objRequestInfo);
         Task<TenantSecurityDepositResponseInfo> GetTenantSecurityDepositDetailsAsync(Guid userPublicId, long tenantSecurityDepositId, long rentAgreementId, long tenantAssignmentId);
         Task<DepositTransactionListResponseInfo> GetTenantSecurityDepositTransactionsAsync(Guid userPublicId, long tenantSecurityDepositId, long rentAgreementId, long tenantAssignmentId);
     }

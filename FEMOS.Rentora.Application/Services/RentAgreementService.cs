@@ -54,9 +54,39 @@ namespace FEMOS.Rentora.Application.Services
             return await _rentAgreementRepository.DeleteRentAgreementAsync(userPublicId, rentAgreementId, tenantAssignmentId);
         }
 
-        public async Task<FilterRentAgreementResponseInfo> GetRentAgreementsAsync(FilterRequestInfo objRequestInfo)
+        public async Task<FilterResponseInfo> GetRentAgreementsAsync(FilterRequestInfo objRequestInfo)
         {
             return await _rentAgreementRepository.GetRentAgreementsAsync(objRequestInfo);
+        }
+
+        public async Task<RentAgreementTerminationRequestResponseInfo> CreateTerminationRequestAsync(CreateRentAgreementTerminationRequestInfo objRequestInfo)
+        {
+            return await _rentAgreementRepository.CreateTerminationRequestAsync(objRequestInfo);
+        }
+
+        public async Task<FilterResponseInfo> GetTerminationRequestsAsync(FilterRequestInfo objRequestInfo)
+        {
+            return await _rentAgreementRepository.GetTerminationRequestsAsync(objRequestInfo);
+        }
+
+        public async Task<RentAgreementTerminationRequestResponseInfo> GetTerminationRequestDetailsAsync(Guid userPublicId, Guid terminationRequestUniqueId)
+        {
+            return await _rentAgreementRepository.GetTerminationRequestDetailsAsync(userPublicId, terminationRequestUniqueId);
+        }
+
+        public async Task<BaseResponseInfo> ApproveTerminationRequestAsync(Guid userPublicId, Guid terminationRequestUniqueId, string actionRemarks)
+        {
+            return await _rentAgreementRepository.ApproveTerminationRequestAsync(userPublicId, terminationRequestUniqueId, actionRemarks);
+        }
+
+        public async Task<BaseResponseInfo> RejectTerminationRequestAsync(Guid userPublicId, Guid terminationRequestUniqueId, string actionRemarks)
+        {
+            return await _rentAgreementRepository.RejectTerminationRequestAsync(userPublicId, terminationRequestUniqueId, actionRemarks);
+        }
+
+        public async Task<BaseResponseInfo> CancelTerminationRequestAsync(Guid userPublicId, Guid terminationRequestUniqueId, string actionRemarks)
+        {
+            return await _rentAgreementRepository.CancelTerminationRequestAsync(userPublicId, terminationRequestUniqueId, actionRemarks);
         }
     }
 }

@@ -31,6 +31,10 @@ namespace FEMOS.Rentora.Domain.Entities
         public long? RentInvoiceId { get; set; }
         public bool? IsInvoiced { get; set; }
 
+        // Termination Request Filter
+        public short? TerminationRequestStatusId { get; set; }
+        public int? RequestedByUserId { get; set; }
+
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 20;
     }

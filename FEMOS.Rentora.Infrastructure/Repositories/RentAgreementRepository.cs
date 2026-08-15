@@ -97,7 +97,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             };
         }
 
-        public async Task<FilterRentAgreementResponseInfo> GetRentAgreementsAsync(FilterRequestInfo objRequestInfo)
+        public async Task<FilterResponseInfo> GetRentAgreementsAsync(FilterRequestInfo objRequestInfo)
         {
             var cmd = new SqlCommand(DBConstants.USP_RentAgreement_List);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -111,12 +111,159 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@PageSize", objRequestInfo.objFilterInfo.PageSize);
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
             List<RentAgreementInfo> objRentAgreements = _dbHelper.ConvertDataTable<RentAgreementInfo>(dt);
-            return new FilterRentAgreementResponseInfo()
+            return new FilterResponseInfo()
             {
                 Status = "Success",
                 Message = "Rent agreements retrieved successfully.",
-                objRentAgreements = objRentAgreements
+                objFilterData = objRentAgreements
             };
+        }
+
+        public async Task<RentAgreementTerminationRequestResponseInfo> CreateTerminationRequestAsync(CreateRentAgreementTerminationRequestInfo objRequestInfo)
+        {
+            RentAgreementTerminationRequestResponseInfo objResponseInfo = new RentAgreementTerminationRequestResponseInfo();
+
+            var cmd = new SqlCommand(DBConstants.USP_RentAgreement_TerminationRequest_Create);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@RentAgreementId", objRequestInfo.objTerminationRequestInfo.RentAgreementId);
+            cmd.Parameters.AddWithValue("@TerminationDate", objRequestInfo.objTerminationRequestInfo.TerminationDate);
+            cmd.Parameters.AddWithValue("@Reason", string.IsNullOrEmpty(objRequestInfo.objTerminationRequestInfo.Reason) ? DBNull.Value : objRequestInfo.objTerminationRequestInfo.Reason);
+            cmd.Parameters.AddWithValue("@RequestedByUserId", objRequestInfo.objTerminationRequestInfo.RequestedByUserId);
+            cmd.Parameters.AddWithValue("@Notes", string.IsNullOrEmpty(objRequestInfo.objTerminationRequestInfo.Notes) ? DBNull.Value : objRequestInfo.objTerminationRequestInfo.Notes);
+
+            var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            var dbResponse = await _dbHelper.GetDBResponse(result);
+
+            if (dbResponse.Status == StatusConstants.Success)
+            {
+                objResponseInfo.Status = StatusConstants.Success;
+                objResponseInfo.Message = "Termination request created successfully.";
+            }
+            else
+            {
+                objResponseInfo.Status = StatusConstants.Failure;
+                objResponseInfo.Message = dbResponse.Message;
+            }
+
+            return objResponseInfo;
+        }
+
+        public async Task<FilterResponseInfo> GetTerminationRequestsAsync(FilterRequestInfo objRequestInfo)
+        {
+            FilterResponseInfo objResponseInfo = new FilterResponseInfo();
+
+            var cmd = new SqlCommand(DBConstants.USP_RentAgreement_TerminationRequest_List);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
+            cmd.Parameters.AddWithValue("@RentAgreementId", (object?)objRequestInfo.objFilterInfo.RentAgreementId ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@TenantAssignmentId", (object?)objRequestInfo.objFilterInfo.TenantAssignmentId ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@TerminationRequestStatusId", (object?)objRequestInfo.objFilterInfo.TerminationRequestStatusId ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@RequestedByUserId", (object?)objRequestInfo.objFilterInfo.RequestedByUserId ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@FromDate", (object?)objRequestInfo.objFilterInfo.FromDate ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@ToDate", (object?)objRequestInfo.objFilterInfo.ToDate ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@PageNumber", objRequestInfo.objFilterInfo.PageNumber);
+            cmd.Parameters.AddWithValue("@PageSize", objRequestInfo.objFilterInfo.PageSize);
+
+            DataTable dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                objResponseInfo.objFilterData = _dbHelper.ConvertDataTable<RentAgreementTerminationRequestInfo>(dt);
+                objResponseInfo.Status = StatusConstants.Success;
+                objResponseInfo.Message = "Termination requests retrieved successfully.";
+            }
+            else
+            {
+                objResponseInfo.objFilterData = new List<RentAgreementTerminationRequestInfo>();
+                objResponseInfo.Status = StatusConstants.Success;
+                objResponseInfo.Message = "No termination requests found.";
+            }
+
+            return objResponseInfo;
+        }
+
+        public async Task<RentAgreementTerminationRequestResponseInfo> GetTerminationRequestDetailsAsync(Guid userPublicId, Guid terminationRequestUniqueId)
+        {
+            RentAgreementTerminationRequestResponseInfo objResponseInfo = new RentAgreementTerminationRequestResponseInfo();
+
+            var cmd = new SqlCommand(DBConstants.USP_RentAgreement_TerminationRequest_Get);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@TerminationRequestUniqueId", terminationRequestUniqueId);
+
+            DataTable dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                var terminationRequest = _dbHelper.ConvertDataTable<RentAgreementTerminationRequestInfo>(dt).FirstOrDefault();
+                objResponseInfo.objTerminationRequestInfo = terminationRequest;
+                objResponseInfo.Status = StatusConstants.Success;
+                objResponseInfo.Message = "Termination request details retrieved successfully.";
+            }
+            else
+            {
+                objResponseInfo.Status = StatusConstants.Failure;
+                objResponseInfo.Message = "Termination request not found.";
+            }
+
+            return objResponseInfo;
+        }
+
+        public async Task<BaseResponseInfo> ApproveTerminationRequestAsync(Guid userPublicId, Guid terminationRequestUniqueId, string actionRemarks)
+        {
+            BaseResponseInfo objResponseInfo = new BaseResponseInfo();
+
+            var cmd = new SqlCommand(DBConstants.USP_RentAgreement_TerminationRequest_Approve);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@UniqueId", terminationRequestUniqueId);
+            cmd.Parameters.AddWithValue("@ActionRemarks", string.IsNullOrEmpty(actionRemarks) ? DBNull.Value : actionRemarks);
+
+            var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            var dbResponse = await _dbHelper.GetDBResponse(result);
+
+            objResponseInfo.Status = dbResponse.Status;
+            objResponseInfo.Message = dbResponse.Message;
+
+            return objResponseInfo;
+        }
+
+        public async Task<BaseResponseInfo> RejectTerminationRequestAsync(Guid userPublicId, Guid terminationRequestUniqueId, string actionRemarks)
+        {
+            BaseResponseInfo objResponseInfo = new BaseResponseInfo();
+
+            var cmd = new SqlCommand(DBConstants.USP_RentAgreement_TerminationRequest_Reject);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@UniqueId", terminationRequestUniqueId);
+            cmd.Parameters.AddWithValue("@ActionRemarks", string.IsNullOrEmpty(actionRemarks) ? DBNull.Value : actionRemarks);
+
+            var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            var dbResponse = await _dbHelper.GetDBResponse(result);
+
+            objResponseInfo.Status = dbResponse.Status;
+            objResponseInfo.Message = dbResponse.Message;
+
+            return objResponseInfo;
+        }
+
+        public async Task<BaseResponseInfo> CancelTerminationRequestAsync(Guid userPublicId, Guid terminationRequestUniqueId, string actionRemarks)
+        {
+            BaseResponseInfo objResponseInfo = new BaseResponseInfo();
+
+            var cmd = new SqlCommand(DBConstants.USP_RentAgreement_TerminationRequest_Cancel);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@UniqueId", terminationRequestUniqueId);
+            cmd.Parameters.AddWithValue("@ActionRemarks", string.IsNullOrEmpty(actionRemarks) ? DBNull.Value : actionRemarks);
+
+            var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            var dbResponse = await _dbHelper.GetDBResponse(result);
+
+            objResponseInfo.Status = dbResponse.Status;
+            objResponseInfo.Message = dbResponse.Message;
+
+            return objResponseInfo;
         }
     }
 }

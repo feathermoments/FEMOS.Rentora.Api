@@ -14,6 +14,6 @@ namespace FEMOS.Rentora.Infrastructure.Interfaces
         Task<UtilityChargeResponseInfo> SaveUtilityChargeAsync(UtilityChargeRequestInfo objRequestInfo);
         Task<BaseResponseInfo> DeleteUtilityChargeAsync(Guid userPublicId, Guid utilityChargeUniqueId);
         Task<UtilityChargeResponseInfo> GetUtilityChargeDetailsAsync(Guid userPublicId, Guid utilityChargeUniqueId);
-        Task<FilterUtilityChargeResponseInfo> GetUtilityChargesAsync(FilterRequestInfo objRequestInfo);
+        Task<FilterResponseInfo> GetUtilityChargesAsync(FilterRequestInfo objRequestInfo);
     }
 }
