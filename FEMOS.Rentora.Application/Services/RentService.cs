@@ -22,41 +22,6 @@ namespace FEMOS.Rentora.Application.Services
             _encryptDecryptService = encryptDecryptService;
         }
 
-        //Agreement
-        public async Task<BaseResponseInfo> DeleteRentAgreementAsync(Guid userPublicId, long RentAgreementId, long TenantAssignmentId)
-        {
-            return await _rentRepository.DeleteRentAgreementAsync(userPublicId, RentAgreementId, TenantAssignmentId);
-        }
-
-        public async Task<RentAgreementResponseInfo> GetRentAgreementAsync(Guid userPublicId, long TenantAssignmentId)
-        {
-            RentAgreementResponseInfo objResponseInfo = new RentAgreementResponseInfo();
-            objResponseInfo.objRentAgreementInfo = await _rentRepository.GetRentAgreementAsync(userPublicId, TenantAssignmentId);
-            if (objResponseInfo.objRentAgreementInfo != null)
-            {
-                objResponseInfo.Status = StatusConstants.Success;
-                objResponseInfo.Message = "Rent agreement details retrieved successfully.";
-            }
-            else
-            {
-                objResponseInfo.objRentAgreementInfo = new RentAgreementInfo()
-                {
-                    RentAgreementId = 0,
-                    TenantAssignmentId = TenantAssignmentId,
-                    AgreementStatusId = 4,
-                    AgreementStatus = "Draft (Pending)"
-                };
-                objResponseInfo.Status = StatusConstants.Failure;
-                objResponseInfo.Message = "Rent agreement not found. Create a new draft.";
-            }
-            return objResponseInfo;
-        }
-
-        public async Task<RentAgreementResponseInfo> SaveRentAgreementAsync(RentAgreementRequestInfo objRequestInfo)
-        {
-            return await _rentRepository.SaveRentAgreementAsync(objRequestInfo);
-        }
-
         //Invoice
         public async Task<FilterRentInvoiceResponseInfo> GetRentInvoicesAsync(FilterRequestInfo objRequestInfo)
         {
@@ -104,11 +69,6 @@ namespace FEMOS.Rentora.Application.Services
                 objResponseInfo.objRentPaymentInfo.EmailAddress = _encryptDecryptService.Decrypt(objResponseInfo.objRentPaymentInfo.EmailAddress);
             }
             return objResponseInfo;
-        }
-
-        public async Task<FilterRentAgreementResponseInfo> GetRentAgreementsAsync(FilterRequestInfo objRequestInfo)
-        {
-            return await _rentRepository.GetRentAgreementsAsync(objRequestInfo);
         }
 
         public async Task<FilterTenantSecurityDepositResponseInfo> GetTenantSecurityDepositsAsync(FilterRequestInfo objRequestInfo)

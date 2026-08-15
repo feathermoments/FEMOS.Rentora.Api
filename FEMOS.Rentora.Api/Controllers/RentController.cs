@@ -1,5 +1,4 @@
 ﻿using FEMOS.Rentora.Application.Interfaces;
-using FEMOS.Rentora.Application.Interfaces;
 using FEMOS.Rentora.Domain.Requests;
 using FEMOS.Rentora.Domain.Responses;
 using Microsoft.AspNetCore.Http;
@@ -15,41 +14,6 @@ namespace FEMOS.Rentora.Api.Controllers
         public RentController(IRentService rentService)
         {
             _rentService = rentService;
-        }
-
-        [HttpPost("save-rent-agreement")]
-        public async Task<IActionResult> SaveRentAgreement(RentAgreementRequestInfo objRequestInfo)
-        {
-            if (objRequestInfo == null)
-            {
-                throw new ArgumentNullException(nameof(objRequestInfo));
-            }
-            var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
-            if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
-                return Unauthorized();
-            objRequestInfo.UserPublicId = userPublicId;
-            var result = await _rentService.SaveRentAgreementAsync(objRequestInfo);
-            return Ok(result);
-        }
-
-        [HttpGet("agreement-details/{tenantAssignmentId}")]
-        public async Task<IActionResult> GetRentAgreement(long tenantAssignmentId)
-        {
-            var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
-            if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
-                return Unauthorized();
-            var rentAgreement = await _rentService.GetRentAgreementAsync(userPublicId, tenantAssignmentId);
-            return Ok(rentAgreement);
-        }
-
-        [HttpDelete("delete-rent-agreement/{rentAgreementId}/{tenantAssignmentId}")]
-        public async Task<IActionResult> DeleteRentAgreement(long rentAgreementId, long tenantAssignmentId)
-        {
-            var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
-            if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
-                return Unauthorized();
-            var result = await _rentService.DeleteRentAgreementAsync(userPublicId, rentAgreementId, tenantAssignmentId);
-            return Ok(result);
         }
 
         [HttpPost("get-rent-invoices")]
@@ -130,21 +94,6 @@ namespace FEMOS.Rentora.Api.Controllers
                 return Unauthorized();
             var rentAgreement = await _rentService.GetRentPaymentDetailsAsync(userPublicId, propertyId, rentPaymentId);
             return Ok(rentAgreement);
-        }
-
-        [HttpPost("get-rent-agreements")]
-        public async Task<IActionResult> GetRentAgreements(FilterRequestInfo objRequestInfo)
-        {
-            if (objRequestInfo == null)
-            {
-                throw new ArgumentNullException(nameof(objRequestInfo));
-            }
-            var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
-            if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
-                return Unauthorized();
-            objRequestInfo.UserPublicId = userPublicId;
-            var result = await _rentService.GetRentAgreementsAsync(objRequestInfo);
-            return Ok(result);
         }
 
         /// <summary>
