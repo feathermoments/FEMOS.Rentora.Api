@@ -11,13 +11,13 @@ namespace FEMOS.Rentora.Domain.Entities
     public class RentPaymentInfo
     {
         public long RentPaymentId { get; set; }
-        public string ReceiptNumber { get; set; }
+        public string? ReceiptNumber { get; set; }
         public DateTime PaymentDate { get; set; }
-        public string PaymentMethod { get; set; }
+        public string? PaymentMethod { get; set; }
         public string TransactionReferenceNo { get; set; }
         public decimal PaymentAmount { get; set; }
         public int PaymentTypeId { get; set; }
-        public string PaymentStatus { get; set; }
+        public string? PaymentStatus { get; set; }
         /// <summary>
         /// save fields for audit purpose, who paid the amount
         /// </summary>
@@ -43,6 +43,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public long RentInvoiceId { get; set; }
         public long PaidByUserId { get; set; }
         public decimal PaidAmount { get; set; }
+        public decimal RequestedPaymentAmount { get; set; }
         public DateTime PaidOn { get; set; }
         public string? PaymentGatewayTransactionId { get; set; }
         public long ReceivedBy { get; set; }

@@ -15,7 +15,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public long TenantAssignmentId { get; set; }
         public string? TenantName { get; set; }
         public string? UnitNumber { get; set; }
-        public short UtilityTypeId { get; set; }
+        public int UtilityTypeId { get; set; }
         public string? UtilityType { get; set; }
         public bool IsMeterBased { get; set; }
         public DateTime ChargeDate { get; set; }

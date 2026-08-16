@@ -104,6 +104,18 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string USP_RentAgreement_TerminationRequest_Cancel = "dbo.USP_RentAgreement_TerminationRequest_Cancel";
         public const string sp_Mst_Get_RentTerminationRequestStatuses = "dbo.sp_Mst_Get_RentTerminationRequestStatuses";
 
+        // Move Out Settlement
+        public const string USP_MoveOutSettlement_Create = "dbo.USP_MoveOutSettlement_Create";
+        public const string USP_MoveOutSettlement_Details = "dbo.USP_MoveOutSettlement_Details";
+        public const string USP_MoveOutSettlement_GetPendingActions = "dbo.USP_MoveOutSettlement_GetPendingActions";
+        public const string USP_MoveOutSettlement_List = "dbo.USP_MoveOutSettlement_List";
+        public const string USP_MoveOutSettlement_Approve = "dbo.USP_MoveOutSettlement_Approve";
+        public const string USP_MoveOutSettlement_Payment_Approve = "dbo.USP_MoveOutSettlement_Payment_Approve";
+        public const string USP_MoveOutSettlement_Payment_Reject = "dbo.USP_MoveOutSettlement_Payment_Reject";
+        public const string USP_MoveOutSettlement_Refund_Confirm = "dbo.USP_MoveOutSettlement_Refund_Confirm";
+        public const string USP_MoveOutSettlement_Refund_MarkPaid = "dbo.USP_MoveOutSettlement_Refund_MarkPaid";
+        public const string USP_MoveOutSettlement_Refund_Reject = "dbo.USP_MoveOutSettlement_Refund_Reject";
+
         //Menu
         public const string USP_GetUserMenus = "dbo.USP_GetUserMenus";
         public const string USP_GetUserMenuPermissions = "dbo.USP_GetUserMenuPermissions";

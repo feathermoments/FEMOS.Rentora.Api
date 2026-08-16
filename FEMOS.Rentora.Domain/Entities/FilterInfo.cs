@@ -34,6 +34,10 @@ namespace FEMOS.Rentora.Domain.Entities
         // Termination Request Filter
         public short? TerminationRequestStatusId { get; set; }
 
+        // Move Out Settlement Filter
+        public Guid? UniqueId { get; set; }
+        public short? SettlementStatusId { get; set; }
+
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 20;
     }
