@@ -134,16 +134,8 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
             var dbResponse = await _dbHelper.GetDBResponse(result);
 
-            if (dbResponse.Status == StatusConstants.Success)
-            {
-                objResponseInfo.Status = StatusConstants.Success;
-                objResponseInfo.Message = "Termination request created successfully.";
-            }
-            else
-            {
-                objResponseInfo.Status = StatusConstants.Failure;
-                objResponseInfo.Message = dbResponse.Message;
-            }
+            objResponseInfo.Status = dbResponse.Status;
+            objResponseInfo.Message = dbResponse.Message;
 
             return objResponseInfo;
         }
