@@ -74,6 +74,21 @@ namespace FEMOS.Rentora.Api.Controllers
             return Ok(result);
         }
 
+        [HttpPost("create-payment")]
+        public async Task<IActionResult> CreatePayment(MoveOutSettlementCreateRequestInfo objRequestInfo)
+        {
+            if (objRequestInfo == null || objRequestInfo.UniqueId == Guid.Empty)
+            {
+                throw new ArgumentNullException(nameof(objRequestInfo));
+            }
+            var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
+            if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
+                return Unauthorized();
+            objRequestInfo.UserPublicId = userPublicId;
+            var result = await _moveOutSettlementService.CreatePaymentAsync(objRequestInfo);
+            return Ok(result);
+        }
+
         [HttpPost("approve-payment")]
         public async Task<IActionResult> ApprovePayment(MoveOutSettlementActionRequestInfo objRequestInfo)
         {
@@ -120,7 +135,7 @@ namespace FEMOS.Rentora.Api.Controllers
         }
 
         [HttpPost("mark-refund-paid")]
-        public async Task<IActionResult> MarkRefundPaid(MoveOutSettlementRefundRequestInfo objRequestInfo)
+        public async Task<IActionResult> MarkRefundPaid(MoveOutSettlementCreateRequestInfo objRequestInfo)
         {
             if (objRequestInfo == null || objRequestInfo.UniqueId == Guid.Empty)
             {

@@ -8,6 +8,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public string AgreementStatus { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public DateTime ActualEndDate { get; set; }
         public int DaysRemaining { get; set; }
         public decimal MonthlyRent { get; set; }
         public decimal SecurityDeposit { get; set; }

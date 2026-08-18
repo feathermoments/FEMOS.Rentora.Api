@@ -43,7 +43,12 @@ namespace FEMOS.Rentora.Application.Services
             return await _moveOutSettlementRepository.ApproveSettlementAsync(uniqueId, userPublicId);
         }
 
-        public async Task<BaseResponseInfo> ApprovePaymentAsync(MoveOutSettlementActionRequestInfo objRequestInfo)
+		public async Task<BaseResponseInfo> CreatePaymentAsync(MoveOutSettlementCreateRequestInfo objRequestInfo)
+		{
+			return await _moveOutSettlementRepository.CreatePaymentAsync(objRequestInfo);
+		}
+
+		public async Task<BaseResponseInfo> ApprovePaymentAsync(MoveOutSettlementActionRequestInfo objRequestInfo)
         {
             return await _moveOutSettlementRepository.ApprovePaymentAsync(objRequestInfo);
         }
@@ -58,7 +63,7 @@ namespace FEMOS.Rentora.Application.Services
             return await _moveOutSettlementRepository.ConfirmRefundAsync(objRequestInfo);
         }
 
-        public async Task<BaseResponseInfo> MarkRefundPaidAsync(MoveOutSettlementRefundRequestInfo objRequestInfo)
+        public async Task<BaseResponseInfo> MarkRefundPaidAsync(MoveOutSettlementCreateRequestInfo objRequestInfo)
         {
             return await _moveOutSettlementRepository.MarkRefundPaidAsync(objRequestInfo);
         }

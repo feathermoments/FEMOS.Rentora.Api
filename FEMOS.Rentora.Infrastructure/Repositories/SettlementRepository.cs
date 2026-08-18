@@ -113,6 +113,31 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             };
         }
 
+        public async Task<BaseResponseInfo> CreatePaymentAsync(MoveOutSettlementCreateRequestInfo objRequestInfo)
+        {
+            var cmd = new SqlCommand(DBConstants.USP_MoveOutSettlement_Payment_Create);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UniqueId", objRequestInfo.UniqueId);
+            cmd.Parameters.AddWithValue("@PaymentMethodId", objRequestInfo.objRentPaymentInfo.PaymentMethodId);
+            cmd.Parameters.AddWithValue("@TransactionReferenceNo", string.IsNullOrEmpty(objRequestInfo.objRentPaymentInfo.TransactionReferenceNo) ? DBNull.Value : objRequestInfo.objRentPaymentInfo.TransactionReferenceNo);
+            cmd.Parameters.AddWithValue("@PaymentGatewayTransactionId", string.IsNullOrEmpty(objRequestInfo.objRentPaymentInfo.PaymentGatewayTransactionId) ? DBNull.Value : objRequestInfo.objRentPaymentInfo.PaymentGatewayTransactionId);
+            cmd.Parameters.AddWithValue("@GatewayName", string.IsNullOrEmpty(objRequestInfo.objRentPaymentInfo.GatewayName) ? DBNull.Value : objRequestInfo.objRentPaymentInfo.GatewayName);
+            cmd.Parameters.AddWithValue("@GatewayResponse", string.IsNullOrEmpty(objRequestInfo.objRentPaymentInfo.GatewayResponse) ? DBNull.Value : objRequestInfo.objRentPaymentInfo.GatewayResponse);
+            cmd.Parameters.AddWithValue("@IsOnlinePayment", objRequestInfo.objRentPaymentInfo.IsOnlinePayment);
+            cmd.Parameters.AddWithValue("@ReferenceNumber", string.IsNullOrEmpty(objRequestInfo.objRentPaymentInfo.ReferenceNumber) ? DBNull.Value : objRequestInfo.objRentPaymentInfo.ReferenceNumber);
+            cmd.Parameters.AddWithValue("@Remarks", string.IsNullOrEmpty(objRequestInfo.objRentPaymentInfo.Remarks) ? DBNull.Value : objRequestInfo.objRentPaymentInfo.Remarks);
+            cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
+
+            var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            var dbResponse = await _dbHelper.GetDBResponse(result);
+
+            return new BaseResponseInfo()
+            {
+                Status = dbResponse.Status,
+                Message = dbResponse.Message
+            };
+        }
+
         public async Task<BaseResponseInfo> ApprovePaymentAsync(MoveOutSettlementActionRequestInfo objRequestInfo)
         {
             var cmd = new SqlCommand(DBConstants.USP_MoveOutSettlement_Payment_Approve);
@@ -167,7 +192,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             };
         }
 
-        public async Task<BaseResponseInfo> MarkRefundPaidAsync(MoveOutSettlementRefundRequestInfo objRequestInfo)
+        public async Task<BaseResponseInfo> MarkRefundPaidAsync(MoveOutSettlementCreateRequestInfo objRequestInfo)
         {
             var cmd = new SqlCommand(DBConstants.USP_MoveOutSettlement_Refund_MarkPaid);
             cmd.CommandType = CommandType.StoredProcedure;

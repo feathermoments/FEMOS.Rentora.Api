@@ -109,9 +109,12 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string USP_MoveOutSettlement_Details = "dbo.USP_MoveOutSettlement_Details";
         public const string USP_MoveOutSettlement_GetPendingActions = "dbo.USP_MoveOutSettlement_GetPendingActions";
         public const string USP_MoveOutSettlement_List = "dbo.USP_MoveOutSettlement_List";
-        public const string USP_MoveOutSettlement_Approve = "dbo.USP_MoveOutSettlement_Approve";
+        // Payment
+        public const string USP_MoveOutSettlement_Payment_Create = "USP_MoveOutSettlement_Payment_Create";
         public const string USP_MoveOutSettlement_Payment_Approve = "dbo.USP_MoveOutSettlement_Payment_Approve";
         public const string USP_MoveOutSettlement_Payment_Reject = "dbo.USP_MoveOutSettlement_Payment_Reject";
+        // Refund
+        public const string USP_MoveOutSettlement_Approve = "dbo.USP_MoveOutSettlement_Approve";
         public const string USP_MoveOutSettlement_Refund_Confirm = "dbo.USP_MoveOutSettlement_Refund_Confirm";
         public const string USP_MoveOutSettlement_Refund_MarkPaid = "dbo.USP_MoveOutSettlement_Refund_MarkPaid";
         public const string USP_MoveOutSettlement_Refund_Reject = "dbo.USP_MoveOutSettlement_Refund_Reject";

@@ -14,11 +14,12 @@ namespace FEMOS.Rentora.Application.Interfaces
         Task<MoveOutSettlementResponseInfo> GetSettlementDetailsAsync(Guid userPublicId, Guid uniqueId);
         Task<FilterResponseInfo> GetPendingActionsAsync(FilterRequestInfo objRequestInfo);
         Task<FilterResponseInfo> GetSettlementsAsync(FilterRequestInfo objRequestInfo);
-        Task<BaseResponseInfo> ApproveSettlementAsync(Guid uniqueId, Guid userPublicId);
+        Task<BaseResponseInfo> CreatePaymentAsync(MoveOutSettlementCreateRequestInfo objRequestInfo);
         Task<BaseResponseInfo> ApprovePaymentAsync(MoveOutSettlementActionRequestInfo objRequestInfo);
         Task<BaseResponseInfo> RejectPaymentAsync(MoveOutSettlementActionRequestInfo objRequestInfo);
+        Task<BaseResponseInfo> ApproveSettlementAsync(Guid uniqueId, Guid userPublicId);
         Task<BaseResponseInfo> ConfirmRefundAsync(MoveOutSettlementActionRequestInfo objRequestInfo);
-        Task<BaseResponseInfo> MarkRefundPaidAsync(MoveOutSettlementRefundRequestInfo objRequestInfo);
+        Task<BaseResponseInfo> MarkRefundPaidAsync(MoveOutSettlementCreateRequestInfo objRequestInfo);
         Task<BaseResponseInfo> RejectRefundAsync(MoveOutSettlementActionRequestInfo objRequestInfo);
     }
 }

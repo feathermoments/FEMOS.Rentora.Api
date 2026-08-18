@@ -13,7 +13,7 @@ namespace FEMOS.Rentora.Domain.Requests
         public string Remarks { get; set; }
     }
 
-    public class MoveOutSettlementRefundRequestInfo : BaseRequestInfo
+    public class MoveOutSettlementCreateRequestInfo : BaseRequestInfo
     {
         public Guid UniqueId { get; set; }
         public RentPaymentInfo objRentPaymentInfo { get; set; }
