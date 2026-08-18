@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FEMOS.Rentora.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,10 +16,11 @@ namespace FEMOS.Rentora.Domain.Entities
         public string City { get; set; } = string.Empty;
         public string State { get; set; } = string.Empty;
         public string AddressLine1 { get; set; } = string.Empty;
-        public int TotalUnits { get; set; }
-        public int OccupiedUnits { get; set; }
-        public int VacantUnits { get; set; }
         public int RoleId { get; set; }
         public string UserRole { get; set; } = string.Empty;
+        public int CurrentUnitId { get; set; }
+        public string CurrentUnitNumber { get; set; } = string.Empty;
+        public string RelationshipStatus { get; set; } = string.Empty;
+        public long TenantAssignmentId { get; set; }
     }
 }

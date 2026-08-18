@@ -30,12 +30,12 @@ namespace FEMOS.Rentora.Api.Controllers
         /// Retrieves the complete dashboard for the authenticated user with all assigned widgets.
         /// </summary>
         /// <param name="propertyId">The property ID for which to retrieve the dashboard</param>
-        /// <returns>Dashboard response containing all assigned widgets and their data</returns>
+        /// <param name="unitId">The unit ID for which to retrieve the dashboard</param>
         /// <response code="200">Dashboard retrieved successfully</response>
         /// <response code="400">Invalid property ID</response>
         /// <response code="401">Unauthorized</response>
         [HttpGet]
-        public async Task<IActionResult> GetDashboard(long propertyId)
+        public async Task<IActionResult> GetDashboard(long propertyId, long unitId)
         {
             if (propertyId <= 0)
                 return BadRequest(new { status = "Failure", message = "Invalid property ID." });
@@ -46,7 +46,7 @@ namespace FEMOS.Rentora.Api.Controllers
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
 
-            var dashboard = await _dashboardService.GetDashboardAsync(propertyId, userPublicId);
+            var dashboard = await _dashboardService.GetDashboardAsync(propertyId, unitId, userPublicId);
 
             if (dashboard.Status == "Failure")
                 return BadRequest(dashboard);

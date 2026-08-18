@@ -37,7 +37,7 @@ namespace FEMOS.Rentora.Application.Services
             _logger = logger;
         }
 
-        public async Task<DashboardResponseInfo> GetDashboardAsync(long propertyId, Guid userPublicId)
+        public async Task<DashboardResponseInfo> GetDashboardAsync(long propertyId, long unitId, Guid userPublicId)
         {
             var response = new DashboardResponseInfo();
             response.Status = StatusConstants.Success;
@@ -77,7 +77,7 @@ namespace FEMOS.Rentora.Application.Services
                         }
 
                         // Step 4: Execute widget to fetch data
-                        var widgetData = await widgetImplementation.GetDataAsync(propertyId, userPublicId);
+                        var widgetData = await widgetImplementation.GetDataAsync(propertyId, unitId, userPublicId);
 
                         // Step 5: Aggregate widget response
                         var widgetResponse = new DashboardWidgetResponseInfo

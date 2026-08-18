@@ -27,9 +27,9 @@ namespace FEMOS.Rentora.Application.Services.Widgets
 
         public string WidgetCode => "MY_HOME";
 
-        public async Task<object> GetDataAsync(long propertyId, Guid userPublicId)
+        public async Task<object> GetDataAsync(long propertyId, long unitId, Guid userPublicId)
         {
-            MyHomeInfo objMyHomeInfo = await _dashboardRepository.GetMyHomeAsync(propertyId, userPublicId);
+            MyHomeInfo objMyHomeInfo = await _dashboardRepository.GetMyHomeAsync(propertyId, unitId, userPublicId);
             if (objMyHomeInfo.objOwnerInfo != null)
             {
                 objMyHomeInfo.objOwnerInfo.MobileNumber = _encryptDecryptService.Decrypt(objMyHomeInfo.objOwnerInfo.MobileNumber);

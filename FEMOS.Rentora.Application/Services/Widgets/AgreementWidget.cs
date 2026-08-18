@@ -23,9 +23,9 @@ namespace FEMOS.Rentora.Application.Services.Widgets
 
         public string WidgetCode => "MY_AGREEMENT";
 
-        public async Task<object> GetDataAsync(long propertyId, Guid userPublicId)
+        public async Task<object> GetDataAsync(long propertyId, long unitId, Guid userPublicId)
         {
-            var data = await _dashboardRepository.GetAgreementAsync(propertyId, userPublicId);
+            var data = await _dashboardRepository.GetAgreementAsync(propertyId, unitId, userPublicId);
             return data;
         }
     }

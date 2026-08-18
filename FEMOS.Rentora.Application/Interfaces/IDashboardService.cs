@@ -15,6 +15,6 @@ namespace FEMOS.Rentora.Application.Interfaces
         /// <param name="userId">The authenticated user ID</param>
         /// <param name="roleId">The user's role ID</param>
         /// <returns>Dashboard response containing all assigned widgets and their data</returns>
-        Task<DashboardResponseInfo> GetDashboardAsync(long propertyId, Guid userPublicId);
+        Task<DashboardResponseInfo> GetDashboardAsync(long propertyId, long unitId, Guid userPublicId);
     }
 }

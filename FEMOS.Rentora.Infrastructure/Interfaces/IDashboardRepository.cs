@@ -43,12 +43,12 @@ namespace FEMOS.Rentora.Infrastructure.Interfaces
         /// <summary>
         /// Retrieves my home/unit data.
         /// </summary>
-        Task<MyHomeInfo> GetMyHomeAsync(long propertyId, Guid userPublicId);
+        Task<MyHomeInfo> GetMyHomeAsync(long propertyId, long unitId, Guid userPublicId);
 
         /// <summary>
         /// Retrieves agreement data.
         /// </summary>
-        Task<MyAgreementInfo> GetAgreementAsync(long propertyId, Guid userPublicId);
+        Task<MyAgreementInfo> GetAgreementAsync(long propertyId, long unitId, Guid userPublicId);
 
         /// <summary>
         /// Retrieves my requests data.
