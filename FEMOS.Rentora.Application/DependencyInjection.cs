@@ -28,6 +28,7 @@ namespace FEMOS.Rentora.Application
 
             // Domain services
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IEncryptDecryptService, EncryptDecryptService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITermsService, TermsService>();
@@ -50,6 +51,8 @@ namespace FEMOS.Rentora.Application
             services.AddScoped<IUtilityService, UtilityService>();
             services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<IDashboardService, DashboardService>();
+            services.AddScoped<IPermissionService, PermissionService>();
+            services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 
             // Dashboard widgets - register all implementations
             services.AddScoped<IDashboardWidget, PropertySummaryWidget>();

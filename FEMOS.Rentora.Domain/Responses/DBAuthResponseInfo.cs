@@ -10,6 +10,8 @@ namespace FEMOS.Rentora.Domain.Responses
     public class DBAuthResponseInfo : DBResponseInfo
     {
         public Guid UserPublicId { get; set; }
+        public long UserId { get; set; }
+        public long RoleId { get; set; }
         public string Role { get; set; }
         public bool IsNewUser { get; set; }
         public bool IsProfileComplete { get; set; }

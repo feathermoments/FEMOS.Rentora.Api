@@ -1,8 +1,10 @@
 using FEMOS.Rentora.Api.Filters;
+using FEMOS.Rentora.Api.Authorization;
 using FEMOS.Rentora.Api.Middleware;
 using FEMOS.Rentora.Application;
 using FEMOS.Rentora.Domain.Constants;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -45,6 +47,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+// Authorization - Register permission-based authorization
+builder.Services.AddAuthorization();
+builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
+
 // Registers: Infrastructure DI, CORS, Swagger Bearer
 builder.Services.AddApplicationServices(builder.Configuration);
 
@@ -56,7 +62,7 @@ if (builder.Environment.IsProduction() && (corsUrls == null || corsUrls.Length =
 {
     throw new Exception("CORS URLs must be set in production.");
 }
-
+    
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(ApiConstants.DefaultCorsPolicy, policy =>

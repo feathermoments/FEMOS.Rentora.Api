@@ -66,6 +66,8 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
 
             var row = dt.Rows[0];
             var userPublicId = row.Table.Columns.Contains("UserPublicId") ? (Guid)row["UserPublicId"] : Guid.Empty;
+            var userId = row.Table.Columns.Contains("UserId") ? Convert.ToInt64(row["UserId"]) : 0;
+            var roleId = row.Table.Columns.Contains("RoleId") ? Convert.ToInt64(row["RoleId"]) : 0;
             var role = row.Table.Columns.Contains("Role") ? row["Role"]?.ToString() ?? "User" : "User";
             var isNewUser = row.Table.Columns.Contains("IsNewUser") && Convert.ToBoolean(row["IsNewUser"]);
             bool IsProfileComplete = row.Table.Columns.Contains("IsProfileComplete") && Convert.ToBoolean(row["IsProfileComplete"]);
@@ -76,6 +78,8 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                     Status = StatusConstants.Success,
                     Message = ApiConstants.Successfull,
                     UserPublicId = userPublicId,
+                    UserId = userId,
+                    RoleId = roleId,
                     Role = role,
                     IsNewUser = isNewUser,
                     IsProfileComplete = IsProfileComplete

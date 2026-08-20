@@ -35,6 +35,10 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string sp_GetPropertyDetails = "dbo.sp_GetPropertyDetails";
         public const string sp_GetUserPropertyRole = "dbo.sp_GetUserPropertyRole";
 
+        // Property-Context Authorization (Rentora)
+        public const string USP_User_GetAccessibleProperties = "dbo.USP_User_GetAccessibleProperties";
+        public const string USP_User_GetPropertyPermissions = "dbo.USP_User_GetPropertyPermissions";
+
         // Unit
         public const string USP_PropertyUnit_List = "dbo.USP_PropertyUnit_List";
         public const string USP_PropertyUnit_Save = "dbo.USP_PropertyUnit_Save";
@@ -122,6 +126,15 @@ namespace FEMOS.Rentora.Domain.Constants
         //Menu
         public const string USP_GetUserMenus = "dbo.USP_GetUserMenus";
         public const string USP_GetUserMenuPermissions = "dbo.USP_GetUserMenuPermissions";
+
+        // Authorization & Permissions
+        public const string USP_User_GetPermissions = "dbo.USP_User_GetPermissions";
+        public const string USP_User_GetPermissionsByProperty = "dbo.USP_User_GetPermissionsByProperty";
+        public const string USP_User_GetPropertyRoleInfo = "dbo.USP_User_GetPropertyRoleInfo";
+        public const string USP_RefreshToken_Validate = "dbo.USP_RefreshToken_Validate";
+        public const string USP_RefreshToken_Create = "dbo.USP_RefreshToken_Create";
+        public const string USP_RefreshToken_Revoke = "dbo.USP_RefreshToken_Revoke";
+        public const string USP_RefreshToken_RevokeAll = "dbo.USP_RefreshToken_RevokeAll";
 
         // Dashboard
         public const string USP_Dashboard_GetWidgetsByRole = "dbo.USP_Dashboard_GetWidgetsByRole";

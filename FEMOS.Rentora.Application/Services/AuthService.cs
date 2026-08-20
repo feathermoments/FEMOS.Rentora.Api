@@ -17,12 +17,21 @@ namespace FEMOS.Rentora.Application.Services
         private readonly IJwtTokenService _jwtTokenService;
         private readonly IEncryptDecryptService _encryptDecryptService;
         private readonly IAuthRepository _authRepository;
+        private readonly IPermissionService _permissionService;
+        private readonly IRefreshTokenService _refreshTokenService;
 
-        public AuthService(IJwtTokenService jwtTokenService, IEncryptDecryptService encryptDecryptService, IAuthRepository authRespository)
+        public AuthService(
+            IJwtTokenService jwtTokenService, 
+            IEncryptDecryptService encryptDecryptService, 
+            IAuthRepository authRespository,
+            IPermissionService permissionService,
+            IRefreshTokenService refreshTokenService)
         {
             _jwtTokenService = jwtTokenService;
             _encryptDecryptService = encryptDecryptService;
             _authRepository = authRespository;
+            _permissionService = permissionService;
+            _refreshTokenService = refreshTokenService;
         }
 
         public async Task<SendOtpResponseInfo> SendOtpAsync(SendOtpInfo model)
@@ -47,18 +56,33 @@ namespace FEMOS.Rentora.Application.Services
 
             DBAuthResponseInfo objResponseInfo = await _authRepository.VerifyOtpAsync(model);
 
-            var token = "";
             if (objResponseInfo.UserPublicId != Guid.Empty)
             {
-                token = _jwtTokenService.GenerateToken(objResponseInfo.UserPublicId, objResponseInfo.Role);
+                // For Rentora: User authenticates with global role USER (2)
+                // Do NOT load permissions - permissions are property-specific
+                // Permissions will be loaded after user selects a property
+                var permissions = new List<string>(); // Empty at login
+
+                // Get accessible properties for property selection
+                var accessibleProperties = await _permissionService.GetAccessiblePropertiesAsync(objResponseInfo.UserPublicId);
+
+                // Generate access token with NO permissions (global role)
+                var accessToken = _jwtTokenService.GenerateToken(objResponseInfo.UserPublicId, objResponseInfo.Role, permissions);
+
+                // Generate refresh token
+                var refreshToken = await _refreshTokenService.CreateRefreshTokenAsync(objResponseInfo.UserId, objResponseInfo.UserPublicId);
 
                 return new VerifyOtpResponseInfo
                 {
                     Status = objResponseInfo.Status,
                     Message = objResponseInfo.Message,
-                    Token = token,
+                    Token = accessToken,
+                    RefreshToken = refreshToken,
+                    Permissions = permissions,  // Empty at login
+                    RoleId = objResponseInfo.RoleId,  // Global role = 2
                     IsNewUser = objResponseInfo.IsNewUser,
-                    IsProfileComplete = objResponseInfo.IsProfileComplete
+                    IsProfileComplete = objResponseInfo.IsProfileComplete,
+                    AccessibleProperties = accessibleProperties  // For property selection
                 };
             }
             else
