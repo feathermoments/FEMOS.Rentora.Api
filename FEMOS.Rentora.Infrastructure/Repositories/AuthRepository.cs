@@ -93,5 +93,66 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                 };
             }
         }
+
+        public async Task<bool> SaveRefreshTokenAsync(Guid userPublicId, string refreshToken, int expiryDays)
+        {
+            var cmd = new SqlCommand(DBConstants.sp_SaveRefreshToken);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@RefreshToken", refreshToken);
+            cmd.Parameters.AddWithValue("@ExpiryDays", expiryDays);
+
+            string result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            DBResponseInfo dbResponse = await _dbHelper.GetDBResponse(result);
+
+            return dbResponse.Status == StatusConstants.Success;
+        }
+
+        public async Task<RefreshTokenInfo> GetRefreshTokenAsync(Guid userPublicId)
+        {
+            var cmd = new SqlCommand(DBConstants.sp_GetRefreshToken);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+
+            var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+
+            if (dt.Rows.Count == 0)
+            {
+                return new RefreshTokenInfo();
+            }
+
+            var row = dt.Rows[0];
+            return new RefreshTokenInfo
+            {
+                UserPublicId = (Guid)row["UserPublicId"],
+                Token = row["Token"]?.ToString() ?? string.Empty,
+                ExpiryDate = Convert.ToDateTime(row["ExpiryDate"]),
+                IsRevoked = Convert.ToBoolean(row["IsRevoked"])
+            };
+        }
+
+        public async Task<bool> RevokeRefreshTokenAsync(Guid userPublicId)
+        {
+            var cmd = new SqlCommand(DBConstants.sp_RevokeRefreshToken);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+
+            string result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            DBResponseInfo dbResponse = await _dbHelper.GetDBResponse(result);
+
+            return dbResponse.Status == StatusConstants.Success;
+        }
+
+        public async Task<bool> RevokeAllRefreshTokensAsync(Guid userPublicId)
+        {
+            var cmd = new SqlCommand(DBConstants.sp_RevokeAllRefreshTokens);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+
+            string result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            DBResponseInfo dbResponse = await _dbHelper.GetDBResponse(result);
+
+            return dbResponse.Status == StatusConstants.Success;
+        }
     }
 }

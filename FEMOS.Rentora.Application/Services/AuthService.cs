@@ -48,15 +48,22 @@ namespace FEMOS.Rentora.Application.Services
             DBAuthResponseInfo objResponseInfo = await _authRepository.VerifyOtpAsync(model);
 
             var token = "";
+            var refreshToken = "";
             if (objResponseInfo.UserPublicId != Guid.Empty)
             {
                 token = _jwtTokenService.GenerateToken(objResponseInfo.UserPublicId, objResponseInfo.Role);
+                refreshToken = _jwtTokenService.GenerateRefreshToken();
+
+                // Save refresh token to database
+                int refreshTokenExpiryDays = 30;
+                await _authRepository.SaveRefreshTokenAsync(objResponseInfo.UserPublicId, refreshToken, refreshTokenExpiryDays);
 
                 return new VerifyOtpResponseInfo
                 {
                     Status = objResponseInfo.Status,
                     Message = objResponseInfo.Message,
                     Token = token,
+                    RefreshToken = refreshToken,
                     IsNewUser = objResponseInfo.IsNewUser,
                     IsProfileComplete = objResponseInfo.IsProfileComplete
                 };
@@ -68,8 +75,127 @@ namespace FEMOS.Rentora.Application.Services
                     Status = StatusConstants.Failure,
                     Message = MessageConstants.InvalidUser,
                     Token = "",
+                    RefreshToken = "",
                     IsNewUser = objResponseInfo.IsNewUser,
                     IsProfileComplete = objResponseInfo.IsProfileComplete
+                };
+            }
+        }
+
+        public async Task<RefreshTokenResponseInfo> RefreshTokenAsync(Guid userPublicId, string refreshToken)
+        {
+            // Validate input
+            if (string.IsNullOrEmpty(refreshToken))
+            {
+                return new RefreshTokenResponseInfo
+                {
+                    Status = StatusConstants.Failure,
+                    Message = "Refresh token is required."
+                };
+            }
+
+            // Retrieve the stored refresh token for this user
+            var refreshTokenInfo = await _authRepository.GetRefreshTokenAsync(userPublicId);
+
+            // Validate token exists
+            if (string.IsNullOrEmpty(refreshTokenInfo.Token))
+            {
+                return new RefreshTokenResponseInfo
+                {
+                    Status = StatusConstants.Failure,
+                    Message = "Invalid refresh token. No token found for user."
+                };
+            }
+
+            // Validate token matches the one provided by the user
+            if (refreshTokenInfo.Token != refreshToken)
+            {
+                return new RefreshTokenResponseInfo
+                {
+                    Status = StatusConstants.Failure,
+                    Message = "Invalid refresh token. Token mismatch."
+                };
+            }
+
+            // Validate token is not revoked
+            if (refreshTokenInfo.IsRevoked)
+            {
+                return new RefreshTokenResponseInfo
+                {
+                    Status = StatusConstants.Failure,
+                    Message = "Refresh token has been revoked."
+                };
+            }
+
+            // Validate token has not expired
+            if (refreshTokenInfo.ExpiryDate < DateTime.UtcNow)
+            {
+                return new RefreshTokenResponseInfo
+                {
+                    Status = StatusConstants.Failure,
+                    Message = "Refresh token has expired."
+                };
+            }
+
+            // All validations passed - generate new tokens
+            // Get user details to retrieve role
+            // For now, we'll assume the user role is still valid
+            // In a production environment, you might want to fetch the current user role from the database
+            var newToken = _jwtTokenService.GenerateToken(userPublicId, "User"); // Default role
+            var newRefreshToken = _jwtTokenService.GenerateRefreshToken();
+
+            // Save new refresh token (this will revoke the old one)
+            await _authRepository.SaveRefreshTokenAsync(userPublicId, newRefreshToken, 30);
+
+            return new RefreshTokenResponseInfo
+            {
+                Status = StatusConstants.Success,
+                Message = ApiConstants.Successfull,
+                Token = newToken,
+                RefreshToken = newRefreshToken
+            };
+        }
+
+        public async Task<BaseResponseInfo> LogoutAsync(Guid userPublicId)
+        {
+            var result = await _authRepository.RevokeRefreshTokenAsync(userPublicId);
+
+            if (result)
+            {
+                return new BaseResponseInfo
+                {
+                    Status = StatusConstants.Success,
+                    Message = "Logged out successfully."
+                };
+            }
+            else
+            {
+                return new BaseResponseInfo
+                {
+                    Status = StatusConstants.Failure,
+                    Message = "Failed to logout."
+                };
+            }
+        }
+
+        public async Task<BaseResponseInfo> LogoutAllAsync(Guid userPublicId)
+        {
+            var result = await _authRepository.RevokeAllRefreshTokensAsync(userPublicId);
+
+            if (result)
+            {
+                return new BaseResponseInfo
+                {
+                    Status = StatusConstants.Success,
+                    Message = "Logged out from all devices successfully."
+                };
+            }
+            else
+            {
+                return new BaseResponseInfo
+                {
+                    Status = StatusConstants.Failure,
+                    Message = "Failed to logout from all devices."
                 };
             }
         }

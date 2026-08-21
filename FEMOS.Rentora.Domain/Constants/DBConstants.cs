@@ -17,6 +17,10 @@ namespace FEMOS.Rentora.Domain.Constants
         // Auth
         public const string sp_SendOtp = "dbo.sp_SendOtp";
         public const string sp_VerifyOtp = "dbo.sp_VerifyOtp";
+        public const string sp_SaveRefreshToken = "dbo.sp_SaveRefreshToken";
+        public const string sp_GetRefreshToken = "dbo.sp_GetRefreshToken";
+        public const string sp_RevokeRefreshToken = "dbo.sp_RevokeRefreshToken";
+        public const string sp_RevokeAllRefreshTokens = "dbo.sp_RevokeAllRefreshTokens";
 
         // User
         public const string sp_GetUserProfile = "dbo.sp_GetUserProfile";
