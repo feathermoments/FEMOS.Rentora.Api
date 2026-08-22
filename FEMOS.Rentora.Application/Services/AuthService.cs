@@ -17,12 +17,18 @@ namespace FEMOS.Rentora.Application.Services
         private readonly IJwtTokenService _jwtTokenService;
         private readonly IEncryptDecryptService _encryptDecryptService;
         private readonly IAuthRepository _authRepository;
+        private readonly IAuthorizationService _authorizationService;
 
-        public AuthService(IJwtTokenService jwtTokenService, IEncryptDecryptService encryptDecryptService, IAuthRepository authRespository)
+        public AuthService(
+            IJwtTokenService jwtTokenService,
+            IEncryptDecryptService encryptDecryptService,
+            IAuthRepository authRespository,
+            IAuthorizationService authorizationService)
         {
             _jwtTokenService = jwtTokenService;
             _encryptDecryptService = encryptDecryptService;
             _authRepository = authRespository;
+            _authorizationService = authorizationService;
         }
 
         public async Task<SendOtpResponseInfo> SendOtpAsync(SendOtpInfo model)
@@ -51,7 +57,35 @@ namespace FEMOS.Rentora.Application.Services
             var refreshToken = "";
             if (objResponseInfo.UserPublicId != Guid.Empty)
             {
-                token = _jwtTokenService.GenerateToken(objResponseInfo.UserPublicId, objResponseInfo.Role);
+                // Load authorization data (property roles and permissions)
+                var authData = await _authorizationService.LoadUserAuthorizationAsync(objResponseInfo.UserPublicId);
+
+                // Generate token with authorization data included
+                if (authData.PropertyRoles.Count > 0 && authData.RolePermissions.Count > 0)
+                {
+                    // Convert DTOs to domain entities for token generation
+                    var propertyRoles = authData.PropertyRoles.Select(pr => new PropertyRoleInfo
+                    {
+                        PropertyPublicId = pr.PropertyPublicId,
+                        RoleId = pr.RoleId,
+                        RoleCode = pr.RoleCode
+                    }).ToList();
+
+                    var rolePermissions = authData.RolePermissions.Select(rp => new RolePermissionsInfo
+                    {
+                        RoleId = rp.RoleId,
+                        RoleCode = rp.RoleCode,
+                        Permissions = rp.Permissions
+                    }).ToList();
+
+                    token = _jwtTokenService.GenerateTokenWithAuthorization(objResponseInfo.UserPublicId, propertyRoles, rolePermissions);
+                }
+                else
+                {
+                    // Fallback to legacy token generation if no authorization data
+                    token = _jwtTokenService.GenerateToken(objResponseInfo.UserPublicId, objResponseInfo.Role);
+                }
+
                 refreshToken = _jwtTokenService.GenerateRefreshToken();
 
                 // Save refresh token to database
@@ -137,11 +171,37 @@ namespace FEMOS.Rentora.Application.Services
                 };
             }
 
-            // All validations passed - generate new tokens
-            // Get user details to retrieve role
-            // For now, we'll assume the user role is still valid
-            // In a production environment, you might want to fetch the current user role from the database
-            var newToken = _jwtTokenService.GenerateToken(userPublicId, "User"); // Default role
+            // All validations passed - generate new token with fresh authorization data
+            // Load current authorization data to ensure changes are reflected
+            var authData = await _authorizationService.LoadUserAuthorizationAsync(userPublicId);
+
+            string newToken;
+
+            if (authData.PropertyRoles.Count > 0 && authData.RolePermissions.Count > 0)
+            {
+                // Convert DTOs to domain entities for token generation
+                var propertyRoles = authData.PropertyRoles.Select(pr => new PropertyRoleInfo
+                {
+                    PropertyPublicId = pr.PropertyPublicId,
+                    RoleId = pr.RoleId,
+                    RoleCode = pr.RoleCode
+                }).ToList();
+
+                var rolePermissions = authData.RolePermissions.Select(rp => new RolePermissionsInfo
+                {
+                    RoleId = rp.RoleId,
+                    RoleCode = rp.RoleCode,
+                    Permissions = rp.Permissions
+                }).ToList();
+
+                newToken = _jwtTokenService.GenerateTokenWithAuthorization(userPublicId, propertyRoles, rolePermissions);
+            }
+            else
+            {
+                // Fallback to legacy token generation if no authorization data
+                newToken = _jwtTokenService.GenerateToken(userPublicId, "User");
+            }
+
             var newRefreshToken = _jwtTokenService.GenerateRefreshToken();
 
             // Save new refresh token (this will revoke the old one)

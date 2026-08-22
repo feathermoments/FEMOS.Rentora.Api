@@ -45,10 +45,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// Registers: Infrastructure DI, CORS, Swagger Bearer
+// Registers: Application Services (including IAuthorizationService and IPropertyAuthorizationContext)
+// Also registers: Infrastructure DI, CORS, Swagger Bearer
 builder.Services.AddApplicationServices(builder.Configuration);
 
-builder.WebHost.UseUrls("http://localhost:5046");
+//builder.WebHost.UseUrls("http://localhost:5046");
 
 // Configure CORS
 var corsUrls = config.GetValue<string>(AppSettingConstants.CorsAllowedUrls)?.Split(',');
@@ -85,6 +86,10 @@ app.UseCors(ApiConstants.DefaultCorsPolicy);
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Property authorization context middleware - extracts property context from header
+// Must run after authentication so User principal is populated
+app.UseMiddleware<PropertyAuthorizationContextMiddleware>();
+
 // Custom middleware: validates UserPublicId claim against request body/query
 app.UseMiddleware<ValidateUserMiddleware>();
 
@@ -98,3 +103,4 @@ app.MapGet("api/healthcheck", () =>
 .WithOpenApi();
 
 await app.RunAsync();
+

@@ -24,6 +24,7 @@ namespace FEMOS.Rentora.Infrastructure
 
             // Domain services
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IAuthorizationRepository, AuthorizationRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITermsRepository, TermsRepository>();
             services.AddScoped<INotificationRepository, NotificationRepository>();

@@ -39,6 +39,11 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string sp_GetPropertyDetails = "dbo.sp_GetPropertyDetails";
         public const string sp_GetUserPropertyRole = "dbo.sp_GetUserPropertyRole";
 
+        // Authorization - Property Roles & Permissions
+        public const string sp_GetUserPropertyRoles = "dbo.sp_GetUserPropertyRoles";
+        public const string sp_GetRolePermissions = "dbo.sp_GetRolePermissions";
+        public const string sp_GetMultipleRolePermissions = "dbo.sp_GetMultipleRolePermissions";
+
         // Unit
         public const string USP_PropertyUnit_List = "dbo.USP_PropertyUnit_List";
         public const string USP_PropertyUnit_Save = "dbo.USP_PropertyUnit_Save";

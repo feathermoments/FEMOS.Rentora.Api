@@ -9,7 +9,8 @@ namespace FEMOS.Rentora.Domain.Entities
 {
     public class MyPropertyInfo
     {
-        public int PropertyId { get; set; }
+        public long PropertyId { get; set; }
+        public Guid PropertyPublicId { get; set; }
         public string PropertyName { get; set; } = string.Empty;
         public int PropertyTypeId { get; set; }
         public string PropertyType { get; set; } = string.Empty;
@@ -18,7 +19,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public string AddressLine1 { get; set; } = string.Empty;
         public int RoleId { get; set; }
         public string UserRole { get; set; } = string.Empty;
-        public int CurrentUnitId { get; set; }
+        public long CurrentUnitId { get; set; }
         public string CurrentUnitNumber { get; set; } = string.Empty;
         public string RelationshipStatus { get; set; } = string.Empty;
         public long TenantAssignmentId { get; set; }

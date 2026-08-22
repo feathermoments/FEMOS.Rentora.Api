@@ -1,4 +1,5 @@
-﻿using FEMOS.Rentora.Application.Identity;
+﻿using FEMOS.Rentora.Application.Authorization;
+using FEMOS.Rentora.Application.Identity;
 using FEMOS.Rentora.Application.Interfaces;
 using FEMOS.Rentora.Application.Interfaces.Dashboard;
 using FEMOS.Rentora.Application.Services;
@@ -25,6 +26,10 @@ namespace FEMOS.Rentora.Application
 
             // Repositories
             services.AddDataRepositories(configuration);
+
+            // Authorization - Property context and role permissions
+            services.AddScoped<IAuthorizationService, AuthorizationService>();
+            services.AddScoped<IPropertyAuthorizationContext, PropertyAuthorizationContext>();
 
             // Domain services
             services.AddScoped<IAuthService, AuthService>();
