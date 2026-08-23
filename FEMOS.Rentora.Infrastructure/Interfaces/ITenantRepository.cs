@@ -11,13 +11,13 @@ namespace FEMOS.Rentora.Infrastructure.Interfaces
 {
     public interface ITenantRepository
     {
-        Task<List<MyPropertyTenantInfo>> GetPropertyTenantsAsync(Guid userPublicId, long propertyId);
-        Task<PropertyTenantInfo> GetPropertyTenantDetailsAsync(Guid userPublicId, long propertyId, long tenantId);
+        Task<List<MyPropertyTenantInfo>> GetPropertyTenantsAsync(Guid userPublicId, Guid PropertyPublicId);
+        Task<PropertyTenantInfo> GetPropertyTenantDetailsAsync(Guid userPublicId, Guid PropertyPublicId, long tenantId);
         Task<PropertyTenantResponseInfo> SavePropertyTenantAsync(PropertyTenantRequestInfo objRequestInfo);
         Task<PropertyTenantAssignmentResponseInfo> SavePropertyTenantAssignmentAsync(PropertyTenantAssignmentRequestInfo objRequestInfo);
-        Task<TenantAssignmentInfo> GetTenantAssignmentDetailsAsync(Guid userPublicId, long propertyId, long tenantId, long tenantAssignmentId);
+        Task<TenantAssignmentInfo> GetTenantAssignmentDetailsAsync(Guid userPublicId, Guid PropertyPublicId, long tenantId, long tenantAssignmentId);
         Task<List<TenantInfo>> SearchTenantAsync(Guid userPublicId, string searchText, string searchTextHash);
-        Task<BaseResponseInfo> DeletePropertyTenantAsync(Guid userPublicId, long propertyId, long tenantId);
-        Task<BaseResponseInfo> DeleteTenantAssignmentAsync(Guid userPublicId, long propertyId, long tenantAssignmentId);
+        Task<BaseResponseInfo> DeletePropertyTenantAsync(Guid userPublicId, Guid PropertyPublicId, long tenantId);
+        Task<BaseResponseInfo> DeleteTenantAssignmentAsync(Guid userPublicId, Guid PropertyPublicId, long tenantAssignmentId);
     }
 }

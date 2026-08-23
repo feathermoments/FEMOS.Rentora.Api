@@ -132,7 +132,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             var cmd = new SqlCommand(DBConstants.USP_RentUtilityCharge_List);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
-            cmd.Parameters.AddWithValue("@PropertyId", objRequestInfo.objFilterInfo.PropertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", objRequestInfo.objFilterInfo.PropertyPublicId);
             cmd.Parameters.AddWithValue("@UnitId", (object?)objRequestInfo.objFilterInfo.UnitId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@TenantAssignmentId", objRequestInfo.objFilterInfo.TenantAssignmentId ?? (object)DBNull.Value);
             cmd.Parameters.AddWithValue("@RentInvoicePublicId", objRequestInfo.objFilterInfo.RentInvoicePublicId ?? (object)DBNull.Value);

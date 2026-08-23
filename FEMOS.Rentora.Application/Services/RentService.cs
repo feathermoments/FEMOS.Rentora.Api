@@ -28,9 +28,9 @@ namespace FEMOS.Rentora.Application.Services
             return await _rentRepository.GetRentInvoicesAsync(objRequestInfo);
         }
 
-        public async Task<RentInvoiceResponseInfo> GetRentInvoiceDetailsAsync(Guid userPublicId, long propertyId, Guid rentInvoicePublicId)
+        public async Task<RentInvoiceResponseInfo> GetRentInvoiceDetailsAsync(Guid userPublicId, Guid propertyPublicId, Guid rentInvoicePublicId)
         {
-            RentInvoiceResponseInfo objResponseInfo = await _rentRepository.GetRentInvoiceDetailsAsync(userPublicId, propertyId, rentInvoicePublicId);
+            RentInvoiceResponseInfo objResponseInfo = await _rentRepository.GetRentInvoiceDetailsAsync(userPublicId, propertyPublicId, rentInvoicePublicId);
             if(objResponseInfo.objPropertyOwnerInfo != null)
             {
                 objResponseInfo.objPropertyOwnerInfo.MobileNumber = _encryptDecryptService.Decrypt(objResponseInfo.objPropertyOwnerInfo.MobileNumber);
@@ -60,9 +60,9 @@ namespace FEMOS.Rentora.Application.Services
             return await _rentRepository.UpdateRentPaymentActionAsync(objRequestInfo);
         }
 
-        public async Task<RentPaymentResponseInfo> GetRentPaymentDetailsAsync(Guid userPublicId, long propertyId, long rentPaymentId)
+        public async Task<RentPaymentResponseInfo> GetRentPaymentDetailsAsync(Guid userPublicId, Guid propertyPublicId, long rentPaymentId)
         {
-            RentPaymentResponseInfo objResponseInfo = await _rentRepository.GetRentPaymentDetailsAsync(userPublicId, propertyId, rentPaymentId);
+            RentPaymentResponseInfo objResponseInfo = await _rentRepository.GetRentPaymentDetailsAsync(userPublicId, propertyPublicId, rentPaymentId);
             if (objResponseInfo.objRentPaymentInfo != null)
             {
                 objResponseInfo.objRentPaymentInfo.MobileNumber = _encryptDecryptService.Decrypt(objResponseInfo.objRentPaymentInfo.MobileNumber);

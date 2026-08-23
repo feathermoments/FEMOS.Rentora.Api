@@ -26,7 +26,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             var cmd = new SqlCommand(DBConstants.USP_RentInvoice_List);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
-            cmd.Parameters.AddWithValue("@PropertyId", objRequestInfo.objFilterInfo.PropertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", objRequestInfo.objFilterInfo.PropertyPublicId);
             cmd.Parameters.AddWithValue("@UnitId", (object?)objRequestInfo.objFilterInfo.UnitId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@TenantAssignmentId", (object?)objRequestInfo.objFilterInfo.TenantAssignmentId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@RentAgreementId", (object?)objRequestInfo.objFilterInfo.RentAgreementId ?? DBNull.Value);
@@ -51,12 +51,12 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             };
         }
 
-        public async Task<RentInvoiceResponseInfo> GetRentInvoiceDetailsAsync(Guid userPublicId, long propertyId, Guid rentInvoicePublicId)
+        public async Task<RentInvoiceResponseInfo> GetRentInvoiceDetailsAsync(Guid userPublicId, Guid propertyPublicId, Guid rentInvoicePublicId)
         {
             var cmd = new SqlCommand(DBConstants.USP_RentInvoice_Details);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
-            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             cmd.Parameters.AddWithValue("@RentInvoicePublicId", rentInvoicePublicId);
             var ds = await _dbHelper.GetDataSetBySQLCommandAsync(cmd);
             List<RentInvoiceInfo> objRentInvoices = _dbHelper.ConvertDataTable<RentInvoiceInfo>(ds.Tables[0]);
@@ -147,7 +147,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             var cmd = new SqlCommand(DBConstants.USP_RentPayment_List);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
-            cmd.Parameters.AddWithValue("@PropertyId", objRequestInfo.objFilterInfo.PropertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", objRequestInfo.objFilterInfo.PropertyPublicId);
             cmd.Parameters.AddWithValue("@UnitId", (object?)objRequestInfo.objFilterInfo.UnitId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@InvoiceStatusId", (object?)objRequestInfo.objFilterInfo.InvoiceStatusId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@PaymentStatusId", (object?)objRequestInfo.objFilterInfo.PaymentStatusId ?? DBNull.Value);
@@ -183,12 +183,12 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             };
         }
 
-        public async Task<RentPaymentResponseInfo> GetRentPaymentDetailsAsync(Guid userPublicId, long propertyId, long rentPaymentId)
+        public async Task<RentPaymentResponseInfo> GetRentPaymentDetailsAsync(Guid userPublicId, Guid propertyPublicId, long rentPaymentId)
         {
             var cmd = new SqlCommand(DBConstants.USP_RentPayment_Details);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
-            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             cmd.Parameters.AddWithValue("@RentPaymentId", rentPaymentId);
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
             List<RentPaymentInfo> objRentPayments = _dbHelper.ConvertDataTable<RentPaymentInfo>(dt);
@@ -218,7 +218,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             var cmd = new SqlCommand(DBConstants.USP_TenantSecurityDeposit_List);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
-            cmd.Parameters.AddWithValue("@PropertyId", objRequestInfo.objFilterInfo.PropertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", objRequestInfo.objFilterInfo.PropertyPublicId);
             cmd.Parameters.AddWithValue("@UnitId", objRequestInfo.objFilterInfo.UnitId);
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
             List<TenantSecurityDepositInfo> objTenantSecurityDeposits = _dbHelper.ConvertDataTable<TenantSecurityDepositInfo>(dt);

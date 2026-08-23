@@ -14,9 +14,9 @@ namespace FEMOS.Rentora.Application.Interfaces.Dashboard
         /// <summary>
         /// Asynchronously retrieves the widget data.
         /// </summary>
-        /// <param name="propertyId">The property ID for which to fetch data</param>
+        /// <param name="propertyPublicId">The property ID for which to fetch data</param>
         /// <param name="userPublicId">The public ID of the user requesting the data</param>
         /// <returns>Widget-specific data as an object</returns>
-        Task<object> GetDataAsync(long propertyId, long unitId,  Guid userPublicId);
+        Task<object> GetDataAsync(Guid PropertyPublicId, long unitId,  Guid userPublicId);
     }
 }

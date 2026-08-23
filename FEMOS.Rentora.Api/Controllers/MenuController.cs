@@ -15,24 +15,24 @@ namespace FEMOS.Rentora.Api.Controllers
             _menuService = menuService;
         }
 
-        [HttpGet("getUserMenu/{propertyId}")]
-        public async Task<IActionResult> GetUserMenu(long propertyId)
+        [HttpGet("getUserMenu/{propertyPublicId}")]
+        public async Task<IActionResult> GetUserMenu(Guid propertyPublicId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
 
-            var userMenus = await _menuService.GetUserMenuAsync(userPublicId, propertyId);
+            var userMenus = await _menuService.GetUserMenuAsync(userPublicId, propertyPublicId);
             return Ok(userMenus);
         }
 
-        [HttpGet("getUserMenuPermissions/{propertyId}")]
-        public async Task<IActionResult> GetUserMenuPermissions(long propertyId)
+        [HttpGet("getUserMenuPermissions/{propertyPublicId}")]
+        public async Task<IActionResult> GetUserMenuPermissions(Guid propertyPublicId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
-            var userMenuPermissions = await _menuService.GetUserMenuPermissionsAsync(userPublicId, propertyId);
+            var userMenuPermissions = await _menuService.GetUserMenuPermissionsAsync(userPublicId, propertyPublicId);
             return Ok(userMenuPermissions);
         }
     }

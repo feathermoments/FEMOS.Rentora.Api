@@ -21,22 +21,22 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
         {
             _dbHelper = dbHelper;
         }
-        public async Task<List<MyPropertyTenantInfo>> GetPropertyTenantsAsync(Guid userPublicId, long propertyId)
+        public async Task<List<MyPropertyTenantInfo>> GetPropertyTenantsAsync(Guid userPublicId, Guid propertyPublicId)
         {
             var cmd = new SqlCommand(DBConstants.USP_PropertyTenant_List);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
-            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
             return _dbHelper.ConvertDataTable<MyPropertyTenantInfo>(dt);
         }
 
-        public async Task<PropertyTenantInfo> GetPropertyTenantDetailsAsync(Guid userPublicId, long propertyId, long tenantId)
+        public async Task<PropertyTenantInfo> GetPropertyTenantDetailsAsync(Guid userPublicId, Guid propertyPublicId, long tenantId)
         {
             var cmd = new SqlCommand(DBConstants.USP_PropertyTenant_Details);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
-            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             cmd.Parameters.AddWithValue("@TenantId", tenantId);
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
             List<PropertyTenantInfo> tenantDetails = _dbHelper.ConvertDataTable<PropertyTenantInfo>(dt);
@@ -59,7 +59,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             };
             cmd.Parameters.Add(tenantIdParam);
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
-            cmd.Parameters.AddWithValue("@PropertyId", objRequestInfo.objPropertyTenantInfo.PropertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", objRequestInfo.objPropertyTenantInfo.PropertyPublicId);
             cmd.Parameters.AddWithValue("@UnitId", objRequestInfo.objPropertyTenantInfo.UnitId);
             cmd.Parameters.AddWithValue("@TenantUserId", objRequestInfo.objPropertyTenantInfo.TenantUserId);
             cmd.Parameters.AddWithValue("@TenantCode", objRequestInfo.objPropertyTenantInfo.TenantCode);
@@ -104,7 +104,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             };
             cmd.Parameters.Add(tenantAssignmentIdParam);
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
-            cmd.Parameters.AddWithValue("@PropertyId", objRequestInfo.objTenantAssignmentInfo.PropertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", objRequestInfo.objTenantAssignmentInfo.PropertyPublicId);
             cmd.Parameters.AddWithValue("@UnitId", objRequestInfo.objTenantAssignmentInfo.UnitId);
             cmd.Parameters.AddWithValue("@TenantId", objRequestInfo.objTenantAssignmentInfo.TenantId);
             cmd.Parameters.AddWithValue("@MoveInDate", objRequestInfo.objTenantAssignmentInfo.MoveInDate);
@@ -129,12 +129,12 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             };
         }
         
-        public async Task<TenantAssignmentInfo> GetTenantAssignmentDetailsAsync(Guid userPublicId, long propertyId, long tenantId, long tenantAssignmentId)
+        public async Task<TenantAssignmentInfo> GetTenantAssignmentDetailsAsync(Guid userPublicId, Guid propertyPublicId, long tenantId, long tenantAssignmentId)
         {
             var cmd = new SqlCommand(DBConstants.usp_GetTenantAssignment);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
-            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             cmd.Parameters.AddWithValue("@TenantId", tenantId);
             cmd.Parameters.AddWithValue("@TenantAssignmentId", tenantAssignmentId);
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
@@ -159,12 +159,12 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             return objTenants;
         }
 
-        public async Task<BaseResponseInfo> DeletePropertyTenantAsync(Guid userPublicId, long propertyId, long tenantId)
+        public async Task<BaseResponseInfo> DeletePropertyTenantAsync(Guid userPublicId, Guid propertyPublicId, long tenantId)
         {
             var cmd = new SqlCommand(DBConstants.usp_PropertyTenant_Delete);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
-            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             cmd.Parameters.AddWithValue("@TenantId", tenantId);
             var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
             var dbResponse = await _dbHelper.GetDBResponse(result);
@@ -176,12 +176,12 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             return baseResponseInfo;
         }
 
-        public async Task<BaseResponseInfo> DeleteTenantAssignmentAsync(Guid userPublicId, long propertyId, long tenantAssignmentId)
+        public async Task<BaseResponseInfo> DeleteTenantAssignmentAsync(Guid userPublicId, Guid propertyPublicId, long tenantAssignmentId)
         {
             var cmd = new SqlCommand(DBConstants.usp_DeleteTenantAssignment);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
-            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             cmd.Parameters.AddWithValue("@TenantAssignmentId", tenantAssignmentId);
             var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
             var dbResponse = await _dbHelper.GetDBResponse(result);

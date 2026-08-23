@@ -4,7 +4,7 @@ namespace FEMOS.Rentora.Domain.Entities
 {
     public class MyHomeInfo
     {
-        public long PropertyId { get; set; }
+        public Guid PropertyPublicId { get; set; }
         public string PropertyName { get; set; }
         public string PropertyType { get; set; }
 

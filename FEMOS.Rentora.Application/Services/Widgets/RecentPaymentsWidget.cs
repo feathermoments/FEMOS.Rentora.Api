@@ -23,9 +23,9 @@ namespace FEMOS.Rentora.Application.Services.Widgets
 
         public string WidgetCode => "RECENT_PAYMENTS";
 
-        public async Task<object> GetDataAsync(long propertyId, long unitId, Guid userPublicId)
+        public async Task<object> GetDataAsync(Guid propertyPublicId, long unitId, Guid userPublicId)
         {
-            var data = await _dashboardRepository.GetRecentPaymentsAsync(propertyId, userPublicId);
+            var data = await _dashboardRepository.GetRecentPaymentsAsync(propertyPublicId, userPublicId);
             return data;
         }
     }

@@ -16,14 +16,14 @@ namespace FEMOS.Rentora.Api.Controllers
             _unitService = unitService;
         }
 
-        [HttpGet("property-units/{propertyId}")]
-        public async Task<IActionResult> GetPropertyUnits(long propertyId)
+        [HttpGet("property-units/{propertyPublicId}")]
+        public async Task<IActionResult> GetPropertyUnits(Guid propertyPublicId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
 
-            var properties = await _unitService.GetPropertyUnitsAsync(userPublicId, propertyId);
+            var properties = await _unitService.GetPropertyUnitsAsync(userPublicId, propertyPublicId);
             return Ok(properties);
         }
 
@@ -42,25 +42,25 @@ namespace FEMOS.Rentora.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("details/{propertyId}/{unitId}")]
-        public async Task<IActionResult> GetPropertyUnitDetails(long propertyId, long unitId)
+        [HttpGet("details/{propertyPublicId}/{unitId}")]
+        public async Task<IActionResult> GetPropertyUnitDetails(Guid propertyPublicId, long unitId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
 
-            var propertyUnitDetails = await _unitService.GetPropertyUnitDetailsAsync(userPublicId, propertyId, unitId);
+            var propertyUnitDetails = await _unitService.GetPropertyUnitDetailsAsync(userPublicId, propertyPublicId, unitId);
             return Ok(propertyUnitDetails);
         }
 
-        [HttpGet("getVacantUnits/{propertyId}")]
-        public async Task<IActionResult> GetVacantUnits(long propertyId)
+        [HttpGet("getVacantUnits/{propertyPublicId}")]
+        public async Task<IActionResult> GetVacantUnits(Guid propertyPublicId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
 
-            var vacantUnits = await _unitService.GetVacantUnitsAsync(userPublicId, propertyId);
+            var vacantUnits = await _unitService.GetVacantUnitsAsync(userPublicId, propertyPublicId);
             return Ok(vacantUnits);
         }
     }

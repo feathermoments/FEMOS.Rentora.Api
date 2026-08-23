@@ -10,7 +10,7 @@ namespace FEMOS.Rentora.Domain.Entities
     public class PropertyTenantInfo
     {
         public long TenantId { get; set; }
-        public long PropertyId { get; set; }
+        public Guid PropertyPublicId { get; set; }
         public long UnitId { get; set; }
         public long TenantAssignmentId { get; set; }
         public long? TenantUserId { get; set; }

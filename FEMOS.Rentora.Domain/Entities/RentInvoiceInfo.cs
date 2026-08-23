@@ -21,7 +21,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public DateTime BillingStartDate { get; set; }
         public DateTime BillingEndDate { get; set; }
         public int BillingFrequencyId { get; set; }
-        public int PropertyId { get; set; }
+        public Guid PropertyPublicId { get; set; }
         public string PropertyName { get; set; }
         public int UnitId { get; set; }
         public string UnitNumber { get; set; }

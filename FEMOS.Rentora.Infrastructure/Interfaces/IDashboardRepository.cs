@@ -18,56 +18,56 @@ namespace FEMOS.Rentora.Infrastructure.Interfaces
         /// <summary>
         /// Retrieves property summary data.
         /// </summary>
-        Task<PropertySummaryInfo> GetPropertySummaryAsync(long propertyId, Guid userPublicId);
+        Task<PropertySummaryInfo> GetPropertySummaryAsync(Guid PropertyPublicId, Guid userPublicId);
 
         /// <summary>
         /// Retrieves rent summary data.
         /// </summary>
-        Task<RentSummaryInfo> GetRentSummaryAsync(long propertyId, Guid userPublicId);
+        Task<RentSummaryInfo> GetRentSummaryAsync(Guid PropertyPublicId, Guid userPublicId);
 
         /// <summary>
         /// Retrieves recent payments data.
         /// </summary>
-        Task<RecentPaymentInfo> GetRecentPaymentsAsync(long propertyId, Guid userPublicId);
+        Task<RecentPaymentInfo> GetRecentPaymentsAsync(Guid PropertyPublicId, Guid userPublicId);
 
         /// <summary>
         /// Retrieves open requests data.
         /// </summary>
-        Task<OpenRequestInfo> GetOpenRequestsAsync(long propertyId, Guid userPublicId);
+        Task<OpenRequestInfo> GetOpenRequestsAsync(Guid PropertyPublicId, Guid userPublicId);
 
         /// <summary>
         /// Retrieves upcoming renewals data.
         /// </summary>
-        Task<UpcomingRenewalInfo> GetUpcomingRenewalsAsync(long propertyId, Guid userPublicId);
+        Task<UpcomingRenewalInfo> GetUpcomingRenewalsAsync(Guid PropertyPublicId, Guid userPublicId);
 
         /// <summary>
         /// Retrieves my home/unit data.
         /// </summary>
-        Task<MyHomeInfo> GetMyHomeAsync(long propertyId, long unitId, Guid userPublicId);
+        Task<MyHomeInfo> GetMyHomeAsync(Guid PropertyPublicId, long unitId, Guid userPublicId);
 
         /// <summary>
         /// Retrieves agreement data.
         /// </summary>
-        Task<MyAgreementInfo> GetAgreementAsync(long propertyId, long unitId, Guid userPublicId);
+        Task<MyAgreementInfo> GetAgreementAsync(Guid PropertyPublicId, long unitId, Guid userPublicId);
 
         /// <summary>
         /// Retrieves my requests data.
         /// </summary>
-        Task<MyRequestInfo> GetMyRequestsAsync(long propertyId, Guid userPublicId);
+        Task<MyRequestInfo> GetMyRequestsAsync(Guid PropertyPublicId, Guid userPublicId);
 
         /// <summary>
         /// Retrieves staff summary data.
         /// </summary>
-        Task<StaffSummaryInfo> GetStaffSummaryAsync(long propertyId, Guid userPublicId);
+        Task<StaffSummaryInfo> GetStaffSummaryAsync(Guid PropertyPublicId, Guid userPublicId);
 
         /// <summary>
         /// Retrieves report summary data.
         /// </summary>
-        Task<ReportSummaryInfo> GetReportSummaryAsync(long propertyId, Guid userPublicId);
+        Task<ReportSummaryInfo> GetReportSummaryAsync(Guid PropertyPublicId, Guid userPublicId);
 
         /// <summary>
         /// Retrieves security deposit summary data.
         /// </summary>
-        Task<SecurityDepositSummaryInfo> GetSecurityDepositSummaryAsync(long propertyId, Guid userPublicId);
+        Task<SecurityDepositSummaryInfo> GetSecurityDepositSummaryAsync(Guid PropertyPublicId, Guid userPublicId);
     }
 }

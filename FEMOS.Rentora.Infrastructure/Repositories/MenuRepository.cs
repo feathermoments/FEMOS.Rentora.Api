@@ -19,12 +19,12 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             _dbHelper = dbHelper;
         }
 
-        public async Task<List<MenuInfo>> GetUserMenuAsync(Guid UserPublicId, long PropertyId)
+        public async Task<List<MenuInfo>> GetUserMenuAsync(Guid UserPublicId, Guid PropertyPublicId)
         {
             var cmd = new SqlCommand(DBConstants.USP_GetUserMenus);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", UserPublicId);
-            cmd.Parameters.AddWithValue("@PropertyId", PropertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", PropertyPublicId);
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
             List<MenuInfo> menuList = _dbHelper.ConvertDataTable<MenuInfo>(dt);
             List<MenuInfo> parentMenus = menuList.Where(m => m.IsBottomMenu).ToList();
@@ -36,12 +36,12 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             return parentMenus;
         }
 
-        public async Task<List<MenuPermissionInfo>> GetUserMenuPermissionsAsync(Guid UserPublicId, long PropertyId)
+        public async Task<List<MenuPermissionInfo>> GetUserMenuPermissionsAsync(Guid UserPublicId, Guid PropertyPublicId)
         {
             var cmd = new SqlCommand(DBConstants.USP_GetUserMenuPermissions);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", UserPublicId);
-            cmd.Parameters.AddWithValue("@PropertyId", PropertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", PropertyPublicId);
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
             return _dbHelper.ConvertDataTable<MenuPermissionInfo>(dt);
         }

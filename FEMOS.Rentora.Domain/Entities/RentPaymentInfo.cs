@@ -52,7 +52,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public long ReversedBy { get; set; }
         public string? ReverseReason { get; set; }
         public string? AgreementNumber { get; set; }
-        public long PropertyId { get; set; }
+        public Guid PropertyPublicId { get; set; }
         public string? PropertyName { get; set; }
         public long UnitId { get; set; }
         public string? UnitNumber { get; set; }

@@ -23,10 +23,10 @@ namespace FEMOS.Rentora.Application.Services
             _encryptDecryptService = encryptDecryptService;
             _accountRepository = accountRepository;
         }
-        public async Task<PropertyTenantResponseInfo> GetPropertyTenantsAsync(Guid userPublicId, long propertyId)
+        public async Task<PropertyTenantResponseInfo> GetPropertyTenantsAsync(Guid userPublicId, Guid propertyPublicId)
         {
             PropertyTenantResponseInfo objResponseInfo = new PropertyTenantResponseInfo();
-            objResponseInfo.objMyPropertyTenants = await _tenantRepository.GetPropertyTenantsAsync(userPublicId, propertyId);
+            objResponseInfo.objMyPropertyTenants = await _tenantRepository.GetPropertyTenantsAsync(userPublicId, propertyPublicId);
             foreach (var tenant in objResponseInfo.objMyPropertyTenants)
             {
                 if(!string.IsNullOrEmpty(tenant.EmailAddress))
@@ -38,10 +38,10 @@ namespace FEMOS.Rentora.Application.Services
             objResponseInfo.Message = "Property tenants retrieved successfully.";
             return objResponseInfo;
         }
-        public async Task<PropertyTenantResponseInfo> GetPropertyTenantDetailsAsync(Guid userPublicId, long propertyId, long tenantId)
+        public async Task<PropertyTenantResponseInfo> GetPropertyTenantDetailsAsync(Guid userPublicId, Guid propertyPublicId, long tenantId)
         {
             PropertyTenantResponseInfo objResponseInfo = new PropertyTenantResponseInfo();
-            objResponseInfo.objPropertyTenantInfo = await _tenantRepository.GetPropertyTenantDetailsAsync(userPublicId, propertyId, tenantId);
+            objResponseInfo.objPropertyTenantInfo = await _tenantRepository.GetPropertyTenantDetailsAsync(userPublicId, propertyPublicId, tenantId);
             if (objResponseInfo.objPropertyTenantInfo != null)
             {
                 if(!string.IsNullOrEmpty(objResponseInfo.objPropertyTenantInfo.EmailAddress))
@@ -119,10 +119,10 @@ namespace FEMOS.Rentora.Application.Services
             return await _tenantRepository.SavePropertyTenantAssignmentAsync(objRequestInfo);
         }
 
-        public async Task<PropertyTenantAssignmentResponseInfo> GetTenantAssignmentDetailsAsync(Guid userPublicId, long propertyId, long tenantId, long tenantAssignmentId)
+        public async Task<PropertyTenantAssignmentResponseInfo> GetTenantAssignmentDetailsAsync(Guid userPublicId, Guid propertyPublicId, long tenantId, long tenantAssignmentId)
         {
             PropertyTenantAssignmentResponseInfo objResponseInfo = new PropertyTenantAssignmentResponseInfo();
-            objResponseInfo.objTenantAssignmentInfo = await _tenantRepository.GetTenantAssignmentDetailsAsync(userPublicId, propertyId, tenantId, tenantAssignmentId);
+            objResponseInfo.objTenantAssignmentInfo = await _tenantRepository.GetTenantAssignmentDetailsAsync(userPublicId, propertyPublicId, tenantId, tenantAssignmentId);
             if (objResponseInfo.objTenantAssignmentInfo != null)
             {
                 objResponseInfo.Status = StatusConstants.Success;
@@ -160,14 +160,14 @@ namespace FEMOS.Rentora.Application.Services
             return objResponseInfo;
         }
 
-        public async Task<BaseResponseInfo> DeletePropertyTenantAsync(Guid userPublicId, long propertyId, long tenantId)
+        public async Task<BaseResponseInfo> DeletePropertyTenantAsync(Guid userPublicId, Guid propertyPublicId, long tenantId)
         {
-            return await _tenantRepository.DeletePropertyTenantAsync(userPublicId, propertyId, tenantId);
+            return await _tenantRepository.DeletePropertyTenantAsync(userPublicId, propertyPublicId, tenantId);
         }
 
-        public async Task<BaseResponseInfo> DeleteTenantAssignmentAsync(Guid userPublicId, long propertyId, long tenantAssignmentId)
+        public async Task<BaseResponseInfo> DeleteTenantAssignmentAsync(Guid userPublicId, Guid propertyPublicId, long tenantAssignmentId)
         {
-            return await _tenantRepository.DeleteTenantAssignmentAsync(userPublicId, propertyId, tenantAssignmentId);
+            return await _tenantRepository.DeleteTenantAssignmentAsync(userPublicId, propertyPublicId, tenantAssignmentId);
         }
     }
 }

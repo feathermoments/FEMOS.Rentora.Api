@@ -36,7 +36,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public bool IsDeleted { get; set; }
         public int TotalRecords { get; set; }
         public string AgreementNumber { get; set; }
-        public long PropertyId { get; set; }
+        public Guid PropertyPublicId { get; set; }
         public string PropertyName { get; set; }
         public long UnitId { get; set; }
         public string UnitNumber { get; set; }

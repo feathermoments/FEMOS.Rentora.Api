@@ -23,12 +23,12 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             _dbHelper = dbHelper;
         }
 
-        public async Task<PropertyUnitInfo> GetPropertyUnitDetailsAsync(Guid userPublicId, long propertyId, long unitId)
+        public async Task<PropertyUnitInfo> GetPropertyUnitDetailsAsync(Guid userPublicId, Guid propertyPublicId, long unitId)
         {
             var cmd = new SqlCommand(DBConstants.USP_PropertyUnit_Details);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
-            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             cmd.Parameters.AddWithValue("@UnitId", unitId);
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
             List<PropertyUnitInfo> propertyUnits = _dbHelper.ConvertDataTable<PropertyUnitInfo>(dt);
@@ -39,22 +39,22 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                 return propertyUnits[0];
         }
 
-        public async Task<List<MyPropertyUnitInfo>> GetPropertyUnitsAsync(Guid userPublicId, long propertyId)
+        public async Task<List<MyPropertyUnitInfo>> GetPropertyUnitsAsync(Guid userPublicId, Guid propertyPublicId)
         {
             var cmd = new SqlCommand(DBConstants.USP_PropertyUnit_List);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
-            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
             return _dbHelper.ConvertDataTable<MyPropertyUnitInfo>(dt);
         }
 
-        public async Task<List<MyPropertyUnitInfo>> GetVacantUnitsAsync(Guid userPublicId, long propertyId)
+        public async Task<List<MyPropertyUnitInfo>> GetVacantUnitsAsync(Guid userPublicId, Guid propertyPublicId)
         {
             var cmd = new SqlCommand(DBConstants.USP_PropertyUnit_GetVacantUnits);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
-            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
             return _dbHelper.ConvertDataTable<MyPropertyUnitInfo>(dt); 
         }
@@ -71,7 +71,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             };
             cmd.Parameters.Add(unitIdParam);
 
-            cmd.Parameters.AddWithValue("@PropertyId", objRequestInfo.objPropertyUnit.PropertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", objRequestInfo.objPropertyUnit.PropertyPublicId);
             cmd.Parameters.AddWithValue("@UnitNumber", objRequestInfo.objPropertyUnit.UnitNumber);
             cmd.Parameters.AddWithValue("@FloorNo", objRequestInfo.objPropertyUnit.FloorNo);
             cmd.Parameters.AddWithValue("@UnitTypeId", objRequestInfo.objPropertyUnit.UnitTypeId);

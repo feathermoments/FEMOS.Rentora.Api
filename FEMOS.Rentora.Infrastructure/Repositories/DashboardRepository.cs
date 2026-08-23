@@ -32,11 +32,11 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             return widgets;
         }
 
-        public async Task<PropertySummaryInfo> GetPropertySummaryAsync(long propertyId, Guid userPublicId)
+        public async Task<PropertySummaryInfo> GetPropertySummaryAsync(Guid propertyPublicId, Guid userPublicId)
         {
             var cmd = new SqlCommand(DBConstants.USP_Dashboard_PropertySummary);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
 
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
@@ -50,11 +50,11 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             }
         }
 
-        public async Task<RentSummaryInfo> GetRentSummaryAsync(long propertyId, Guid userPublicId)
+        public async Task<RentSummaryInfo> GetRentSummaryAsync(Guid propertyPublicId, Guid userPublicId)
         {
             var cmd = new SqlCommand(DBConstants.USP_Dashboard_RentSummary);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
 
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
@@ -70,11 +70,11 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             }
         }
 
-        public async Task<RecentPaymentInfo> GetRecentPaymentsAsync(long propertyId, Guid userPublicId)
+        public async Task<RecentPaymentInfo> GetRecentPaymentsAsync(Guid propertyPublicId, Guid userPublicId)
         {
             var cmd = new SqlCommand(DBConstants.USP_Dashboard_RecentPayments);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
 
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
@@ -95,11 +95,11 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             }
         }
 
-        public async Task<OpenRequestInfo> GetOpenRequestsAsync(long propertyId, Guid userPublicId)
+        public async Task<OpenRequestInfo> GetOpenRequestsAsync(Guid propertyPublicId, Guid userPublicId)
         {
             var cmd = new SqlCommand(DBConstants.USP_Dashboard_OpenRequests);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
 
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
@@ -114,11 +114,11 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             }
         }
 
-        public async Task<UpcomingRenewalInfo> GetUpcomingRenewalsAsync(long propertyId, Guid userPublicId)
+        public async Task<UpcomingRenewalInfo> GetUpcomingRenewalsAsync(Guid propertyPublicId, Guid userPublicId)
         {
             var cmd = new SqlCommand(DBConstants.USP_Dashboard_UpcomingRenewals);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
 
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
@@ -133,11 +133,11 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             }
         }
 
-        public async Task<MyHomeInfo> GetMyHomeAsync(long propertyId, long unitId, Guid userPublicId)
+        public async Task<MyHomeInfo> GetMyHomeAsync(Guid propertyPublicId, long unitId, Guid userPublicId)
         {
             var cmd = new SqlCommand(DBConstants.USP_Dashboard_MyHome);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             cmd.Parameters.AddWithValue("@UnitId", unitId);
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
 
@@ -158,11 +158,11 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             }
         }
 
-        public async Task<MyAgreementInfo> GetAgreementAsync(long propertyId, long unitId, Guid userPublicId)
+        public async Task<MyAgreementInfo> GetAgreementAsync(Guid propertyPublicId, long unitId, Guid userPublicId)
         {
             var cmd = new SqlCommand(DBConstants.USP_Dashboard_Agreement);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             cmd.Parameters.AddWithValue("@UnitId", unitId);
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
 
@@ -178,11 +178,11 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             }
         }
 
-        public async Task<MyRequestInfo> GetMyRequestsAsync(long propertyId, Guid userPublicId)
+        public async Task<MyRequestInfo> GetMyRequestsAsync(Guid propertyPublicId, Guid userPublicId)
         {
             var cmd = new SqlCommand(DBConstants.USP_Dashboard_MyRequests);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
 
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
@@ -202,11 +202,11 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             }
         }
 
-        public async Task<StaffSummaryInfo> GetStaffSummaryAsync(long propertyId, Guid userPublicId)
+        public async Task<StaffSummaryInfo> GetStaffSummaryAsync(Guid propertyPublicId, Guid userPublicId)
         {
             var cmd = new SqlCommand(DBConstants.USP_Dashboard_StaffSummary);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
 
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
@@ -221,11 +221,11 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             }
         }
 
-        public async Task<ReportSummaryInfo> GetReportSummaryAsync(long propertyId, Guid userPublicId)
+        public async Task<ReportSummaryInfo> GetReportSummaryAsync(Guid propertyPublicId, Guid userPublicId)
         {
             var cmd = new SqlCommand(DBConstants.USP_Dashboard_ReportSummary);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
 
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
@@ -240,11 +240,11 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             }
         }
 
-        public async Task<SecurityDepositSummaryInfo> GetSecurityDepositSummaryAsync(long propertyId, Guid userPublicId)
+        public async Task<SecurityDepositSummaryInfo> GetSecurityDepositSummaryAsync(Guid propertyPublicId, Guid userPublicId)
         {
             var cmd = new SqlCommand(DBConstants.USP_Dashboard_SecurityDepositSummary);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
 
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);

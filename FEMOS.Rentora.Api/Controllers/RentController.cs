@@ -31,13 +31,13 @@ namespace FEMOS.Rentora.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("get-rent-invoice-details/{propertyId}/{rentInvoicePublicId}")]
-        public async Task<IActionResult> GetRentInvoiceDetails(long propertyId, Guid rentInvoicePublicId)
+        [HttpGet("get-rent-invoice-details/{propertyPublicId}/{rentInvoicePublicId}")]
+        public async Task<IActionResult> GetRentInvoiceDetails(Guid propertyPublicId, Guid rentInvoicePublicId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
-            var rentAgreement = await _rentService.GetRentInvoiceDetailsAsync(userPublicId, propertyId, rentInvoicePublicId);
+            var rentAgreement = await _rentService.GetRentInvoiceDetailsAsync(userPublicId, propertyPublicId, rentInvoicePublicId);
             return Ok(rentAgreement);
         }
 
@@ -86,18 +86,18 @@ namespace FEMOS.Rentora.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("get-rent-payment-details/{propertyId}/{rentPaymentId}")]
-        public async Task<IActionResult> GetRentPaymentDetails(long propertyId, long rentPaymentId)
+        [HttpGet("get-rent-payment-details/{propertyPublicId}/{rentPaymentId}")]
+        public async Task<IActionResult> GetRentPaymentDetails(Guid propertyPublicId, long rentPaymentId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
-            var rentAgreement = await _rentService.GetRentPaymentDetailsAsync(userPublicId, propertyId, rentPaymentId);
+            var rentAgreement = await _rentService.GetRentPaymentDetailsAsync(userPublicId, propertyPublicId, rentPaymentId);
             return Ok(rentAgreement);
         }
 
         /// <summary>
-        /// GET /api/rent/get-tenant-security-deposits/{propertyId}
+        /// GET /api/rent/get-tenant-security-deposits/{propertyPublicId}
         /// Retrieves all tenant security deposits for a specific property.
         /// Response: { status, message, objTenantSecurityDeposits }
         /// </summary>

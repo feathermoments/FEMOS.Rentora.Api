@@ -99,7 +99,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@SettlementStatusId", (object?)objRequestInfo.objFilterInfo.SettlementStatusId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@FromDate", (object?)objRequestInfo.objFilterInfo.FromDate ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@ToDate", (object?)objRequestInfo.objFilterInfo.ToDate ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@PropertyId", objRequestInfo.objFilterInfo.PropertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", objRequestInfo.objFilterInfo.PropertyPublicId);
             cmd.Parameters.AddWithValue("@UnitId", objRequestInfo.objFilterInfo.UnitId);
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
 

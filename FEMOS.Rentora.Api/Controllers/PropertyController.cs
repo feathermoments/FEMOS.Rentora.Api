@@ -30,7 +30,7 @@ namespace FEMOS.Rentora.Api.Controllers
         /// Returns all properties associated with the authenticated user.
         /// Requires: PROPERTY.VIEW permission
         /// 
-        /// Response: [{ propertyId, propertyName, propertyType, city, state, addressLine1,
+        /// Response: [{ propertyPublicId, propertyName, propertyType, city, state, addressLine1,
         ///              totalUnits, occupiedUnits, vacantUnits, roleId, roleName }]
         /// </summary>
         [HttpGet("my-properties")]
@@ -47,10 +47,10 @@ namespace FEMOS.Rentora.Api.Controllers
 
         /// <summary>
         /// POST /api/property/save-property
-        /// Creates or updates a property. Pass PropertyId to update an existing record.
+        /// Creates or updates a property. Pass PropertyPublicId to update an existing record.
         /// Requires: X-Property-Public-Id header and PROPERTY.EDIT permission
         /// 
-        /// Response: { status, message, propertyId }
+        /// Response: { status, message, propertyPublicId }
         /// </summary>
         [HttpPost("save")]
         [RequirePermission("PROPERTY.EDIT", requirePropertyContext: true)]
@@ -76,16 +76,16 @@ namespace FEMOS.Rentora.Api.Controllers
         }
 
         /// <summary>
-        /// GET /api/property/details/{propertyId}
+        /// GET /api/property/details/{propertyPublicId}
         /// Returns property details associated with the authenticated user.
         /// Requires: X-Property-Public-Id header and PROPERTY.VIEW permission
         /// 
-        /// Response: { propertyId, propertyName, propertyType, city, state, addressLine1,
+        /// Response: { propertyPublicId, propertyName, propertyType, city, state, addressLine1,
         ///              totalUnits, occupiedUnits, vacantUnits, roleId, roleName }
         /// </summary>
-        [HttpGet("details/{propertyId}")]
+        [HttpGet("details/{propertyPublicId}")]
         [RequirePermission("PROPERTY.VIEW", requirePropertyContext: true)]
-        public async Task<IActionResult> GetPropertyDetails(long propertyId)
+        public async Task<IActionResult> GetPropertyDetails(Guid propertyPublicId)
         {
             // Verify property context is valid
             if (!_authContext.IsValid)
@@ -97,7 +97,7 @@ namespace FEMOS.Rentora.Api.Controllers
 
             var userPublicId = User.GetUserPublicId();
 
-            var propertyDetails = await _propertyService.GetPropertyDetailsAsync(userPublicId, propertyId);
+            var propertyDetails = await _propertyService.GetPropertyDetailsAsync(userPublicId, propertyPublicId);
             return Ok(propertyDetails);
         }
     }

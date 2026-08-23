@@ -30,10 +30,10 @@ namespace FEMOS.Rentora.Application.Services
             return objResponseInfo;
         }
 
-        public async Task<UserPropertyResponseInfo> GetPropertyDetailsAsync(Guid userPublicId, long propertyId)
+        public async Task<UserPropertyResponseInfo> GetPropertyDetailsAsync(Guid userPublicId, Guid propertyPublicId)
         {
             UserPropertyResponseInfo objResponseInfo = new UserPropertyResponseInfo();
-            objResponseInfo.objUserPropertyInfo = await _propertyRepository.GetPropertyDetailsAsync(userPublicId, propertyId);
+            objResponseInfo.objUserPropertyInfo = await _propertyRepository.GetPropertyDetailsAsync(userPublicId, propertyPublicId);
             objResponseInfo.Status = StatusConstants.Success;
             objResponseInfo.Message = "Property details retrieved successfully.";
             return objResponseInfo;

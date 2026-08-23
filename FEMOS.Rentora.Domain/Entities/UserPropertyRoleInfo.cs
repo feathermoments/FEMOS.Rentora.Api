@@ -9,7 +9,7 @@ namespace FEMOS.Rentora.Domain.Entities
     public class UserPropertyMemberInfo
     {
         public long PropertyMemberId { get; set; }
-        public long PropertyId { get; set; }
+        public Guid PropertyPublicId { get; set; }
         public long RoleId { get; set; }
         public string RoleName { get; set; }
     }

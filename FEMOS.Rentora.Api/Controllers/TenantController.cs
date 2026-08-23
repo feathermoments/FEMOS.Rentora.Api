@@ -15,24 +15,24 @@ namespace FEMOS.Rentora.Api.Controllers
             _tenantService = tenantService;
         }
 
-        [HttpGet("property-tenants/{propertyId}")]
-        public async Task<IActionResult> GetPropertyTenants(long propertyId)
+        [HttpGet("property-tenants/{propertyPublicId}")]
+        public async Task<IActionResult> GetPropertyTenants(Guid propertyPublicId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
 
-            var propertyTenants = await _tenantService.GetPropertyTenantsAsync(userPublicId, propertyId);
+            var propertyTenants = await _tenantService.GetPropertyTenantsAsync(userPublicId, propertyPublicId);
             return Ok(propertyTenants);
         }
 
-        [HttpGet("details/{propertyId}/{tenantId}")]
-        public  async Task<IActionResult> GetPropertyTenantDetails(long propertyId, long tenantId)
+        [HttpGet("details/{propertyPublicId}/{tenantId}")]
+        public  async Task<IActionResult> GetPropertyTenantDetails(Guid propertyPublicId, long tenantId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
-            var propertyTenantDetails = await _tenantService.GetPropertyTenantDetailsAsync(userPublicId, propertyId, tenantId);
+            var propertyTenantDetails = await _tenantService.GetPropertyTenantDetailsAsync(userPublicId, propertyPublicId, tenantId);
             return Ok(propertyTenantDetails);
         }
 
@@ -66,13 +66,13 @@ namespace FEMOS.Rentora.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("getTenantAssignment/{propertyId}/{tenantId}/{tenantAssignmentId}")]
-        public async Task<IActionResult> GetTenantAssignment(long propertyId, long tenantId, long tenantAssignmentId)
+        [HttpGet("getTenantAssignment/{propertyPublicId}/{tenantId}/{tenantAssignmentId}")]
+        public async Task<IActionResult> GetTenantAssignment(Guid propertyPublicId, long tenantId, long tenantAssignmentId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
-            var propertyTenantAssignments = await _tenantService.GetTenantAssignmentDetailsAsync(userPublicId, propertyId, tenantId, tenantAssignmentId);
+            var propertyTenantAssignments = await _tenantService.GetTenantAssignmentDetailsAsync(userPublicId, propertyPublicId, tenantId, tenantAssignmentId);
             return Ok(propertyTenantAssignments);
         }
 
@@ -87,23 +87,23 @@ namespace FEMOS.Rentora.Api.Controllers
             return Ok(tenants);
         }
 
-        [HttpDelete("delete-property-tenant/{propertyId}/{tenantId}")]
-        public async Task<IActionResult> DeletePropertyTenant(long propertyId, long tenantId)
+        [HttpDelete("delete-property-tenant/{propertyPublicId}/{tenantId}")]
+        public async Task<IActionResult> DeletePropertyTenant(Guid propertyPublicId, long tenantId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
-            var result = await _tenantService.DeletePropertyTenantAsync(userPublicId, propertyId, tenantId);
+            var result = await _tenantService.DeletePropertyTenantAsync(userPublicId, propertyPublicId, tenantId);
             return Ok(result);
         }
 
-        [HttpDelete("delete-tenant-assignment/{propertyId}/{tenantAssignmentId}")]
-        public async Task<IActionResult> DeleteTenantAssignment(long propertyId, long tenantAssignmentId)
+        [HttpDelete("delete-tenant-assignment/{propertyPublicId}/{tenantAssignmentId}")]
+        public async Task<IActionResult> DeleteTenantAssignment(Guid propertyPublicId, long tenantAssignmentId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
-            var result = await _tenantService.DeleteTenantAssignmentAsync(userPublicId, propertyId, tenantAssignmentId);
+            var result = await _tenantService.DeleteTenantAssignmentAsync(userPublicId, propertyPublicId, tenantAssignmentId);
             return Ok(result);
         }
     }

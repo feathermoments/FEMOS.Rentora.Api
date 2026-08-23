@@ -19,28 +19,28 @@ namespace FEMOS.Rentora.Application.Services
             _unitRepository = unitRepository;
         }
 
-        public async Task<PropertyUnitResponseInfo> GetPropertyUnitDetailsAsync(Guid userPublicId, long propertyId, long unitId)
+        public async Task<PropertyUnitResponseInfo> GetPropertyUnitDetailsAsync(Guid userPublicId, Guid propertyPublicId, long unitId)
         {
             PropertyUnitResponseInfo objResponseInfo = new PropertyUnitResponseInfo();
-            objResponseInfo.objPropertyUnitInfo = await _unitRepository.GetPropertyUnitDetailsAsync(userPublicId, propertyId, unitId);
+            objResponseInfo.objPropertyUnitInfo = await _unitRepository.GetPropertyUnitDetailsAsync(userPublicId, propertyPublicId, unitId);
             objResponseInfo.Status = StatusConstants.Success;
             objResponseInfo.Message = "Property unit details retrieved successfully.";
             return objResponseInfo;
         }
 
-        public async Task<PropertyUnitResponseInfo> GetPropertyUnitsAsync(Guid userPublicId, long propertyId)
+        public async Task<PropertyUnitResponseInfo> GetPropertyUnitsAsync(Guid userPublicId, Guid propertyPublicId)
         {
             PropertyUnitResponseInfo objResponseInfo = new PropertyUnitResponseInfo();
-            objResponseInfo.objMyPropertyUnits = await _unitRepository.GetPropertyUnitsAsync(userPublicId, propertyId);
+            objResponseInfo.objMyPropertyUnits = await _unitRepository.GetPropertyUnitsAsync(userPublicId, propertyPublicId);
             objResponseInfo.Status = StatusConstants.Success;
             objResponseInfo.Message = "Property units retrieved successfully.";
             return objResponseInfo;
         }
 
-        public async Task<PropertyUnitResponseInfo> GetVacantUnitsAsync(Guid userPublicId, long propertyId)
+        public async Task<PropertyUnitResponseInfo> GetVacantUnitsAsync(Guid userPublicId, Guid propertyPublicId)
         {
             PropertyUnitResponseInfo objResponseInfo = new PropertyUnitResponseInfo();
-            objResponseInfo.objMyPropertyUnits = await _unitRepository.GetVacantUnitsAsync(userPublicId, propertyId);
+            objResponseInfo.objMyPropertyUnits = await _unitRepository.GetVacantUnitsAsync(userPublicId, propertyPublicId);
             objResponseInfo.Status = StatusConstants.Success;
             objResponseInfo.Message = "Vacant property units retrieved successfully.";
             return objResponseInfo;

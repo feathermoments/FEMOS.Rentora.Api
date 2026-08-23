@@ -35,12 +35,12 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             return properties;
         }
 
-        public async Task<UserPropertyInfo> GetPropertyDetailsAsync(Guid userPublicId, long propertyId)
+        public async Task<UserPropertyInfo> GetPropertyDetailsAsync(Guid userPublicId, Guid propertyPublicId)
         {
             var cmd = new SqlCommand(DBConstants.sp_GetPropertyDetails);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
-            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
             List<UserPropertyInfo> properties = _dbHelper.ConvertDataTable<UserPropertyInfo>(dt);
 
@@ -50,12 +50,12 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                 return properties[0];
         }
 
-        public async Task<UserPropertyMemberInfo> GetUserPropertyRole(Guid userPublicId, long propertyId)
+        public async Task<UserPropertyMemberInfo> GetUserPropertyRole(Guid userPublicId, Guid propertyPublicId)
         {
             var cmd = new SqlCommand(DBConstants.sp_GetUserPropertyRole);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
-            cmd.Parameters.AddWithValue("@PropertyId", propertyId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
             List<UserPropertyMemberInfo> roles = _dbHelper.ConvertDataTable<UserPropertyMemberInfo>(dt);
             if (roles == null || roles.Count == 0)
@@ -69,12 +69,12 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             var cmd = new SqlCommand(DBConstants.sp_SaveProperty);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            var propertyIdParam = new SqlParameter("@PropertyId", SqlDbType.BigInt)
+            var propertyPublicIdParam = new SqlParameter("@PropertyPublicId", SqlDbType.UniqueIdentifier)
             {
                 Direction = ParameterDirection.InputOutput,
-                Value = (object?)objRequestInfo.objUserPropertyInfo.PropertyId ?? DBNull.Value
+                Value = (object?)objRequestInfo.objUserPropertyInfo.PropertyPublicId ?? DBNull.Value
             };
-            cmd.Parameters.Add(propertyIdParam);
+            cmd.Parameters.Add(propertyPublicIdParam);
 
             cmd.Parameters.AddWithValue("@OwnerUserId",        objRequestInfo.objUserPropertyInfo.OwnerUserId);
             cmd.Parameters.AddWithValue("@PropertyCode",       (object?)objRequestInfo.objUserPropertyInfo.PropertyCode ?? DBNull.Value);
@@ -103,15 +103,15 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
             var dbResponse = await _dbHelper.GetDBResponse(result);
 
-            long? returnedPropertyId = propertyIdParam.Value != DBNull.Value
-                ? Convert.ToInt64(propertyIdParam.Value)
-                : null;
+            Guid? returnedPropertyPublicId = (Guid?)(propertyPublicIdParam.Value != DBNull.Value
+                ? propertyPublicIdParam.Value
+                : null);
 
             return new UserPropertyResponseInfo
             {
                 Status = dbResponse.Status,
                 Message = dbResponse.Message,
-                PropertyId = returnedPropertyId
+                PropertyPublicId = returnedPropertyPublicId
             };
         }
     }

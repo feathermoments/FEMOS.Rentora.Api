@@ -9,7 +9,7 @@ namespace FEMOS.Rentora.Infrastructure.Interfaces
 {
     public interface IMenuRepository
     {
-        Task<List<MenuInfo>> GetUserMenuAsync(Guid UserPublicId, long PropertyId);
-        Task<List<MenuPermissionInfo>> GetUserMenuPermissionsAsync(Guid UserPublicId, long PropertyId);
+        Task<List<MenuInfo>> GetUserMenuAsync(Guid UserPublicId, Guid PropertyPublicId);
+        Task<List<MenuPermissionInfo>> GetUserMenuPermissionsAsync(Guid UserPublicId, Guid PropertyPublicId);
     }
 }

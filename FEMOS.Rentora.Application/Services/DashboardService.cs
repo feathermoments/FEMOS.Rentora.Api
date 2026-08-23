@@ -37,7 +37,7 @@ namespace FEMOS.Rentora.Application.Services
             _logger = logger;
         }
 
-        public async Task<DashboardResponseInfo> GetDashboardAsync(long propertyId, long unitId, Guid userPublicId)
+        public async Task<DashboardResponseInfo> GetDashboardAsync(Guid propertyPublicId, long unitId, Guid userPublicId)
         {
             var response = new DashboardResponseInfo();
             response.Status = StatusConstants.Success;
@@ -46,9 +46,9 @@ namespace FEMOS.Rentora.Application.Services
 
             try
             {
-                UserPropertyMemberInfo objUserPropertyMemberInfo = await _propertyRepository.GetUserPropertyRole(userPublicId, propertyId);
+                UserPropertyMemberInfo objUserPropertyMemberInfo = await _propertyRepository.GetUserPropertyRole(userPublicId, propertyPublicId);
 
-                _logger.LogInformation($"Fetching dashboard for PropertyId: {propertyId}, UserPublicId: {userPublicId}, RoleId: {objUserPropertyMemberInfo.RoleId}");
+                _logger.LogInformation($"Fetching dashboard for PropertyPublicId: {propertyPublicId}, UserPublicId: {userPublicId}, RoleId: {objUserPropertyMemberInfo.RoleId}");
 
                 // Step 1: Fetch dashboard widgets assigned to the user's role
                 var assignedWidgets = await _dashboardRepository.GetDashboardWidgetsByRoleAsync(objUserPropertyMemberInfo.RoleId);
@@ -77,7 +77,7 @@ namespace FEMOS.Rentora.Application.Services
                         }
 
                         // Step 4: Execute widget to fetch data
-                        var widgetData = await widgetImplementation.GetDataAsync(propertyId, unitId, userPublicId);
+                        var widgetData = await widgetImplementation.GetDataAsync(propertyPublicId, unitId, userPublicId);
 
                         // Step 5: Aggregate widget response
                         var widgetResponse = new DashboardWidgetResponseInfo

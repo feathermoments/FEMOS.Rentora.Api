@@ -5,7 +5,7 @@ namespace FEMOS.Rentora.Domain.Entities
     public class UserPropertyInfo
     {
         // Primary
-        public long PropertyId { get; set; }
+        public Guid PropertyPublicId { get; set; }
         public long OwnerUserId { get; set; }
         public string PropertyCode { get; set; }
         public string PropertyName { get; set; } = string.Empty;

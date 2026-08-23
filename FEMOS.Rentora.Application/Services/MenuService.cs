@@ -19,19 +19,19 @@ namespace FEMOS.Rentora.Application.Services
             _menuRepository = menuRepository;
         }
 
-        public async Task<MenuResponseInfo> GetUserMenuAsync(Guid UserPublicId, long PropertyId)
+        public async Task<MenuResponseInfo> GetUserMenuAsync(Guid UserPublicId, Guid PropertyPublicId)
         {
             MenuResponseInfo objResponseInfo = new MenuResponseInfo();
-            objResponseInfo.objMenus = await _menuRepository.GetUserMenuAsync(UserPublicId, PropertyId);
+            objResponseInfo.objMenus = await _menuRepository.GetUserMenuAsync(UserPublicId, PropertyPublicId);
             objResponseInfo.Status = StatusConstants.Success;
             objResponseInfo.Message = "User menu retrieved successfully.";
             return objResponseInfo;
         }
 
-        public async Task<MenuPermissionResponseInfo> GetUserMenuPermissionsAsync(Guid UserPublicId, long PropertyId)
+        public async Task<MenuPermissionResponseInfo> GetUserMenuPermissionsAsync(Guid UserPublicId, Guid PropertyPublicId)
         {
             MenuPermissionResponseInfo objResponseInfo = new MenuPermissionResponseInfo();
-            objResponseInfo.objMenuPermissions = await _menuRepository.GetUserMenuPermissionsAsync(UserPublicId, PropertyId);
+            objResponseInfo.objMenuPermissions = await _menuRepository.GetUserMenuPermissionsAsync(UserPublicId, PropertyPublicId);
             objResponseInfo.Status = StatusConstants.Success;
             objResponseInfo.Message = "User menu permissions retrieved successfully.";
             return objResponseInfo;
