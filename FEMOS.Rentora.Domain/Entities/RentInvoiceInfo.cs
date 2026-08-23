@@ -11,7 +11,7 @@ namespace FEMOS.Rentora.Domain.Entities
     public class RentInvoiceInfo
     {
         public int TotalRecords { get; set; }
-        public int RentInvoiceId { get; set; }
+        public Guid RentInvoicePublicId { get; set; }
         public int RentAgreementId { get; set; }
         public string AgreementNumber { get; set; }
         public string InvoiceNumber { get; set; }

@@ -11,7 +11,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public int TotalRecords { get; set; }
         public long UtilityChargeId { get; set; }
         public Guid UniqueId { get; set; }
-        public long RentInvoiceId { get; set; }
+        public Guid RentInvoicePublicId { get; set; }
         public long TenantAssignmentId { get; set; }
         public string? TenantName { get; set; }
         public string? UnitNumber { get; set; }

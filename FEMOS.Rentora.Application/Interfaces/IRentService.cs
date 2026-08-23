@@ -13,7 +13,7 @@ namespace FEMOS.Rentora.Application.Interfaces
     {
         Task<FilterResponseInfo> GetRentInvoicesAsync(FilterRequestInfo objRequestInfo);
 
-        Task<RentInvoiceResponseInfo> GetRentInvoiceDetailsAsync(Guid userPublicId, long propertyId, long rentInvoiceId);
+        Task<RentInvoiceResponseInfo> GetRentInvoiceDetailsAsync(Guid userPublicId, long propertyId, Guid rentInvoicePublicId);
 
         Task<RentPaymentResponseInfo> SaveRentPaymentAsync(RentPaymentRequestInfo objRequestInfo);
 

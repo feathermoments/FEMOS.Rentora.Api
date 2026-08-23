@@ -79,12 +79,12 @@ namespace FEMOS.Rentora.Api.Controllers
         /// </remarks>
         [HttpPost("logout")]
         [Authorize]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout([FromBody] RefreshTokenRequestInfo model)
         {
             try
             {
                 var userPublicId = User.GetUserPublicId();
-                var result = await _authService.LogoutAsync(userPublicId);
+                var result = await _authService.LogoutAsync(userPublicId, model.RefreshToken);
 
                 if (result.Status == "Failure")
                     return BadRequest(result);

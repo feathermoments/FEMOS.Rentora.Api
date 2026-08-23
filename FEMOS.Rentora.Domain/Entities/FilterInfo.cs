@@ -28,7 +28,7 @@ namespace FEMOS.Rentora.Domain.Entities
 
         // Utility Charges Filter
         public short? UtilityTypeId { get; set; }
-        public long? RentInvoiceId { get; set; }
+        public Guid? RentInvoicePublicId { get; set; }
         public bool? IsInvoiced { get; set; }
 
         // Termination Request Filter

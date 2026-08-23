@@ -12,7 +12,7 @@ namespace FEMOS.Rentora.Infrastructure.Interfaces
     public interface IRentRepository
     {
         Task<FilterResponseInfo> GetRentInvoicesAsync(FilterRequestInfo objRequestInfo);
-        Task<RentInvoiceResponseInfo> GetRentInvoiceDetailsAsync(Guid userPublicId, long propertyId, long rentInvoiceId);
+        Task<RentInvoiceResponseInfo> GetRentInvoiceDetailsAsync(Guid userPublicId, long propertyId, Guid rentInvoicePublicId);
         Task<RentPaymentResponseInfo> SaveRentPaymentAsync(RentPaymentRequestInfo objRequestInfo);
         Task<FilterResponseInfo> GetRentPaymentsAsync(FilterRequestInfo objRequestInfo);
         Task<BaseResponseInfo> UpdateRentPaymentActionAsync(RentPaymentActionRequestInfo objRequestInfo);

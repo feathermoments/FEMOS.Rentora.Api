@@ -14,7 +14,7 @@ namespace FEMOS.Rentora.Infrastructure.Interfaces
         Task<DBAuthResponseInfo> VerifyOtpAsync(VerifyOtpInfo model);
         Task<bool> SaveRefreshTokenAsync(Guid userPublicId, string refreshToken, int expiryDays);
         Task<RefreshTokenInfo> GetRefreshTokenAsync(Guid userPublicId);
-        Task<bool> RevokeRefreshTokenAsync(Guid userPublicId);
+        Task<bool> RevokeRefreshTokenAsync(Guid userPublicId, string refreshToken);
         Task<bool> RevokeAllRefreshTokensAsync(Guid userPublicId);
     }
 }

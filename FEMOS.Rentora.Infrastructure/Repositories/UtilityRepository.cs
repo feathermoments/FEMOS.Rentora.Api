@@ -35,7 +35,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             };
             cmd.Parameters.Add(userIdParam);
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
-            cmd.Parameters.AddWithValue("@RentInvoiceId", objUtilityCharge.RentInvoiceId);
+            cmd.Parameters.AddWithValue("@RentInvoicePublicId", objUtilityCharge.RentInvoicePublicId);
             cmd.Parameters.AddWithValue("@TenantAssignmentId", objUtilityCharge.TenantAssignmentId);
             cmd.Parameters.AddWithValue("@UtilityTypeId", objUtilityCharge.UtilityTypeId);
             cmd.Parameters.AddWithValue("@ChargeDate", objUtilityCharge.ChargeDate);
@@ -135,7 +135,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@PropertyId", objRequestInfo.objFilterInfo.PropertyId);
             cmd.Parameters.AddWithValue("@UnitId", (object?)objRequestInfo.objFilterInfo.UnitId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@TenantAssignmentId", objRequestInfo.objFilterInfo.TenantAssignmentId ?? (object)DBNull.Value);
-            cmd.Parameters.AddWithValue("@RentInvoiceId", objRequestInfo.objFilterInfo.RentInvoiceId ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@RentInvoicePublicId", objRequestInfo.objFilterInfo.RentInvoicePublicId ?? (object)DBNull.Value);
             cmd.Parameters.AddWithValue("@UtilityTypeId", objRequestInfo.objFilterInfo.UtilityTypeId ?? (object)DBNull.Value);
             cmd.Parameters.AddWithValue("@IsInvoiced", objRequestInfo.objFilterInfo.IsInvoiced ?? (object)DBNull.Value);
             cmd.Parameters.AddWithValue("@FromDate", objRequestInfo.objFilterInfo.FromDate ?? (object)DBNull.Value);

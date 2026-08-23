@@ -216,9 +216,9 @@ namespace FEMOS.Rentora.Application.Services
             };
         }
 
-        public async Task<BaseResponseInfo> LogoutAsync(Guid userPublicId)
+        public async Task<BaseResponseInfo> LogoutAsync(Guid userPublicId, string refreshToken)
         {
-            var result = await _authRepository.RevokeRefreshTokenAsync(userPublicId);
+            var result = await _authRepository.RevokeRefreshTokenAsync(userPublicId, refreshToken);
 
             if (result)
             {

@@ -40,7 +40,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public long RentAgreementId { get; set; }
 
         public int TotalRecords { get; set; }
-        public long RentInvoiceId { get; set; }
+        public Guid RentInvoicePublicId { get; set; }
         public long PaidByUserId { get; set; }
         public decimal PaidAmount { get; set; }
         public decimal RequestedPaymentAmount { get; set; }
@@ -67,7 +67,7 @@ namespace FEMOS.Rentora.Domain.Entities
 
     public class RentPaymentInvoiceInfo
     {
-        public long RentInvoiceId { get; set; }
+        public Guid RentInvoicePublicId { get; set; }
         public decimal OutstandingAmount { get; set; }
         public decimal PaidAmount { get; set; }
     }

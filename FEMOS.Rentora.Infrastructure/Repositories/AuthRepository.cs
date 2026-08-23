@@ -131,11 +131,12 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             };
         }
 
-        public async Task<bool> RevokeRefreshTokenAsync(Guid userPublicId)
+        public async Task<bool> RevokeRefreshTokenAsync(Guid userPublicId, string refreshToken)
         {
             var cmd = new SqlCommand(DBConstants.sp_RevokeRefreshToken);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@RefreshToken", refreshToken);
 
             string result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
             DBResponseInfo dbResponse = await _dbHelper.GetDBResponse(result);

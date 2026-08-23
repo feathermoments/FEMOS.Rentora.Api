@@ -51,13 +51,13 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             };
         }
 
-        public async Task<RentInvoiceResponseInfo> GetRentInvoiceDetailsAsync(Guid userPublicId, long propertyId, long rentInvoiceId)
+        public async Task<RentInvoiceResponseInfo> GetRentInvoiceDetailsAsync(Guid userPublicId, long propertyId, Guid rentInvoicePublicId)
         {
             var cmd = new SqlCommand(DBConstants.USP_RentInvoice_Details);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
             cmd.Parameters.AddWithValue("@PropertyId", propertyId);
-            cmd.Parameters.AddWithValue("@RentInvoiceId", rentInvoiceId);
+            cmd.Parameters.AddWithValue("@RentInvoicePublicId", rentInvoicePublicId);
             var ds = await _dbHelper.GetDataSetBySQLCommandAsync(cmd);
             List<RentInvoiceInfo> objRentInvoices = _dbHelper.ConvertDataTable<RentInvoiceInfo>(ds.Tables[0]);
             if (objRentInvoices != null && objRentInvoices.Count > 0)
@@ -99,13 +99,13 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.Add(transactionGuidParam);
 
             DataTable tvp = new DataTable();
-            tvp.Columns.Add("RentInvoiceId", typeof(long));
+            tvp.Columns.Add("RentInvoicePublicId", typeof(Guid));
             tvp.Columns.Add("OutstandingAmount", typeof(decimal));
             tvp.Columns.Add("PaidAmount", typeof(decimal));
 
             foreach (var item in objRequestInfo.obRentPaymentInfo.Invoices)
             {
-                tvp.Rows.Add(item.RentInvoiceId, item.OutstandingAmount, item.PaidAmount);
+                tvp.Rows.Add(item.RentInvoicePublicId, item.OutstandingAmount, item.PaidAmount);
             }
 
             SqlParameter paymentInvoicesParam = new SqlParameter("@PaymentInvoices", SqlDbType.Structured);

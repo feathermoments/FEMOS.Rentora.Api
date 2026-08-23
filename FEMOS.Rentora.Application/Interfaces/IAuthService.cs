@@ -13,7 +13,7 @@ namespace FEMOS.Rentora.Application.Interfaces
         Task<SendOtpResponseInfo> SendOtpAsync(SendOtpInfo model);
         Task<VerifyOtpResponseInfo> VerifyOtpAsync(VerifyOtpInfo model);
         Task<RefreshTokenResponseInfo> RefreshTokenAsync(Guid userPublicId, string refreshToken);
-        Task<BaseResponseInfo> LogoutAsync(Guid userPublicId);
+        Task<BaseResponseInfo> LogoutAsync(Guid userPublicId, string refreshToken);
         Task<BaseResponseInfo> LogoutAllAsync(Guid userPublicId);
     }
 }
