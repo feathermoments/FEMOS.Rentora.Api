@@ -23,13 +23,13 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             _dbHelper = dbHelper;
         }
 
-        public async Task<PropertyUnitInfo> GetPropertyUnitDetailsAsync(Guid userPublicId, Guid propertyPublicId, long unitId)
+        public async Task<PropertyUnitInfo> GetPropertyUnitDetailsAsync(Guid userPublicId, Guid propertyPublicId, Guid unitPublicId)
         {
             var cmd = new SqlCommand(DBConstants.USP_PropertyUnit_Details);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
             cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
-            cmd.Parameters.AddWithValue("@UnitId", unitId);
+            cmd.Parameters.AddWithValue("@UnitPublicId", unitPublicId);
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
             List<PropertyUnitInfo> propertyUnits = _dbHelper.ConvertDataTable<PropertyUnitInfo>(dt);
 
@@ -64,12 +64,12 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             var cmd = new SqlCommand(DBConstants.USP_PropertyUnit_Save);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            var unitIdParam = new SqlParameter("@UnitId", SqlDbType.BigInt)
+            var unitPublicIdParam = new SqlParameter("@UnitPublicId", SqlDbType.UniqueIdentifier)
             {
                 Direction = ParameterDirection.InputOutput,
-                Value = (object?)objRequestInfo.objPropertyUnit.UnitId ?? DBNull.Value
+                Value = (object?)objRequestInfo.objPropertyUnit.UnitPublicId ?? DBNull.Value
             };
-            cmd.Parameters.Add(unitIdParam);
+            cmd.Parameters.Add(unitPublicIdParam);
 
             cmd.Parameters.AddWithValue("@PropertyPublicId", objRequestInfo.objPropertyUnit.PropertyPublicId);
             cmd.Parameters.AddWithValue("@UnitNumber", objRequestInfo.objPropertyUnit.UnitNumber);
@@ -95,15 +95,15 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
             var dbResponse = await _dbHelper.GetDBResponse(result);
 
-            long? returnedUnitId = unitIdParam.Value != DBNull.Value
-                ? Convert.ToInt64(unitIdParam.Value)
+            Guid? returnedUnitPublicId = unitPublicIdParam.Value != DBNull.Value
+                ? (Guid)unitPublicIdParam.Value
                 : null;
 
             return new PropertyUnitResponseInfo
             {
                 Status = dbResponse.Status,
                 Message = dbResponse.Message,
-                UnitId = returnedUnitId
+                UnitPublicId = returnedUnitPublicId
             };
         }
     }

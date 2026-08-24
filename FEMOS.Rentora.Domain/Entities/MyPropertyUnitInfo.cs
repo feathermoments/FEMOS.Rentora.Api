@@ -8,7 +8,7 @@ namespace FEMOS.Rentora.Domain.Entities
 {
     public class MyPropertyUnitInfo
     {
-        public long UnitId { get; set; }
+        public Guid UnitPublicId { get; set; }
         public Guid PropertyPublicId { get; set; }
         public string UnitNumber { get; set; } = string.Empty;
         public long TenantId { get; set; }

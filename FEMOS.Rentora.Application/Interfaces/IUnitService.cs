@@ -12,7 +12,7 @@ namespace FEMOS.Rentora.Application.Interfaces
     {
         Task<PropertyUnitResponseInfo> GetPropertyUnitsAsync(Guid userPublicId, Guid propertyPublicId);
         Task<PropertyUnitResponseInfo> SavePropertyUnitAsync(PropertyUnitRequestInfo objRequestInfo);
-        Task<PropertyUnitResponseInfo> GetPropertyUnitDetailsAsync(Guid userPublicId, Guid propertyPublicId, long unitId);
+        Task<PropertyUnitResponseInfo> GetPropertyUnitDetailsAsync(Guid userPublicId, Guid propertyPublicId, Guid unitPublicId);
         Task<PropertyUnitResponseInfo> GetVacantUnitsAsync(Guid userPublicId, Guid propertyPublicId);
     }
 }

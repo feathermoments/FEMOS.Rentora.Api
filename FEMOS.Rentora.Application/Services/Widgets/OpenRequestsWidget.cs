@@ -23,7 +23,7 @@ namespace FEMOS.Rentora.Application.Services.Widgets
 
         public string WidgetCode => "OPEN_REQUESTS";
 
-        public async Task<object> GetDataAsync(Guid propertyPublicId, long unitId, Guid userPublicId)
+        public async Task<object> GetDataAsync(Guid propertyPublicId, Guid unitPublicId, Guid userPublicId)
         {
             var data = await _dashboardRepository.GetOpenRequestsAsync(propertyPublicId, userPublicId);
             return data;

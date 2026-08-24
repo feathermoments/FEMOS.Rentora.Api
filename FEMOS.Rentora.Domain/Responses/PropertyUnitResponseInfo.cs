@@ -9,7 +9,7 @@ namespace FEMOS.Rentora.Domain.Responses
 {
     public class PropertyUnitResponseInfo : BaseResponseInfo
     {
-        public long? UnitId { get; set; }
+        public Guid? UnitPublicId { get; set; }
         public List<MyPropertyUnitInfo> objMyPropertyUnits { get; set; }
         public PropertyUnitInfo objPropertyUnitInfo { get; set; }
     }

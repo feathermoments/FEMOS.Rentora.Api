@@ -23,7 +23,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public int BillingFrequencyId { get; set; }
         public Guid PropertyPublicId { get; set; }
         public string PropertyName { get; set; }
-        public int UnitId { get; set; }
+        public Guid UnitPublicId { get; set; }
         public string UnitNumber { get; set; }
         public int TenantAssignmentId { get; set; }
         public int TenantId { get; set; }

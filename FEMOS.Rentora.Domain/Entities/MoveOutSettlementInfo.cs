@@ -38,7 +38,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public string AgreementNumber { get; set; }
         public Guid PropertyPublicId { get; set; }
         public string PropertyName { get; set; }
-        public long UnitId { get; set; }
+        public Guid UnitPublicId { get; set; }
         public string UnitNumber { get; set; }
         public long TenantId { get; set; }
         public string TenantName { get; set; }

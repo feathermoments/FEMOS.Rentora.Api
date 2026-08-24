@@ -27,7 +27,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
             cmd.Parameters.AddWithValue("@PropertyPublicId", objRequestInfo.objFilterInfo.PropertyPublicId);
-            cmd.Parameters.AddWithValue("@UnitId", (object?)objRequestInfo.objFilterInfo.UnitId ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@UnitPublicId", (object?)objRequestInfo.objFilterInfo.UnitPublicId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@TenantAssignmentId", (object?)objRequestInfo.objFilterInfo.TenantAssignmentId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@RentAgreementId", (object?)objRequestInfo.objFilterInfo.RentAgreementId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@InvoiceStatusId", (object?)objRequestInfo.objFilterInfo.InvoiceStatusId ?? DBNull.Value);
@@ -148,7 +148,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
             cmd.Parameters.AddWithValue("@PropertyPublicId", objRequestInfo.objFilterInfo.PropertyPublicId);
-            cmd.Parameters.AddWithValue("@UnitId", (object?)objRequestInfo.objFilterInfo.UnitId ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@UnitPublicId", (object?)objRequestInfo.objFilterInfo.UnitPublicId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@InvoiceStatusId", (object?)objRequestInfo.objFilterInfo.InvoiceStatusId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@PaymentStatusId", (object?)objRequestInfo.objFilterInfo.PaymentStatusId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@BillingYear", (object?)objRequestInfo.objFilterInfo.BillingYear ?? DBNull.Value);
@@ -219,7 +219,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
             cmd.Parameters.AddWithValue("@PropertyPublicId", objRequestInfo.objFilterInfo.PropertyPublicId);
-            cmd.Parameters.AddWithValue("@UnitId", objRequestInfo.objFilterInfo.UnitId);
+            cmd.Parameters.AddWithValue("@UnitPublicId", objRequestInfo.objFilterInfo.UnitPublicId);
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
             List<TenantSecurityDepositInfo> objTenantSecurityDeposits = _dbHelper.ConvertDataTable<TenantSecurityDepositInfo>(dt);
             return new FilterResponseInfo()

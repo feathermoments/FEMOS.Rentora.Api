@@ -100,7 +100,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@FromDate", (object?)objRequestInfo.objFilterInfo.FromDate ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@ToDate", (object?)objRequestInfo.objFilterInfo.ToDate ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@PropertyPublicId", objRequestInfo.objFilterInfo.PropertyPublicId);
-            cmd.Parameters.AddWithValue("@UnitId", objRequestInfo.objFilterInfo.UnitId);
+            cmd.Parameters.AddWithValue("@UnitPublicId", objRequestInfo.objFilterInfo.UnitPublicId);
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
 
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);

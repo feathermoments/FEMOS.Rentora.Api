@@ -42,14 +42,14 @@ namespace FEMOS.Rentora.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("details/{propertyPublicId}/{unitId}")]
-        public async Task<IActionResult> GetPropertyUnitDetails(Guid propertyPublicId, long unitId)
+        [HttpGet("details/{propertyPublicId}/{unitPublicId}")]
+        public async Task<IActionResult> GetPropertyUnitDetails(Guid propertyPublicId, Guid unitPublicId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
 
-            var propertyUnitDetails = await _unitService.GetPropertyUnitDetailsAsync(userPublicId, propertyPublicId, unitId);
+            var propertyUnitDetails = await _unitService.GetPropertyUnitDetailsAsync(userPublicId, propertyPublicId, unitPublicId);
             return Ok(propertyUnitDetails);
         }
 

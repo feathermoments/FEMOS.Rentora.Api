@@ -9,10 +9,10 @@ namespace FEMOS.Rentora.Domain.Entities
     public class RentAgreementInfo
     {
         public long RentAgreementId { get; set; }
-        //public Guid? PropertyPublicId { get; set; }
-        //public long? UnitId { get; set; }
-        //public long? TenantId { get; set; }
-        public long TenantAssignmentId { get; set; }
+		//public Guid? PropertyPublicId { get; set; }
+		//public Guid? UnitPublicId { get; set; }
+		//public long? TenantId { get; set; }
+		public long TenantAssignmentId { get; set; }
         public string AgreementNumber { get; set; } = string.Empty;
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

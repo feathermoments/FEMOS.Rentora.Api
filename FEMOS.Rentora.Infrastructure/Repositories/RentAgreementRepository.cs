@@ -103,7 +103,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
             cmd.Parameters.AddWithValue("@PropertyPublicId", objRequestInfo.objFilterInfo.PropertyPublicId);
-            cmd.Parameters.AddWithValue("@UnitId", (object?)objRequestInfo.objFilterInfo.UnitId ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@UnitPublicId", (object?)objRequestInfo.objFilterInfo.UnitPublicId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@TenantId", (object?)objRequestInfo.objFilterInfo.TenantId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@TenantAssignmentId", (object?)objRequestInfo.objFilterInfo.TenantAssignmentId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@SearchText", (object?)objRequestInfo.objFilterInfo.SearchText ?? DBNull.Value);
@@ -155,7 +155,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@PageNumber", objRequestInfo.objFilterInfo.PageNumber);
             cmd.Parameters.AddWithValue("@PageSize", objRequestInfo.objFilterInfo.PageSize);
             cmd.Parameters.AddWithValue("@PropertyPublicId", objRequestInfo.objFilterInfo.PropertyPublicId);
-            cmd.Parameters.AddWithValue("@UnitId", objRequestInfo.objFilterInfo.UnitId);
+            cmd.Parameters.AddWithValue("@UnitPublicId", objRequestInfo.objFilterInfo.UnitPublicId);
 
             DataTable dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
 

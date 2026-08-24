@@ -18,7 +18,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public string AddressLine1 { get; set; } = string.Empty;
         public int RoleId { get; set; }
         public string UserRole { get; set; } = string.Empty;
-        public long CurrentUnitId { get; set; }
+        public Guid CurrentUnitPublicId { get; set; }
         public string CurrentUnitNumber { get; set; } = string.Empty;
         public string RelationshipStatus { get; set; } = string.Empty;
         public long TenantAssignmentId { get; set; }

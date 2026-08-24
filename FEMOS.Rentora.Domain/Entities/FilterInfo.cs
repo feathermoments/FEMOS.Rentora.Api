@@ -9,7 +9,7 @@ namespace FEMOS.Rentora.Domain.Entities
     public class FilterInfo
     {
         public Guid PropertyPublicId { get; set; }
-        public long? UnitId { get; set; }
+        public Guid? UnitPublicId { get; set; }
         public long? TenantId { get; set; }
         public int? InvoiceStatusId { get; set; }
         public int? PaymentStatusId { get; set; }
