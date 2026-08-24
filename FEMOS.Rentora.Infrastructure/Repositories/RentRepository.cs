@@ -173,7 +173,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
             cmd.Parameters.AddWithValue("@TransactionGuid", objRequestInfo.TransactionGuid);
             cmd.Parameters.AddWithValue("@ActionTaken", objRequestInfo.ActionTaken);
-            cmd.Parameters.AddWithValue("@RentPaymentId", (object?)objRequestInfo.RentPaymentId ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@RentPaymentPublicId", (object?)objRequestInfo.RentPaymentPublicId ?? DBNull.Value);
             var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
             var dbResponse = await _dbHelper.GetDBResponse(result);
             return new BaseResponseInfo
@@ -183,13 +183,13 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             };
         }
 
-        public async Task<RentPaymentResponseInfo> GetRentPaymentDetailsAsync(Guid userPublicId, Guid propertyPublicId, long rentPaymentId)
+        public async Task<RentPaymentResponseInfo> GetRentPaymentDetailsAsync(Guid userPublicId, Guid propertyPublicId, Guid rentPaymentPublicId)
         {
             var cmd = new SqlCommand(DBConstants.USP_RentPayment_Details);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
             cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
-            cmd.Parameters.AddWithValue("@RentPaymentId", rentPaymentId);
+            cmd.Parameters.AddWithValue("@RentPaymentPublicId", rentPaymentPublicId);
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
             List<RentPaymentInfo> objRentPayments = _dbHelper.ConvertDataTable<RentPaymentInfo>(dt);
             if (objRentPayments != null && objRentPayments.Count > 0)

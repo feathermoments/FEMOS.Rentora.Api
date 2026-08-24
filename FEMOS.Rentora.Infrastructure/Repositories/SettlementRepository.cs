@@ -142,7 +142,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
         {
             var cmd = new SqlCommand(DBConstants.USP_MoveOutSettlement_Payment_Approve);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@RentPaymentId", objRequestInfo.RentPaymentId);
+            cmd.Parameters.AddWithValue("@RentPaymentPublicId", objRequestInfo.RentPaymentPublicId);
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
             cmd.Parameters.AddWithValue("@Remarks", string.IsNullOrEmpty(objRequestInfo.Remarks) ? DBNull.Value : objRequestInfo.Remarks);
 
@@ -160,7 +160,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
         {
             var cmd = new SqlCommand(DBConstants.USP_MoveOutSettlement_Payment_Reject);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@RentPaymentId", objRequestInfo.RentPaymentId);
+            cmd.Parameters.AddWithValue("@RentPaymentPublicId", objRequestInfo.RentPaymentPublicId);
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
             cmd.Parameters.AddWithValue("@Remarks", string.IsNullOrEmpty(objRequestInfo.Remarks) ? DBNull.Value : objRequestInfo.Remarks);
 
@@ -178,7 +178,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
         {
             var cmd = new SqlCommand(DBConstants.USP_MoveOutSettlement_Refund_Confirm);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@RentPaymentId", objRequestInfo.RentPaymentId);
+            cmd.Parameters.AddWithValue("@RentPaymentPublicId", objRequestInfo.RentPaymentPublicId);
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
             cmd.Parameters.AddWithValue("@Remarks", string.IsNullOrEmpty(objRequestInfo.Remarks) ? DBNull.Value : objRequestInfo.Remarks);
 
@@ -221,7 +221,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
         {
             var cmd = new SqlCommand(DBConstants.USP_MoveOutSettlement_Refund_Reject);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@RentPaymentId", objRequestInfo.RentPaymentId);
+            cmd.Parameters.AddWithValue("@RentPaymentPublicId", objRequestInfo.RentPaymentPublicId);
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
             cmd.Parameters.AddWithValue("@Remarks", string.IsNullOrEmpty(objRequestInfo.Remarks) ? DBNull.Value : objRequestInfo.Remarks);
 

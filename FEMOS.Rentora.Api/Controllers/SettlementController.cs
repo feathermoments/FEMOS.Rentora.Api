@@ -92,7 +92,7 @@ namespace FEMOS.Rentora.Api.Controllers
         [HttpPost("approve-payment")]
         public async Task<IActionResult> ApprovePayment(MoveOutSettlementActionRequestInfo objRequestInfo)
         {
-            if (objRequestInfo == null || objRequestInfo.RentPaymentId <= 0)
+            if (objRequestInfo == null || objRequestInfo.RentPaymentPublicId == Guid.Empty)
             {
                 throw new ArgumentNullException(nameof(objRequestInfo));
             }
@@ -107,7 +107,7 @@ namespace FEMOS.Rentora.Api.Controllers
         [HttpPost("reject-payment")]
         public async Task<IActionResult> RejectPayment(MoveOutSettlementActionRequestInfo objRequestInfo)
         {
-            if (objRequestInfo == null || objRequestInfo.RentPaymentId <= 0)
+            if (objRequestInfo == null || objRequestInfo.RentPaymentPublicId == Guid.Empty)
             {
                 throw new ArgumentNullException(nameof(objRequestInfo));
             }
@@ -122,7 +122,7 @@ namespace FEMOS.Rentora.Api.Controllers
         [HttpPost("confirm-refund")]
         public async Task<IActionResult> ConfirmRefund(MoveOutSettlementActionRequestInfo objRequestInfo)
         {
-            if (objRequestInfo == null || objRequestInfo.RentPaymentId <= 0)
+            if (objRequestInfo == null || objRequestInfo.RentPaymentPublicId == Guid.Empty)
             {
                 throw new ArgumentNullException(nameof(objRequestInfo));
             }
@@ -152,7 +152,7 @@ namespace FEMOS.Rentora.Api.Controllers
         [HttpPost("reject-refund")]
         public async Task<IActionResult> RejectRefund(MoveOutSettlementActionRequestInfo objRequestInfo)
         {
-            if (objRequestInfo == null || objRequestInfo.RentPaymentId <= 0)
+            if (objRequestInfo == null || objRequestInfo.RentPaymentPublicId == Guid.Empty)
             {
                 throw new ArgumentNullException(nameof(objRequestInfo));
             }

@@ -9,7 +9,7 @@ namespace FEMOS.Rentora.Domain.Requests
 {
     public class MoveOutSettlementActionRequestInfo : BaseRequestInfo
     {
-        public long RentPaymentId { get; set; }
+        public Guid RentPaymentPublicId { get; set; }
         public string Remarks { get; set; }
     }
 

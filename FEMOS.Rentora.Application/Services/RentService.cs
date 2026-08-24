@@ -60,9 +60,9 @@ namespace FEMOS.Rentora.Application.Services
             return await _rentRepository.UpdateRentPaymentActionAsync(objRequestInfo);
         }
 
-        public async Task<RentPaymentResponseInfo> GetRentPaymentDetailsAsync(Guid userPublicId, Guid propertyPublicId, long rentPaymentId)
+        public async Task<RentPaymentResponseInfo> GetRentPaymentDetailsAsync(Guid userPublicId, Guid propertyPublicId, Guid rentPaymentPublicId)
         {
-            RentPaymentResponseInfo objResponseInfo = await _rentRepository.GetRentPaymentDetailsAsync(userPublicId, propertyPublicId, rentPaymentId);
+            RentPaymentResponseInfo objResponseInfo = await _rentRepository.GetRentPaymentDetailsAsync(userPublicId, propertyPublicId, rentPaymentPublicId);
             if (objResponseInfo.objRentPaymentInfo != null)
             {
                 objResponseInfo.objRentPaymentInfo.MobileNumber = _encryptDecryptService.Decrypt(objResponseInfo.objRentPaymentInfo.MobileNumber);

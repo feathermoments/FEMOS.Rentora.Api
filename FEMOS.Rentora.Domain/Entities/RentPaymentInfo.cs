@@ -10,7 +10,7 @@ namespace FEMOS.Rentora.Domain.Entities
 {
     public class RentPaymentInfo
     {
-        public long RentPaymentId { get; set; }
+        public Guid RentPaymentPublicId { get; set; }
         public string? ReceiptNumber { get; set; }
         public DateTime PaymentDate { get; set; }
         public string? PaymentMethod { get; set; }

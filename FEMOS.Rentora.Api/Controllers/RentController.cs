@@ -86,13 +86,13 @@ namespace FEMOS.Rentora.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("get-rent-payment-details/{propertyPublicId}/{rentPaymentId}")]
-        public async Task<IActionResult> GetRentPaymentDetails(Guid propertyPublicId, long rentPaymentId)
+        [HttpGet("get-rent-payment-details/{propertyPublicId}/{rentPaymentPublicId}")]
+        public async Task<IActionResult> GetRentPaymentDetails(Guid propertyPublicId, Guid rentPaymentPublicId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
-            var rentAgreement = await _rentService.GetRentPaymentDetailsAsync(userPublicId, propertyPublicId, rentPaymentId);
+            var rentAgreement = await _rentService.GetRentPaymentDetailsAsync(userPublicId, propertyPublicId, rentPaymentPublicId);
             return Ok(rentAgreement);
         }
 

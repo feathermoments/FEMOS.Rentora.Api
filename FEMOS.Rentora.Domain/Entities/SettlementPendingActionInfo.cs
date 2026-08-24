@@ -56,6 +56,6 @@ namespace FEMOS.Rentora.Domain.Entities
         public bool CanRejectRefund { get; set; }
         public bool CanFinalizeSettlement { get; set; }
         public bool HasPendingAction { get; set; }
-        public long RentPaymentId { get; set; }
+        public Guid RentPaymentPublicId { get; set; }
     }
 }

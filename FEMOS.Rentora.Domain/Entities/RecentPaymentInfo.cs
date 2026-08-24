@@ -8,7 +8,7 @@ namespace FEMOS.Rentora.Domain.Entities
     }
     public class RecentPaymentDetailInfo
     {
-        public long PaymentId { get; set; }
+        public Guid RentPaymentPublicId { get; set; }
         public long TenantId { get; set; }
         public string TenantName { get; set; }
         public decimal Amount { get; set; }
