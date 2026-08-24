@@ -4,7 +4,7 @@ namespace FEMOS.Rentora.Domain.Entities
     {
         public long TenantSecurityDepositId { get; set; }
         public Guid UniqueId { get; set; }
-        public long RentAgreementId { get; set; }
+        public Guid RentAgreementPublicId { get; set; }
         public string AgreementNumber { get; set; }
         public long TenantAssignmentId { get; set; }
         public long TenantId { get; set; }

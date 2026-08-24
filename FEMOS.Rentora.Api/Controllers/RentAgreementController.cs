@@ -40,13 +40,13 @@ namespace FEMOS.Rentora.Api.Controllers
             return Ok(rentAgreement);
         }
 
-        [HttpDelete("delete/{rentAgreementId}/{tenantAssignmentId}")]
-        public async Task<IActionResult> DeleteRentAgreement(long rentAgreementId, long tenantAssignmentId)
+        [HttpDelete("delete/{rentAgreementPublicId}/{tenantAssignmentId}")]
+        public async Task<IActionResult> DeleteRentAgreement(Guid rentAgreementPublicId, long tenantAssignmentId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
-            var result = await _rentAgreementService.DeleteRentAgreementAsync(userPublicId, rentAgreementId, tenantAssignmentId);
+            var result = await _rentAgreementService.DeleteRentAgreementAsync(userPublicId, rentAgreementPublicId, tenantAssignmentId);
             return Ok(result);
         }
 

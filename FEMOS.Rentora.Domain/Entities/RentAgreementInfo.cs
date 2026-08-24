@@ -8,7 +8,7 @@ namespace FEMOS.Rentora.Domain.Entities
 {
     public class RentAgreementInfo
     {
-        public long RentAgreementId { get; set; }
+        public Guid RentAgreementPublicId { get; set; }
 		//public Guid? PropertyPublicId { get; set; }
 		//public Guid? UnitPublicId { get; set; }
 		//public long? TenantId { get; set; }
@@ -34,7 +34,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public string? ProrationType { get; set; }
         public int CurrentRenewalNo { get; set; }
         public int BillingCycleStartDay { get; set; }
-        public long PreviousRentAgreementId { get; set; }
+        public Guid PreviousRentAgreementPublicId { get; set; }
         public bool IsActive { get; set; }
         public string? UnitNumber { get; set; } = string.Empty;  
         public string? PropertyName { get; set; } = string.Empty;

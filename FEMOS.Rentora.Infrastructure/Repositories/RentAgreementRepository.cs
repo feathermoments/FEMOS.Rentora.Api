@@ -21,12 +21,12 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             _dbHelper = dbHelper;
         }
 
-        public async Task<BaseResponseInfo> DeleteRentAgreementAsync(Guid userPublicId, long RentAgreementId, long TenantAssignmentId)
+        public async Task<BaseResponseInfo> DeleteRentAgreementAsync(Guid userPublicId, Guid RentAgreementPublicId, long TenantAssignmentId)
         {
             var cmd = new SqlCommand(DBConstants.usp_DeleteRentAgreement);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
-            cmd.Parameters.AddWithValue("@RentAgreementId", RentAgreementId);
+            cmd.Parameters.AddWithValue("@RentAgreementPublicId", RentAgreementPublicId);
             cmd.Parameters.AddWithValue("@TenantAssignmentId", TenantAssignmentId);
             var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
             var dbResponse = await _dbHelper.GetDBResponse(result);
@@ -58,12 +58,12 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
         {
             var cmd = new SqlCommand(DBConstants.usp_RentAgreement_Save);
             cmd.CommandType = CommandType.StoredProcedure;
-            var rentAgreementIdParam = new SqlParameter("@RentAgreementId", SqlDbType.BigInt)
+            var rentAgreementPublicIdParam = new SqlParameter("@RentAgreementPublicId", SqlDbType.UniqueIdentifier)
             {
                 Direction = ParameterDirection.InputOutput,
-                Value = (object?)objRequestInfo.objRentAgreementInfo.RentAgreementId ?? DBNull.Value
+                Value = (object?)objRequestInfo.objRentAgreementInfo.RentAgreementPublicId ?? DBNull.Value
             };
-            cmd.Parameters.Add(rentAgreementIdParam);
+            cmd.Parameters.Add(rentAgreementPublicIdParam);
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
             cmd.Parameters.AddWithValue("@TenantAssignmentId", objRequestInfo.objRentAgreementInfo.TenantAssignmentId);
             cmd.Parameters.AddWithValue("@AgreementNumber", objRequestInfo.objRentAgreementInfo.AgreementNumber);
@@ -80,20 +80,20 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@BillingCycleTypeId", objRequestInfo.objRentAgreementInfo.BillingCycleTypeId);
             cmd.Parameters.AddWithValue("@ProrationTypeId", objRequestInfo.objRentAgreementInfo.ProrationTypeId);
             cmd.Parameters.AddWithValue("@BillingCycleStartDay", objRequestInfo.objRentAgreementInfo.BillingCycleStartDay);
-            cmd.Parameters.AddWithValue("@PreviousRentAgreementId", objRequestInfo.objRentAgreementInfo.PreviousRentAgreementId);
+            cmd.Parameters.AddWithValue("@PreviousRentAgreementPublicId", objRequestInfo.objRentAgreementInfo.PreviousRentAgreementPublicId);
 
             var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
             var dbResponse = await _dbHelper.GetDBResponse(result);
 
-            long? rentAgreementId = rentAgreementIdParam.Value != DBNull.Value
-                ? Convert.ToInt64(rentAgreementIdParam.Value)
+            Guid? rentAgreementPublicId = rentAgreementPublicIdParam.Value != DBNull.Value
+                ? (Guid?)rentAgreementPublicIdParam.Value
                 : null;
 
             return new RentAgreementResponseInfo
             {
                 Status = dbResponse.Status,
                 Message = dbResponse.Message,
-                RentAgreementId = rentAgreementId
+                RentAgreementPublicId = rentAgreementPublicId
             };
         }
 
@@ -126,7 +126,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             var cmd = new SqlCommand(DBConstants.USP_RentAgreement_TerminationRequest_Create);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
-            cmd.Parameters.AddWithValue("@RentAgreementId", objRequestInfo.objTerminationRequestInfo.RentAgreementId);
+            cmd.Parameters.AddWithValue("@RentAgreementPublicId", objRequestInfo.objTerminationRequestInfo.RentAgreementPublicId);
             cmd.Parameters.AddWithValue("@TerminationDate", objRequestInfo.objTerminationRequestInfo.TerminationDate);
             cmd.Parameters.AddWithValue("@Reason", string.IsNullOrEmpty(objRequestInfo.objTerminationRequestInfo.Reason) ? DBNull.Value : objRequestInfo.objTerminationRequestInfo.Reason);
             cmd.Parameters.AddWithValue("@Notes", string.IsNullOrEmpty(objRequestInfo.objTerminationRequestInfo.Notes) ? DBNull.Value : objRequestInfo.objTerminationRequestInfo.Notes);
@@ -147,7 +147,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             var cmd = new SqlCommand(DBConstants.USP_RentAgreement_TerminationRequest_List);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
-            cmd.Parameters.AddWithValue("@RentAgreementId", (object?)objRequestInfo.objFilterInfo.RentAgreementId ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@RentAgreementPublicId", (object?)objRequestInfo.objFilterInfo.RentAgreementPublicId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@TenantAssignmentId", (object?)objRequestInfo.objFilterInfo.TenantAssignmentId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@TerminationRequestStatusId", (object?)objRequestInfo.objFilterInfo.TerminationRequestStatusId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@FromDate", (object?)objRequestInfo.objFilterInfo.FromDate ?? DBNull.Value);

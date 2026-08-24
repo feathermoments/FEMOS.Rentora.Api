@@ -37,7 +37,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public Guid TransactionGuid { get; set; }
 
         public List<RentPaymentInvoiceInfo> Invoices { get; set; }
-        public long RentAgreementId { get; set; }
+        public Guid RentAgreementPublicId { get; set; }
 
         public int TotalRecords { get; set; }
         public Guid RentInvoicePublicId { get; set; }

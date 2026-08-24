@@ -10,7 +10,7 @@ namespace FEMOS.Rentora.Domain.Entities
     {
         public long TerminationRequestId { get; set; }
         public Guid UniqueId { get; set; }
-        public long RentAgreementId { get; set; }
+        public Guid RentAgreementPublicId { get; set; }
         public int TerminationRequestStatusId { get; set; }
         public int RequestedByUserId { get; set; }
         public DateTime RequestedOn { get; set; }

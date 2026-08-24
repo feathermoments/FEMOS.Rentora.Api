@@ -9,7 +9,7 @@ namespace FEMOS.Rentora.Domain.Responses
 {
     public class RentAgreementResponseInfo : BaseResponseInfo
     {
-        public long? RentAgreementId { get; set; }
+        public Guid? RentAgreementPublicId { get; set; }
         public RentAgreementInfo objRentAgreementInfo { get; set; }
     }
 }

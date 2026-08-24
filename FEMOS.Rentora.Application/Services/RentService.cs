@@ -76,14 +76,14 @@ namespace FEMOS.Rentora.Application.Services
             return await _rentRepository.GetTenantSecurityDepositsAsync(objRequestInfo);
         }
 
-        public async Task<TenantSecurityDepositResponseInfo> GetTenantSecurityDepositDetailsAsync(Guid userPublicId, long tenantSecurityDepositId, long rentAgreementId, long tenantAssignmentId)
+        public async Task<TenantSecurityDepositResponseInfo> GetTenantSecurityDepositDetailsAsync(Guid userPublicId, long tenantSecurityDepositId, Guid rentAgreementPublicId, long tenantAssignmentId)
         {
-            return await _rentRepository.GetTenantSecurityDepositDetailsAsync(userPublicId, tenantSecurityDepositId, rentAgreementId, tenantAssignmentId);
+            return await _rentRepository.GetTenantSecurityDepositDetailsAsync(userPublicId, tenantSecurityDepositId, rentAgreementPublicId, tenantAssignmentId);
         }
 
-        public async Task<DepositTransactionListResponseInfo> GetTenantSecurityDepositTransactionsAsync(Guid userPublicId, long tenantSecurityDepositId, long rentAgreementId, long tenantAssignmentId)
+        public async Task<DepositTransactionListResponseInfo> GetTenantSecurityDepositTransactionsAsync(Guid userPublicId, long tenantSecurityDepositId, Guid rentAgreementPublicId, long tenantAssignmentId)
         {
-            return await _rentRepository.GetTenantSecurityDepositTransactionsAsync(userPublicId, tenantSecurityDepositId, rentAgreementId, tenantAssignmentId);
+            return await _rentRepository.GetTenantSecurityDepositTransactionsAsync(userPublicId, tenantSecurityDepositId, rentAgreementPublicId, tenantAssignmentId);
         }
     }
 }

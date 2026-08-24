@@ -38,7 +38,7 @@ namespace FEMOS.Rentora.Application.Services
             {
                 objResponseInfo.objRentAgreementInfo = new RentAgreementInfo()
                 {
-                    RentAgreementId = 0,
+                    RentAgreementPublicId = Guid.Empty,
                     TenantAssignmentId = tenantAssignmentId,
                     AgreementStatusId = 4,
                     AgreementStatus = "Draft (Pending)"
@@ -49,9 +49,9 @@ namespace FEMOS.Rentora.Application.Services
             return objResponseInfo;
         }
 
-        public async Task<BaseResponseInfo> DeleteRentAgreementAsync(Guid userPublicId, long rentAgreementId, long tenantAssignmentId)
+        public async Task<BaseResponseInfo> DeleteRentAgreementAsync(Guid userPublicId, Guid rentAgreementPublicId, long tenantAssignmentId)
         {
-            return await _rentAgreementRepository.DeleteRentAgreementAsync(userPublicId, rentAgreementId, tenantAssignmentId);
+            return await _rentAgreementRepository.DeleteRentAgreementAsync(userPublicId, rentAgreementPublicId, tenantAssignmentId);
         }
 
         public async Task<FilterResponseInfo> GetRentAgreementsAsync(FilterRequestInfo objRequestInfo)

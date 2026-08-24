@@ -18,7 +18,7 @@ namespace FEMOS.Rentora.Infrastructure.Interfaces
         Task<BaseResponseInfo> UpdateRentPaymentActionAsync(RentPaymentActionRequestInfo objRequestInfo);
         Task<RentPaymentResponseInfo> GetRentPaymentDetailsAsync(Guid userPublicId, Guid PropertyPublicId, Guid rentPaymentPublicId);
         Task<FilterResponseInfo> GetTenantSecurityDepositsAsync(FilterRequestInfo objRequestInfo);
-        Task<TenantSecurityDepositResponseInfo> GetTenantSecurityDepositDetailsAsync(Guid userPublicId, long tenantSecurityDepositId, long rentAgreementId, long tenantAssignmentId);
-        Task<DepositTransactionListResponseInfo> GetTenantSecurityDepositTransactionsAsync(Guid userPublicId, long tenantSecurityDepositId, long rentAgreementId, long tenantAssignmentId);
+        Task<TenantSecurityDepositResponseInfo> GetTenantSecurityDepositDetailsAsync(Guid userPublicId, long tenantSecurityDepositId, Guid rentAgreementPublicId, long tenantAssignmentId);
+        Task<DepositTransactionListResponseInfo> GetTenantSecurityDepositTransactionsAsync(Guid userPublicId, long tenantSecurityDepositId, Guid rentAgreementPublicId, long tenantAssignmentId);
     }
 }
