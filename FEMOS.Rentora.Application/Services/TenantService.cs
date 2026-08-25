@@ -119,10 +119,10 @@ namespace FEMOS.Rentora.Application.Services
             return await _tenantRepository.SavePropertyTenantAssignmentAsync(objRequestInfo);
         }
 
-        public async Task<PropertyTenantAssignmentResponseInfo> GetTenantAssignmentDetailsAsync(Guid userPublicId, Guid propertyPublicId, long tenantId, long tenantAssignmentId)
+        public async Task<PropertyTenantAssignmentResponseInfo> GetTenantAssignmentDetailsAsync(Guid userPublicId, Guid propertyPublicId, long tenantId, Guid tenantAssignmentPublicId)
         {
             PropertyTenantAssignmentResponseInfo objResponseInfo = new PropertyTenantAssignmentResponseInfo();
-            objResponseInfo.objTenantAssignmentInfo = await _tenantRepository.GetTenantAssignmentDetailsAsync(userPublicId, propertyPublicId, tenantId, tenantAssignmentId);
+            objResponseInfo.objTenantAssignmentInfo = await _tenantRepository.GetTenantAssignmentDetailsAsync(userPublicId, propertyPublicId, tenantId, tenantAssignmentPublicId);
             if (objResponseInfo.objTenantAssignmentInfo != null)
             {
                 objResponseInfo.Status = StatusConstants.Success;
@@ -165,9 +165,9 @@ namespace FEMOS.Rentora.Application.Services
             return await _tenantRepository.DeletePropertyTenantAsync(userPublicId, propertyPublicId, tenantId);
         }
 
-        public async Task<BaseResponseInfo> DeleteTenantAssignmentAsync(Guid userPublicId, Guid propertyPublicId, long tenantAssignmentId)
+        public async Task<BaseResponseInfo> DeleteTenantAssignmentAsync(Guid userPublicId, Guid propertyPublicId, Guid tenantAssignmentPublicId)
         {
-            return await _tenantRepository.DeleteTenantAssignmentAsync(userPublicId, propertyPublicId, tenantAssignmentId);
+            return await _tenantRepository.DeleteTenantAssignmentAsync(userPublicId, propertyPublicId, tenantAssignmentPublicId);
         }
     }
 }

@@ -30,23 +30,23 @@ namespace FEMOS.Rentora.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("details/{tenantAssignmentId}")]
-        public async Task<IActionResult> GetRentAgreement(long tenantAssignmentId)
+        [HttpGet("details/{tenantAssignmentPublicId}")]
+        public async Task<IActionResult> GetRentAgreement(Guid tenantAssignmentPublicId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
-            var rentAgreement = await _rentAgreementService.GetRentAgreementAsync(userPublicId, tenantAssignmentId);
+            var rentAgreement = await _rentAgreementService.GetRentAgreementAsync(userPublicId, tenantAssignmentPublicId);
             return Ok(rentAgreement);
         }
 
-        [HttpDelete("delete/{rentAgreementPublicId}/{tenantAssignmentId}")]
-        public async Task<IActionResult> DeleteRentAgreement(Guid rentAgreementPublicId, long tenantAssignmentId)
+        [HttpDelete("delete/{rentAgreementPublicId}/{tenantAssignmentPublicId}")]
+        public async Task<IActionResult> DeleteRentAgreement(Guid rentAgreementPublicId, Guid tenantAssignmentPublicId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
-            var result = await _rentAgreementService.DeleteRentAgreementAsync(userPublicId, rentAgreementPublicId, tenantAssignmentId);
+            var result = await _rentAgreementService.DeleteRentAgreementAsync(userPublicId, rentAgreementPublicId, tenantAssignmentPublicId);
             return Ok(result);
         }
 

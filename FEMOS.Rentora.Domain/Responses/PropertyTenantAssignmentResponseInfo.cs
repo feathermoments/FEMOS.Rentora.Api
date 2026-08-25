@@ -9,7 +9,7 @@ namespace FEMOS.Rentora.Domain.Responses
 {
     public class PropertyTenantAssignmentResponseInfo : BaseResponseInfo
     {
-        public long? TenantAssignmentId { get; set; }
+        public Guid? TenantAssignmentPublicId { get; set; }
         public TenantAssignmentInfo objTenantAssignmentInfo { get; set; }
     }
 }

@@ -97,12 +97,12 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
         {
             var cmd = new SqlCommand(DBConstants.sp_SaveTenantAssignment);
             cmd.CommandType = CommandType.StoredProcedure;
-            var tenantAssignmentIdParam = new SqlParameter("@TenantAssignmentId", SqlDbType.BigInt)
+            var tenantAssignmentPublicIdParam = new SqlParameter("@TenantAssignmentPublicId", SqlDbType.UniqueIdentifier)
             {
                 Direction = ParameterDirection.InputOutput,
-                Value = (object?)objRequestInfo.objTenantAssignmentInfo.TenantAssignmentId ?? DBNull.Value
+                Value = (object?)objRequestInfo.objTenantAssignmentInfo.TenantAssignmentPublicId ?? DBNull.Value
             };
-            cmd.Parameters.Add(tenantAssignmentIdParam);
+            cmd.Parameters.Add(tenantAssignmentPublicIdParam);
             cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
             cmd.Parameters.AddWithValue("@PropertyPublicId", objRequestInfo.objTenantAssignmentInfo.PropertyPublicId);
             cmd.Parameters.AddWithValue("@UnitPublicId", objRequestInfo.objTenantAssignmentInfo.UnitPublicId);
@@ -117,26 +117,26 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
             var dbResponse = await _dbHelper.GetDBResponse(result);
 
-            long? tenantAssignmentId = tenantAssignmentIdParam.Value != DBNull.Value
-                ? Convert.ToInt64(tenantAssignmentIdParam.Value)
+            Guid? tenantAssignmentPublicId = tenantAssignmentPublicIdParam.Value != DBNull.Value
+                ? (Guid?)tenantAssignmentPublicIdParam.Value
                 : null;
 
             return new PropertyTenantAssignmentResponseInfo
             {
                 Status = dbResponse.Status,
                 Message = dbResponse.Message,
-                TenantAssignmentId = tenantAssignmentId
+                TenantAssignmentPublicId = tenantAssignmentPublicId
             };
         }
         
-        public async Task<TenantAssignmentInfo> GetTenantAssignmentDetailsAsync(Guid userPublicId, Guid propertyPublicId, long tenantId, long tenantAssignmentId)
+        public async Task<TenantAssignmentInfo> GetTenantAssignmentDetailsAsync(Guid userPublicId, Guid propertyPublicId, long tenantId, Guid tenantAssignmentPublicId)
         {
             var cmd = new SqlCommand(DBConstants.usp_GetTenantAssignment);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
             cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
             cmd.Parameters.AddWithValue("@TenantId", tenantId);
-            cmd.Parameters.AddWithValue("@TenantAssignmentId", tenantAssignmentId);
+            cmd.Parameters.AddWithValue("@TenantAssignmentPublicId", tenantAssignmentPublicId);
             var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
             List<TenantAssignmentInfo> objTenantAssignments = _dbHelper.ConvertDataTable<TenantAssignmentInfo>(dt);
             if (objTenantAssignments == null || objTenantAssignments.Count == 0)
@@ -176,13 +176,13 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             return baseResponseInfo;
         }
 
-        public async Task<BaseResponseInfo> DeleteTenantAssignmentAsync(Guid userPublicId, Guid propertyPublicId, long tenantAssignmentId)
+        public async Task<BaseResponseInfo> DeleteTenantAssignmentAsync(Guid userPublicId, Guid propertyPublicId, Guid tenantAssignmentPublicId)
         {
             var cmd = new SqlCommand(DBConstants.usp_DeleteTenantAssignment);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
             cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
-            cmd.Parameters.AddWithValue("@TenantAssignmentId", tenantAssignmentId);
+            cmd.Parameters.AddWithValue("@TenantAssignmentPublicId", tenantAssignmentPublicId);
             var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
             var dbResponse = await _dbHelper.GetDBResponse(result);
             BaseResponseInfo baseResponseInfo = new BaseResponseInfo()

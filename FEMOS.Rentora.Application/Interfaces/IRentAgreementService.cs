@@ -11,8 +11,8 @@ namespace FEMOS.Rentora.Application.Interfaces
     public interface IRentAgreementService
     {
         Task<RentAgreementResponseInfo> SaveRentAgreementAsync(RentAgreementRequestInfo objRequestInfo);
-        Task<RentAgreementResponseInfo> GetRentAgreementAsync(Guid userPublicId, long tenantAssignmentId);
-        Task<BaseResponseInfo> DeleteRentAgreementAsync(Guid userPublicId, Guid rentAgreementPublicId, long tenantAssignmentId);
+        Task<RentAgreementResponseInfo> GetRentAgreementAsync(Guid userPublicId, Guid tenantAssignmentPublicId);
+        Task<BaseResponseInfo> DeleteRentAgreementAsync(Guid userPublicId, Guid rentAgreementPublicId, Guid tenantAssignmentPublicId);
         Task<FilterResponseInfo> GetRentAgreementsAsync(FilterRequestInfo objRequestInfo);
         Task<RentAgreementTerminationRequestResponseInfo> CreateTerminationRequestAsync(CreateRentAgreementTerminationRequestInfo objRequestInfo);
         Task<FilterResponseInfo> GetTerminationRequestsAsync(FilterRequestInfo objRequestInfo);

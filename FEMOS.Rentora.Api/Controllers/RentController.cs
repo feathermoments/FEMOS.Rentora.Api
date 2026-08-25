@@ -115,40 +115,40 @@ namespace FEMOS.Rentora.Api.Controllers
         }
 
         /// <summary>
-        /// GET /api/rent/get-tenant-security-deposit-details/{tenantSecurityDepositId}/{rentAgreementPublicId}/{tenantAssignmentId}
+        /// GET /api/rent/get-tenant-security-deposit-details/{tenantSecurityDepositId}/{rentAgreementPublicId}/{tenantAssignmentPublicId}
         /// Retrieves details of a specific tenant security deposit.
         /// Response: { status, message, objTenantSecurityDepositInfo }
         /// </summary>
-        [HttpGet("get-tenant-security-deposit-details/{tenantSecurityDepositId}/{rentAgreementPublicId}/{tenantAssignmentId}")]
-        public async Task<IActionResult> GetTenantSecurityDepositDetails(long tenantSecurityDepositId, Guid rentAgreementPublicId, long tenantAssignmentId)
+        [HttpGet("get-tenant-security-deposit-details/{tenantSecurityDepositId}/{rentAgreementPublicId}/{tenantAssignmentPublicId}")]
+        public async Task<IActionResult> GetTenantSecurityDepositDetails(long tenantSecurityDepositId, Guid rentAgreementPublicId, Guid tenantAssignmentPublicId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
 
-            if (tenantSecurityDepositId <= 0 || rentAgreementPublicId == Guid.Empty || tenantAssignmentId <= 0)
+            if (tenantSecurityDepositId <= 0 || rentAgreementPublicId == Guid.Empty || tenantAssignmentPublicId == Guid.Empty)
                 return BadRequest(new { status = "Failure", message = "Invalid parameters." });
 
-            var result = await _rentService.GetTenantSecurityDepositDetailsAsync(userPublicId, tenantSecurityDepositId, rentAgreementPublicId, tenantAssignmentId);
+            var result = await _rentService.GetTenantSecurityDepositDetailsAsync(userPublicId, tenantSecurityDepositId, rentAgreementPublicId, tenantAssignmentPublicId);
             return Ok(result);
         }
 
         /// <summary>
-        /// GET /api/rent/get-tenant-security-deposit-transactions/{tenantSecurityDepositId}/{rentAgreementPublicId}/{tenantAssignmentId}
+        /// GET /api/rent/get-tenant-security-deposit-transactions/{tenantSecurityDepositId}/{rentAgreementPublicId}/{tenantAssignmentPublicId}
         /// Retrieves transaction history for a tenant security deposit.
         /// Response: { status, message, objDepositTransactions }
         /// </summary>
-        [HttpGet("get-tenant-security-deposit-transactions/{tenantSecurityDepositId}/{rentAgreementPublicId}/{tenantAssignmentId}")]
-        public async Task<IActionResult> GetTenantSecurityDepositTransactions(long tenantSecurityDepositId, Guid rentAgreementPublicId, long tenantAssignmentId)
+        [HttpGet("get-tenant-security-deposit-transactions/{tenantSecurityDepositId}/{rentAgreementPublicId}/{tenantAssignmentPublicId}")]
+        public async Task<IActionResult> GetTenantSecurityDepositTransactions(long tenantSecurityDepositId, Guid rentAgreementPublicId, Guid tenantAssignmentPublicId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
 
-            if (tenantSecurityDepositId <= 0 || rentAgreementPublicId == Guid.Empty || tenantAssignmentId <= 0)
+            if (tenantSecurityDepositId <= 0 || rentAgreementPublicId == Guid.Empty || tenantAssignmentPublicId == Guid.Empty)
                 return BadRequest(new { status = "Failure", message = "Invalid parameters." });
 
-            var result = await _rentService.GetTenantSecurityDepositTransactionsAsync(userPublicId, tenantSecurityDepositId, rentAgreementPublicId, tenantAssignmentId);
+            var result = await _rentService.GetTenantSecurityDepositTransactionsAsync(userPublicId, tenantSecurityDepositId, rentAgreementPublicId, tenantAssignmentPublicId);
             return Ok(result);
         }
     }

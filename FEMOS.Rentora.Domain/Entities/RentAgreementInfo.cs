@@ -12,7 +12,7 @@ namespace FEMOS.Rentora.Domain.Entities
 		//public Guid? PropertyPublicId { get; set; }
 		//public Guid? UnitPublicId { get; set; }
 		//public long? TenantId { get; set; }
-		public long TenantAssignmentId { get; set; }
+		public Guid TenantAssignmentPublicId { get; set; }
         public string AgreementNumber { get; set; } = string.Empty;
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

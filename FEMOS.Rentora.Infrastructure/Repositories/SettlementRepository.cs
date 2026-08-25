@@ -26,7 +26,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             var cmd = new SqlCommand(DBConstants.USP_MoveOutSettlement_Create);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@RentAgreementPublicId", objRequestInfo.objSettlementInfo.RentAgreementPublicId);
-            cmd.Parameters.AddWithValue("@TenantAssignmentId", objRequestInfo.objSettlementInfo.TenantAssignmentId);
+            cmd.Parameters.AddWithValue("@TenantAssignmentPublicId", objRequestInfo.objSettlementInfo.TenantAssignmentPublicId);
             cmd.Parameters.AddWithValue("@SettlementDate", objRequestInfo.objSettlementInfo.SettlementDate);
             cmd.Parameters.AddWithValue("@OutstandingRent", objRequestInfo.objSettlementInfo.OutstandingRent);
             cmd.Parameters.AddWithValue("@OutstandingMaintenance", objRequestInfo.objSettlementInfo.OutstandingMaintenance);
@@ -95,7 +95,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             var cmd = new SqlCommand(DBConstants.USP_MoveOutSettlement_List);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@RentAgreementPublicId", (object?)objRequestInfo.objFilterInfo.RentAgreementPublicId ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@TenantAssignmentId", (object?)objRequestInfo.objFilterInfo.TenantAssignmentId ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@TenantAssignmentPublicId", (object?)objRequestInfo.objFilterInfo.TenantAssignmentPublicId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@SettlementStatusId", (object?)objRequestInfo.objFilterInfo.SettlementStatusId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@FromDate", (object?)objRequestInfo.objFilterInfo.FromDate ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@ToDate", (object?)objRequestInfo.objFilterInfo.ToDate ?? DBNull.Value);

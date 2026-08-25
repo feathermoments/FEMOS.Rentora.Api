@@ -14,7 +14,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public int? InvoiceStatusId { get; set; }
         public int? PaymentStatusId { get; set; }
 
-        public long? TenantAssignmentId { get; set; }
+        public Guid? TenantAssignmentPublicId { get; set; }
         public Guid? RentAgreementPublicId { get; set; }
         public int? BillingYear { get; set; }
         public int? BillingMonth { get; set; }

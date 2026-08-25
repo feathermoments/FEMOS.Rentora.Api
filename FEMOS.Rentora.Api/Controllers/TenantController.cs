@@ -66,13 +66,13 @@ namespace FEMOS.Rentora.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("getTenantAssignment/{propertyPublicId}/{tenantId}/{tenantAssignmentId}")]
-        public async Task<IActionResult> GetTenantAssignment(Guid propertyPublicId, long tenantId, long tenantAssignmentId)
+        [HttpGet("getTenantAssignment/{propertyPublicId}/{tenantId}/{tenantAssignmentPublicId}")]
+        public async Task<IActionResult> GetTenantAssignment(Guid propertyPublicId, long tenantId, Guid tenantAssignmentPublicId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
-            var propertyTenantAssignments = await _tenantService.GetTenantAssignmentDetailsAsync(userPublicId, propertyPublicId, tenantId, tenantAssignmentId);
+            var propertyTenantAssignments = await _tenantService.GetTenantAssignmentDetailsAsync(userPublicId, propertyPublicId, tenantId, tenantAssignmentPublicId);
             return Ok(propertyTenantAssignments);
         }
 
@@ -97,13 +97,13 @@ namespace FEMOS.Rentora.Api.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("delete-tenant-assignment/{propertyPublicId}/{tenantAssignmentId}")]
-        public async Task<IActionResult> DeleteTenantAssignment(Guid propertyPublicId, long tenantAssignmentId)
+        [HttpDelete("delete-tenant-assignment/{propertyPublicId}/{tenantAssignmentPublicId}")]
+        public async Task<IActionResult> DeleteTenantAssignment(Guid propertyPublicId, Guid tenantAssignmentPublicId)
         {
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
-            var result = await _tenantService.DeleteTenantAssignmentAsync(userPublicId, propertyPublicId, tenantAssignmentId);
+            var result = await _tenantService.DeleteTenantAssignmentAsync(userPublicId, propertyPublicId, tenantAssignmentPublicId);
             return Ok(result);
         }
     }

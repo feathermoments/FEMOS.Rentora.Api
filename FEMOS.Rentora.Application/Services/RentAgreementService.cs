@@ -25,10 +25,10 @@ namespace FEMOS.Rentora.Application.Services
             return await _rentAgreementRepository.SaveRentAgreementAsync(objRequestInfo);
         }
 
-        public async Task<RentAgreementResponseInfo> GetRentAgreementAsync(Guid userPublicId, long tenantAssignmentId)
+        public async Task<RentAgreementResponseInfo> GetRentAgreementAsync(Guid userPublicId, Guid tenantAssignmentPublicId)
         {
             RentAgreementResponseInfo objResponseInfo = new RentAgreementResponseInfo();
-            objResponseInfo.objRentAgreementInfo = await _rentAgreementRepository.GetRentAgreementAsync(userPublicId, tenantAssignmentId);
+            objResponseInfo.objRentAgreementInfo = await _rentAgreementRepository.GetRentAgreementAsync(userPublicId, tenantAssignmentPublicId);
             if (objResponseInfo.objRentAgreementInfo != null)
             {
                 objResponseInfo.Status = StatusConstants.Success;
@@ -39,7 +39,7 @@ namespace FEMOS.Rentora.Application.Services
                 objResponseInfo.objRentAgreementInfo = new RentAgreementInfo()
                 {
                     RentAgreementPublicId = Guid.Empty,
-                    TenantAssignmentId = tenantAssignmentId,
+                    TenantAssignmentPublicId = tenantAssignmentPublicId,
                     AgreementStatusId = 4,
                     AgreementStatus = "Draft (Pending)"
                 };
@@ -49,9 +49,9 @@ namespace FEMOS.Rentora.Application.Services
             return objResponseInfo;
         }
 
-        public async Task<BaseResponseInfo> DeleteRentAgreementAsync(Guid userPublicId, Guid rentAgreementPublicId, long tenantAssignmentId)
+        public async Task<BaseResponseInfo> DeleteRentAgreementAsync(Guid userPublicId, Guid rentAgreementPublicId, Guid tenantAssignmentPublicId)
         {
-            return await _rentAgreementRepository.DeleteRentAgreementAsync(userPublicId, rentAgreementPublicId, tenantAssignmentId);
+            return await _rentAgreementRepository.DeleteRentAgreementAsync(userPublicId, rentAgreementPublicId, tenantAssignmentPublicId);
         }
 
         public async Task<FilterResponseInfo> GetRentAgreementsAsync(FilterRequestInfo objRequestInfo)

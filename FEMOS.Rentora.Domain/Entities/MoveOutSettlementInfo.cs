@@ -11,7 +11,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public long SettlementId { get; set; }
         public Guid UniqueId { get; set; }
         public Guid RentAgreementPublicId { get; set; }
-        public long TenantAssignmentId { get; set; }
+        public Guid TenantAssignmentPublicId { get; set; }
         public DateTime SettlementDate { get; set; }
         public decimal OutstandingRent { get; set; }
         public decimal OutstandingMaintenance { get; set; }

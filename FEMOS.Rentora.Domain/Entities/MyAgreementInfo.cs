@@ -2,7 +2,7 @@ namespace FEMOS.Rentora.Domain.Entities
 {
     public class MyAgreementInfo
     {
-        public long TenantAssignmentId { get; set; }
+        public Guid TenantAssignmentPublicId { get; set; }
         public Guid RentAgreementPublicId { get; set; }
         public string AgreementNumber { get; set; }
         public string AgreementStatus { get; set; }
