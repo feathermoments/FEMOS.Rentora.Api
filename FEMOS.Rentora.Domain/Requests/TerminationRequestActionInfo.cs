@@ -8,7 +8,8 @@ namespace FEMOS.Rentora.Domain.Requests
 {
     public class TerminationRequestActionInfo : BaseRequestInfo
     {
-        public Guid TerminationRequestUniqueId { get; set; }
+        public Guid RentAgreementPublicId { get; set; }
+        public Guid TerminationRequestPublicId { get; set; }
         public string ActionRemarks { get; set; }
     }
 }

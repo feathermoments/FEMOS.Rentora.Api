@@ -82,8 +82,19 @@ namespace FEMOS.Rentora.Application.Services
                 }
                 else
                 {
-                    // Fallback to legacy token generation if no authorization data
-                    token = _jwtTokenService.GenerateToken(objResponseInfo.UserPublicId, objResponseInfo.Role);
+                    // No property roles/permissions found - assign default permissions
+                    // Default permissions (MY.PROPERTIES and PROPERTY.CREATE) are available to all users
+                    var defaultRolePermissions = new List<RolePermissionsInfo>
+                    {
+                        new RolePermissionsInfo
+                        {
+                            RoleId = 0, // Default system role ID
+                            RoleCode = "DEFAULT_USER",
+                            Permissions = PermissionConstants.GetDefaultPermissions()
+                        }
+                    };
+
+                    token = _jwtTokenService.GenerateTokenWithAuthorization(objResponseInfo.UserPublicId, new List<PropertyRoleInfo>(), defaultRolePermissions);
                 }
 
                 refreshToken = _jwtTokenService.GenerateRefreshToken();
@@ -198,8 +209,19 @@ namespace FEMOS.Rentora.Application.Services
             }
             else
             {
-                // Fallback to legacy token generation if no authorization data
-                newToken = _jwtTokenService.GenerateToken(userPublicId, "User");
+                // No property roles/permissions found - assign default permissions
+                // Default permissions (MY.PROPERTIES and PROPERTY.CREATE) are available to all users
+                var defaultRolePermissions = new List<RolePermissionsInfo>
+                {
+                    new RolePermissionsInfo
+                    {
+                        RoleId = 0, // Default system role ID
+                        RoleCode = "DEFAULT_USER",
+                        Permissions = PermissionConstants.GetDefaultPermissions()
+                    }
+                };
+
+                newToken = _jwtTokenService.GenerateTokenWithAuthorization(userPublicId, new List<PropertyRoleInfo>(), defaultRolePermissions);
             }
 
             var newRefreshToken = _jwtTokenService.GenerateRefreshToken();

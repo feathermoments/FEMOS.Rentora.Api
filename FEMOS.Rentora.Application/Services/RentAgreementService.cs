@@ -69,24 +69,24 @@ namespace FEMOS.Rentora.Application.Services
             return await _rentAgreementRepository.GetTerminationRequestsAsync(objRequestInfo);
         }
 
-        public async Task<RentAgreementTerminationRequestResponseInfo> GetTerminationRequestDetailsAsync(Guid userPublicId, Guid terminationRequestUniqueId)
+        public async Task<RentAgreementTerminationRequestResponseInfo> GetTerminationRequestDetailsAsync(Guid userPublicId, Guid rentAgreementPublicId, Guid terminationRequestPublicId)
         {
-            return await _rentAgreementRepository.GetTerminationRequestDetailsAsync(userPublicId, terminationRequestUniqueId);
+            return await _rentAgreementRepository.GetTerminationRequestDetailsAsync(userPublicId, rentAgreementPublicId, terminationRequestPublicId);
         }
 
-        public async Task<BaseResponseInfo> ApproveTerminationRequestAsync(Guid userPublicId, Guid terminationRequestUniqueId, string actionRemarks)
+        public async Task<BaseResponseInfo> ApproveTerminationRequestAsync(TerminationRequestActionInfo objRequestInfo)
         {
-            return await _rentAgreementRepository.ApproveTerminationRequestAsync(userPublicId, terminationRequestUniqueId, actionRemarks);
+            return await _rentAgreementRepository.ApproveTerminationRequestAsync(objRequestInfo);
         }
 
-        public async Task<BaseResponseInfo> RejectTerminationRequestAsync(Guid userPublicId, Guid terminationRequestUniqueId, string actionRemarks)
+        public async Task<BaseResponseInfo> RejectTerminationRequestAsync(TerminationRequestActionInfo objRequestInfo)
         {
-            return await _rentAgreementRepository.RejectTerminationRequestAsync(userPublicId, terminationRequestUniqueId, actionRemarks);
+            return await _rentAgreementRepository.RejectTerminationRequestAsync(objRequestInfo);
         }
 
-        public async Task<BaseResponseInfo> CancelTerminationRequestAsync(Guid userPublicId, Guid terminationRequestUniqueId, string actionRemarks)
+        public async Task<BaseResponseInfo> CancelTerminationRequestAsync(TerminationRequestActionInfo objRequestInfo)
         {
-            return await _rentAgreementRepository.CancelTerminationRequestAsync(userPublicId, terminationRequestUniqueId, actionRemarks);
+            return await _rentAgreementRepository.CancelTerminationRequestAsync(objRequestInfo);
         }
     }
 }

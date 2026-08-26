@@ -52,6 +52,28 @@ namespace FEMOS.Rentora.Api.Controllers
         /// 
         /// Response: { status, message, propertyPublicId }
         /// </summary>
+        [HttpPost("create")]
+        [RequirePermission("PROPERTY.CREATE", requirePropertyContext: false)]
+        public async Task<IActionResult> CreateProperty([FromBody] UserPropertyRequestInfo objRequestInfo)
+        {
+            var userPublicId = User.GetUserPublicId();
+            objRequestInfo.UserPublicId = userPublicId;
+
+            var result = await _propertyService.SavePropertyAsync(objRequestInfo);
+
+            if (result.Status == "Failure")
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// POST /api/property/save-property
+        /// Creates or updates a property. Pass PropertyPublicId to update an existing record.
+        /// Requires: X-Property-Public-Id header and PROPERTY.EDIT permission
+        /// 
+        /// Response: { status, message, propertyPublicId }
+        /// </summary>
         [HttpPost("save")]
         [RequirePermission("PROPERTY.EDIT", requirePropertyContext: true)]
         public async Task<IActionResult> SaveProperty([FromBody] UserPropertyRequestInfo objRequestInfo)

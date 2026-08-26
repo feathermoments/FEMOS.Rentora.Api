@@ -95,59 +95,62 @@ namespace FEMOS.Rentora.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPost("get-terminate-request-details/{TerminationRequestUniqueId}")]
-        public async Task<IActionResult> GetTerminationRequestDetails(Guid terminationRequestUniqueId)
+        [HttpPost("get-terminate-request-details/{rentAgreementPublicId}/{TerminationRequestPublicId}")]
+        public async Task<IActionResult> GetTerminationRequestDetails(Guid rentAgreementPublicId, Guid terminationRequestPublicId)
         {
-            if (terminationRequestUniqueId == Guid.Empty)
+            if (terminationRequestPublicId == Guid.Empty)
             {
-                throw new ArgumentNullException(nameof(terminationRequestUniqueId));
+                throw new ArgumentNullException(nameof(terminationRequestPublicId));
             }
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
-            var result = await _rentAgreementService.GetTerminationRequestDetailsAsync(userPublicId, terminationRequestUniqueId);
+            var result = await _rentAgreementService.GetTerminationRequestDetailsAsync(userPublicId, rentAgreementPublicId, terminationRequestPublicId);
             return Ok(result);
         }
 
         [HttpPost("approve-terminate-request")]
         public async Task<IActionResult> ApproveTerminationRequest(TerminationRequestActionInfo objRequestInfo)
         {
-            if (objRequestInfo == null || objRequestInfo.TerminationRequestUniqueId == Guid.Empty)
+            if (objRequestInfo == null || objRequestInfo.TerminationRequestPublicId == Guid.Empty)
             {
                 throw new ArgumentNullException(nameof(objRequestInfo));
             }
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
-            var result = await _rentAgreementService.ApproveTerminationRequestAsync(userPublicId, objRequestInfo.TerminationRequestUniqueId, objRequestInfo.ActionRemarks);
+            objRequestInfo.UserPublicId = userPublicId;
+            var result = await _rentAgreementService.ApproveTerminationRequestAsync(objRequestInfo);
             return Ok(result);
         }
 
         [HttpPost("reject-terminate-request")]
         public async Task<IActionResult> RejectTerminationRequest(TerminationRequestActionInfo objRequestInfo)
         {
-            if (objRequestInfo == null || objRequestInfo.TerminationRequestUniqueId == Guid.Empty)
+            if (objRequestInfo == null || objRequestInfo.TerminationRequestPublicId == Guid.Empty)
             {
                 throw new ArgumentNullException(nameof(objRequestInfo));
             }
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
-            var result = await _rentAgreementService.RejectTerminationRequestAsync(userPublicId, objRequestInfo.TerminationRequestUniqueId, objRequestInfo.ActionRemarks);
+            objRequestInfo.UserPublicId = userPublicId;
+            var result = await _rentAgreementService.RejectTerminationRequestAsync(objRequestInfo);
             return Ok(result);
         }
 
         [HttpPost("cancel-terminate-request")]
         public async Task<IActionResult> CancelTerminationRequest(TerminationRequestActionInfo objRequestInfo)
         {
-            if (objRequestInfo == null || objRequestInfo.TerminationRequestUniqueId == Guid.Empty)
+            if (objRequestInfo == null || objRequestInfo.TerminationRequestPublicId == Guid.Empty)
             {
                 throw new ArgumentNullException(nameof(objRequestInfo));
             }
             var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
             if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
                 return Unauthorized();
-            var result = await _rentAgreementService.CancelTerminationRequestAsync(userPublicId, objRequestInfo.TerminationRequestUniqueId, objRequestInfo.ActionRemarks);
+            objRequestInfo.UserPublicId = userPublicId;
+            var result = await _rentAgreementService.CancelTerminationRequestAsync(objRequestInfo);
             return Ok(result);
         }
     }

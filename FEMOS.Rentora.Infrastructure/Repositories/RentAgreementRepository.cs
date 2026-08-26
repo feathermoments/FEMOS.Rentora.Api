@@ -175,14 +175,15 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             return objResponseInfo;
         }
 
-        public async Task<RentAgreementTerminationRequestResponseInfo> GetTerminationRequestDetailsAsync(Guid userPublicId, Guid terminationRequestUniqueId)
+        public async Task<RentAgreementTerminationRequestResponseInfo> GetTerminationRequestDetailsAsync(Guid userPublicId, Guid rentAgreementPublicId, Guid terminationRequestPublicId)
         {
             RentAgreementTerminationRequestResponseInfo objResponseInfo = new RentAgreementTerminationRequestResponseInfo();
 
             var cmd = new SqlCommand(DBConstants.USP_RentAgreement_TerminationRequest_Get);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
-            cmd.Parameters.AddWithValue("@UniqueId", terminationRequestUniqueId);
+            cmd.Parameters.AddWithValue("@RentAgreementPublicId", rentAgreementPublicId);
+            cmd.Parameters.AddWithValue("@UniqueId", terminationRequestPublicId);
 
             DataTable dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
 
@@ -202,15 +203,16 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             return objResponseInfo;
         }
 
-        public async Task<BaseResponseInfo> ApproveTerminationRequestAsync(Guid userPublicId, Guid terminationRequestUniqueId, string actionRemarks)
+        public async Task<BaseResponseInfo> ApproveTerminationRequestAsync(TerminationRequestActionInfo objRequestInfo)
         {
             BaseResponseInfo objResponseInfo = new BaseResponseInfo();
 
             var cmd = new SqlCommand(DBConstants.USP_RentAgreement_TerminationRequest_Approve);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
-            cmd.Parameters.AddWithValue("@UniqueId", terminationRequestUniqueId);
-            cmd.Parameters.AddWithValue("@ActionRemarks", string.IsNullOrEmpty(actionRemarks) ? DBNull.Value : actionRemarks);
+            cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
+            cmd.Parameters.AddWithValue("@RentAgreementPublicId", objRequestInfo.RentAgreementPublicId);
+            cmd.Parameters.AddWithValue("@UniqueId", objRequestInfo.TerminationRequestPublicId);
+            cmd.Parameters.AddWithValue("@ActionRemarks", string.IsNullOrEmpty(objRequestInfo.ActionRemarks) ? DBNull.Value : objRequestInfo.ActionRemarks);
 
             var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
             var dbResponse = await _dbHelper.GetDBResponse(result);
@@ -221,15 +223,16 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             return objResponseInfo;
         }
 
-        public async Task<BaseResponseInfo> RejectTerminationRequestAsync(Guid userPublicId, Guid terminationRequestUniqueId, string actionRemarks)
+        public async Task<BaseResponseInfo> RejectTerminationRequestAsync(TerminationRequestActionInfo objRequestInfo)
         {
             BaseResponseInfo objResponseInfo = new BaseResponseInfo();
 
             var cmd = new SqlCommand(DBConstants.USP_RentAgreement_TerminationRequest_Reject);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
-            cmd.Parameters.AddWithValue("@UniqueId", terminationRequestUniqueId);
-            cmd.Parameters.AddWithValue("@ActionRemarks", string.IsNullOrEmpty(actionRemarks) ? DBNull.Value : actionRemarks);
+            cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
+            cmd.Parameters.AddWithValue("@RentAgreementPublicId", objRequestInfo.RentAgreementPublicId);
+            cmd.Parameters.AddWithValue("@UniqueId", objRequestInfo.TerminationRequestPublicId);
+            cmd.Parameters.AddWithValue("@ActionRemarks", string.IsNullOrEmpty(objRequestInfo.ActionRemarks) ? DBNull.Value : objRequestInfo.ActionRemarks);
 
             var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
             var dbResponse = await _dbHelper.GetDBResponse(result);
@@ -240,15 +243,16 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             return objResponseInfo;
         }
 
-        public async Task<BaseResponseInfo> CancelTerminationRequestAsync(Guid userPublicId, Guid terminationRequestUniqueId, string actionRemarks)
+        public async Task<BaseResponseInfo> CancelTerminationRequestAsync(TerminationRequestActionInfo objRequestInfo)
         {
             BaseResponseInfo objResponseInfo = new BaseResponseInfo();
 
             var cmd = new SqlCommand(DBConstants.USP_RentAgreement_TerminationRequest_Cancel);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
-            cmd.Parameters.AddWithValue("@UniqueId", terminationRequestUniqueId);
-            cmd.Parameters.AddWithValue("@ActionRemarks", string.IsNullOrEmpty(actionRemarks) ? DBNull.Value : actionRemarks);
+            cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
+            cmd.Parameters.AddWithValue("@RentAgreementPublicId", objRequestInfo.RentAgreementPublicId);
+            cmd.Parameters.AddWithValue("@UniqueId", objRequestInfo.TerminationRequestPublicId);
+            cmd.Parameters.AddWithValue("@ActionRemarks", string.IsNullOrEmpty(objRequestInfo.ActionRemarks) ? DBNull.Value : objRequestInfo.ActionRemarks);
 
             var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
             var dbResponse = await _dbHelper.GetDBResponse(result);
