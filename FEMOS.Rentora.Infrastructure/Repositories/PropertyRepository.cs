@@ -28,11 +28,121 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
 
-            var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+            var ds = await _dbHelper.GetDataSetBySQLCommandAsync(cmd);
 
-            var properties = _dbHelper.ConvertDataTable<MyPropertyInfo>(dt);
-            
+            var properties = _dbHelper.ConvertDataTable<MyPropertyInfo>(ds.Tables[0]);
+            var tenantAssignmentSummary = _dbHelper.ConvertDataTable<TenantAssignmentSummaryInfo>(ds.Tables[1]);
+            var propertyQuickSummary = _dbHelper.ConvertDataTable<PropertyQuickSummaryInfo>(ds.Tables[2]);
+
+            foreach (var property in properties)
+            {
+                property.objTenantAssignmentSummaryInfo = tenantAssignmentSummary.FirstOrDefault(t => t.PropertyPublicId == property.PropertyPublicId);
+                property.objPropertyQuickSummaryInfo = propertyQuickSummary.FirstOrDefault(p => p.PropertyPublicId == property.PropertyPublicId);
+            }
+
             return properties;
+        }
+
+        public async Task<MyPropertiesSummaryResponseInfo> GetMyPropertiesSummaryAsync(Guid userPublicId)
+        {
+            MyPropertiesSummaryResponseInfo objResponseInfo = new MyPropertiesSummaryResponseInfo();
+
+            var cmd = new SqlCommand(DBConstants.sp_GetMyPropertiesSummary);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+
+            var ds = await _dbHelper.GetDataSetBySQLCommandAsync(cmd);
+
+            if (ds.Tables.Count == 0)
+            {
+                return objResponseInfo;
+            }
+
+            // Table 0: Role information (roleId, roleName)
+            var roles = _dbHelper.ConvertDataTable<RoleSummaryInfo>(ds.Tables[0]);
+
+            if (roles == null || roles.Count == 0)
+            {
+                return objResponseInfo;
+            }
+
+            var hasOwnerRole = roles.Any(r => r.RoleName?.ToUpper() == "OWNER");
+            var hasTenantRole = roles.Any(r => r.RoleName?.ToUpper() == "TENANT");
+
+            int tableIndex = 1;
+
+            // Determine which summary tables are present and bind them accordingly
+            if (hasOwnerRole && hasTenantRole)
+            {
+                // Table 1: OwnerSummaryInfo
+                if (tableIndex < ds.Tables.Count)
+                {
+                    var ownerSummaries = _dbHelper.ConvertDataTable<OwnerSummaryInfo>(ds.Tables[tableIndex]);
+                    if (ownerSummaries != null && ownerSummaries.Count > 0)
+                    {
+                        objResponseInfo.objOwnerSummary = ownerSummaries[0];
+                    }
+                    tableIndex++;
+                }
+
+                // Table 2: TenantSummaryInfo
+                if (tableIndex < ds.Tables.Count)
+                {
+                    var tenantSummaries = _dbHelper.ConvertDataTable<TenantSummaryInfo>(ds.Tables[tableIndex]);
+                    if (tenantSummaries != null && tenantSummaries.Count > 0)
+                    {
+                        objResponseInfo.objTenantSummary = tenantSummaries[0];
+                    }
+                    tableIndex++;
+                }
+
+                // Table 3: MonthlyTrendInfo
+                if (tableIndex < ds.Tables.Count)
+                {
+                    var monthlyTrends = _dbHelper.ConvertDataTable<MonthlyTrendInfo>(ds.Tables[tableIndex]);
+                    if (monthlyTrends != null && monthlyTrends.Count > 0)
+                    {
+                        objResponseInfo.objMonthlyTrends = monthlyTrends;
+                    }
+                }
+            }
+            else if (hasOwnerRole)
+            {
+                // Table 1: OwnerSummaryInfo
+                if (tableIndex < ds.Tables.Count)
+                {
+                    var ownerSummaries = _dbHelper.ConvertDataTable<OwnerSummaryInfo>(ds.Tables[tableIndex]);
+                    if (ownerSummaries != null && ownerSummaries.Count > 0)
+                    {
+                        objResponseInfo.objOwnerSummary = ownerSummaries[0];
+                    }
+                    tableIndex++;
+                }
+
+                // Table 2: MonthlyTrendInfo
+                if (tableIndex < ds.Tables.Count)
+                {
+                    var monthlyTrends = _dbHelper.ConvertDataTable<MonthlyTrendInfo>(ds.Tables[tableIndex]);
+                    if (monthlyTrends != null && monthlyTrends.Count > 0)
+                    {
+                        objResponseInfo.objMonthlyTrends = monthlyTrends;
+                    }
+                }
+            }
+            else if (hasTenantRole)
+            {
+                // Table 1: TenantSummaryInfo
+                if (tableIndex < ds.Tables.Count)
+                {
+                    var tenantSummaries = _dbHelper.ConvertDataTable<TenantSummaryInfo>(ds.Tables[tableIndex]);
+                    if (tenantSummaries != null && tenantSummaries.Count > 0)
+                    {
+                        objResponseInfo.objTenantSummary = tenantSummaries[0];
+                    }
+                }
+            }
+
+            return objResponseInfo;
         }
 
         public async Task<UserPropertyInfo> GetPropertyDetailsAsync(Guid userPublicId, Guid propertyPublicId)
@@ -98,6 +208,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@IsPublicListing",    objRequestInfo.objUserPropertyInfo.IsPublicListing);
             cmd.Parameters.AddWithValue("@AllowPreBooking",    objRequestInfo.objUserPropertyInfo.AllowPreBooking);
             cmd.Parameters.AddWithValue("@IsActive",           objRequestInfo.objUserPropertyInfo.IsActive);
+            cmd.Parameters.AddWithValue("@CoverImageUrl",          (object?)objRequestInfo.objUserPropertyInfo.CoverImageUrl ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@UserPublicId",       objRequestInfo.UserPublicId);
 
             var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);

@@ -46,6 +46,26 @@ namespace FEMOS.Rentora.Api.Controllers
         }
 
         /// <summary>
+        /// GET /api/property/my-properties-summary
+        /// Returns comprehensive summary of properties for the authenticated user.
+        /// Dynamically returns different summary objects based on user roles (Owner/Tenant).
+        /// 
+        /// Response: 
+        ///   - Owner only: { ownerSummary, monthlyTrends }
+        ///   - Tenant only: { tenantSummary }
+        ///   - Owner + Tenant: { ownerSummary, tenantSummary, monthlyTrends }
+        /// </summary>
+        [HttpGet("my-properties-summary")]
+        [RequirePermission("MY.PROPERTIES", requirePropertyContext: false)]
+        public async Task<IActionResult> GetMyPropertiesSummary()
+        {
+            var userPublicId = User.GetUserPublicId();
+
+            var summary = await _propertyService.GetMyPropertiesSummaryAsync(userPublicId);
+            return Ok(summary);
+        }
+
+        /// <summary>
         /// POST /api/property/save-property
         /// Creates or updates a property. Pass PropertyPublicId to update an existing record.
         /// Requires: X-Property-Public-Id header and PROPERTY.EDIT permission

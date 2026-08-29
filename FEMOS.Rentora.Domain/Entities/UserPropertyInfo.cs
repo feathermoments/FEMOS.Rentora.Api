@@ -12,6 +12,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public int PropertyTypeId { get; set; }
 
         public string? PropertyType { get; set; }
+        public string? CoverImageUrl { get; set; }
 
         // Description and Address
         public string Description { get; set; }

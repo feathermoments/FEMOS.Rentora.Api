@@ -11,6 +11,7 @@ namespace FEMOS.Rentora.Application.Interfaces
     public interface IPropertyService
     {
         Task<MyPropertyResponseInfo> GetMyPropertiesAsync(Guid userPublicId);
+        Task<MyPropertiesSummaryResponseInfo> GetMyPropertiesSummaryAsync(Guid userPublicId);
         Task<UserPropertyResponseInfo> SavePropertyAsync(UserPropertyRequestInfo objRequestInfo);
         Task<UserPropertyResponseInfo> GetPropertyDetailsAsync(Guid userPublicId, Guid propertyPublicId);
     }
