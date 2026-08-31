@@ -55,6 +55,7 @@ namespace FEMOS.Rentora.Application
             services.AddScoped<IUtilityService, UtilityService>();
             services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<IDashboardService, DashboardService>();
+            services.AddScoped<IPeopleService, PeopleService>();
 
             // Dashboard widgets - register all implementations
             services.AddScoped<IDashboardWidget, PropertySummaryWidget>();

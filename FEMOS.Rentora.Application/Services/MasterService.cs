@@ -205,5 +205,16 @@ namespace FEMOS.Rentora.Application.Services
                 Message = "Termination request statuses retrieved successfully."
             };
         }
+
+        public async Task<TenantFamilyRelationsResponseInfo> GetTenantFamilyRelationsAsync()
+        {
+            var relations = await _masterRepository.GetTenantFamilyRelationsAsync();
+            return new TenantFamilyRelationsResponseInfo
+            {
+                Data = relations,
+                Status = StatusConstants.Success,
+                Message = "Tenant family relations retrieved successfully."
+            };
+        }
     }
 }

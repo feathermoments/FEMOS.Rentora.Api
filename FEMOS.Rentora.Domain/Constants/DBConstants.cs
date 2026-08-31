@@ -146,6 +146,21 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string USP_Dashboard_StaffSummary = "dbo.USP_Dashboard_StaffSummary";
         public const string USP_Dashboard_ReportSummary = "dbo.USP_Dashboard_ReportSummary";
         public const string USP_Dashboard_SecurityDepositSummary = "dbo.USP_Dashboard_SecurityDepositSummary";
+
+        // People - Property Members
+        public const string usp_PropertyMembers_Get = "dbo.usp_PropertyMembers_Get";
+        public const string usp_PropertyOwners_Get = "dbo.usp_PropertyOwners_Get";
+        public const string usp_PropertyCoOwner_Save = "dbo.usp_PropertyCoOwner_Save";
+        public const string usp_PropertyCoOwner_Remove = "dbo.usp_PropertyCoOwner_Remove";
+
+        // People - Tenant Family Members
+        public const string usp_TenantFamilyMembers_Get = "dbo.usp_TenantFamilyMembers_Get";
+        public const string usp_TenantFamilyMember_Save = "dbo.usp_TenantFamilyMember_Save";
+        public const string usp_TenantFamilyMember_Update = "dbo.usp_TenantFamilyMember_Update";
+        public const string usp_TenantFamilyMember_Remove = "dbo.usp_TenantFamilyMember_Remove";
+
+        // Master Data
+        public const string sp_Mst_GetTenantFamilyRelations = "dbo.sp_Mst_GetTenantFamilyRelations";
     }
 }
 

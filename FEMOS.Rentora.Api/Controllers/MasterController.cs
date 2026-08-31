@@ -134,6 +134,13 @@ namespace FEMOS.Rentora.Api.Controllers
             var result = await _masterService.GetRentTerminationRequestStatusesAsync();
             return Ok(result);
         }
+
+        [HttpGet("getTenantFamilyRelations")]
+        public async Task<IActionResult> GetTenantFamilyRelations()
+        {
+            var result = await _masterService.GetTenantFamilyRelationsAsync();
+            return Ok(result);
+        }
     }
 }
 
