@@ -59,5 +59,48 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                 UserId = returnedUserId
             };
         }
+
+        public async Task<UserAccountResponseInfo> SaveUserAccountAsync(UserProfileInfo model)
+        {
+            var cmd = new SqlCommand(DBConstants.sp_SaveUserAccount);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            var userIdParam = new SqlParameter("@UserPublicId", SqlDbType.UniqueIdentifier)
+            {
+                Direction = ParameterDirection.InputOutput,
+                Value = (object?)model.UserPublicId ?? DBNull.Value
+            };
+            cmd.Parameters.Add(userIdParam);
+
+            cmd.Parameters.AddWithValue("@EmailHash", (object?)model.EmailHash);
+            cmd.Parameters.AddWithValue("@MobileHash", (object?)model.MobileHash);
+            cmd.Parameters.AddWithValue("@EmailEncrypted", (object?)model.EmailEncrypted);
+            cmd.Parameters.AddWithValue("@MobileEncrypted", (object?)model.MobileEncrypted);
+
+            var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            var dbResponse = await _dbHelper.GetDBResponse(result);
+
+            Guid? returnedUserPublic = userIdParam.Value != DBNull.Value
+                ? (Guid?)userIdParam.Value
+                : null;
+            UserAccountResponseInfo objUserAccountResponseInfo = new UserAccountResponseInfo
+            {
+                UserPublicId = returnedUserPublic ?? Guid.Empty,
+                Status = dbResponse.Status,
+                Message = dbResponse.Message
+            };
+            return objUserAccountResponseInfo;
+        }
+
+        public async Task<DBResponseInfo> DeleteUserAccountAsync(Guid userPublicId)
+        {
+            var cmd = new SqlCommand(DBConstants.sp_DeleteUserAccount);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+
+            var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            var dbResponse = await _dbHelper.GetDBResponse(result);
+            return dbResponse;
+        }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FEMOS.Rentora.Domain.Entities
 {
-    public class MemberInfo
+    public class MemberUserInfo
     {
         public Guid MemberUserPublicId { get; set; }
         public string FullName { get; set; }
@@ -16,7 +16,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public string EmailAddress { get; set; } = string.Empty;
         public string EmailHash { get; set; } = string.Empty;
         public string EmailEncrypted { get; set; } = string.Empty;
-        public int GenderId { get; set; }
+        public string GenderId { get; set; }
         public string Gender { get; set; } = string.Empty;
         public DateTime DateOfBirth { get; set; }
         public string ProfilePhoto { get; set; } = string.Empty;

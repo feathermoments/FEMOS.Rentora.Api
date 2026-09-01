@@ -14,11 +14,13 @@ namespace FEMOS.Rentora.Application.Services
     internal class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IAccountRepository _accountRepository;
         private readonly IEncryptDecryptService _encryptDecryptService;
 
-        public UserService(IUserRepository userRepository, IEncryptDecryptService encryptDecryptService)
+        public UserService(IUserRepository userRepository, IAccountRepository accountRepository, IEncryptDecryptService encryptDecryptService)
         {
             _userRepository = userRepository;
+            _accountRepository = accountRepository;
             _encryptDecryptService = encryptDecryptService;
         }
 
@@ -48,6 +50,8 @@ namespace FEMOS.Rentora.Application.Services
             model.EmailEncrypted = _encryptDecryptService.Encrypt(model.EmailAddress ?? string.Empty);
             model.MobileEncrypted = _encryptDecryptService.Encrypt(model.MobileNumber ?? string.Empty);
 
+            var dbAccountResponse = await _accountRepository.SaveUserAccountAsync(model);
+            model.UserPublicId = model.UserPublicId == Guid.Empty ? dbAccountResponse.UserPublicId : model.UserPublicId;
             var dbResponse = await _userRepository.UpdateUserProfileAsync(model);
 
             return new BaseResponseInfo { Status = dbResponse.Status, Message = dbResponse.Message };
@@ -55,7 +59,7 @@ namespace FEMOS.Rentora.Application.Services
 
         public async Task<BaseResponseInfo> DeleteUserAccountAsync(Guid userPublicId)
         {
-            var dbResponse = await _userRepository.DeleteUserAccountAsync(userPublicId);
+            var dbResponse = await _accountRepository.DeleteUserAccountAsync(userPublicId);
             return new BaseResponseInfo { Status = dbResponse.Status, Message = dbResponse.Message };
         }
     }

@@ -9,6 +9,7 @@ namespace FEMOS.Rentora.Domain.Entities
     public class UserAccountInfo
     {
         public long UserId { get; set; }
+        public Guid UserPublicId { get; set; }
         public int CountryId { get; set; }
         public string MobileNo { get; set; } = string.Empty;
         public string MobileHash { get; set; } = string.Empty;
@@ -20,6 +21,5 @@ namespace FEMOS.Rentora.Domain.Entities
         public int UserRoleId { get; set; }
         public long CreatorUserId { get; set; }
         public string LanguageId { get; set; } = string.Empty;
-        public Guid UserPublicId { get; set; }
     }
 }

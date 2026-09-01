@@ -14,12 +14,10 @@ namespace FEMOS.Rentora.Api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
-        private readonly IEncryptDecryptService _encryptDecryptService;
 
         public AuthController(IAuthService authService, IEncryptDecryptService encryptDecryptService)
         {
             _authService = authService;
-            _encryptDecryptService = encryptDecryptService;
         }
 
         /// <summary>POST /api/auth/send-otp</summary>

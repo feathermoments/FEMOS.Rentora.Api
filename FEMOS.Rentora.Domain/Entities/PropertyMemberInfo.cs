@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FEMOS.Rentora.Domain.Entities
 {
-    public class PropertyMemberInfo : MemberInfo
+    public class PropertyMemberInfo : MemberUserInfo
     {
         public Guid PropertyPublicId { get; set; }
         public int RoleId { get; set; }

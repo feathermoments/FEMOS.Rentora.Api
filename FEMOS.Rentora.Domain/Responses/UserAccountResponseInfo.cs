@@ -9,5 +9,6 @@ namespace FEMOS.Rentora.Domain.Responses
     public class UserAccountResponseInfo : BaseResponseInfo
     {
         public long? UserId { get; set; }
+        public Guid UserPublicId { get; set; }
     }
 }

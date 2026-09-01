@@ -24,7 +24,8 @@ namespace FEMOS.Rentora.Domain.Constants
 
         // User
         public const string sp_GetUserProfile = "dbo.sp_GetUserProfile";
-        public const string sp_UpdateUserProfile = "dbo.sp_UpdateUserProfile";
+        public const string sp_SaveUserProfile = "dbo.sp_SaveUserProfile";
+        public const string sp_SaveUserAccount = "dbo.sp_SaveUserAccount";
         public const string sp_DeleteUserAccount = "dbo.sp_DeleteUserAccount";
 
         // Terms
@@ -150,7 +151,8 @@ namespace FEMOS.Rentora.Domain.Constants
         // People - Property Members
         public const string usp_PropertyMembers_Get = "dbo.usp_PropertyMembers_Get";
         public const string usp_PropertyOwners_Get = "dbo.usp_PropertyOwners_Get";
-        public const string usp_PropertyCoOwner_Save = "dbo.usp_PropertyCoOwner_Save";
+        public const string usp_PropertyCoOwner_Add = "dbo.usp_PropertyCoOwner_Add";
+        public const string usp_PropertyCoOwner_Update = "dbo.usp_PropertyCoOwner_Update";
         public const string usp_PropertyCoOwner_Remove = "dbo.usp_PropertyCoOwner_Remove";
 
         // People - Tenant Family Members
@@ -158,6 +160,9 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string usp_TenantFamilyMember_Save = "dbo.usp_TenantFamilyMember_Save";
         public const string usp_TenantFamilyMember_Update = "dbo.usp_TenantFamilyMember_Update";
         public const string usp_TenantFamilyMember_Remove = "dbo.usp_TenantFamilyMember_Remove";
+
+        // People - Search
+        public const string usp_Search_User = "dbo.usp_Search_User";
 
         // Master Data
         public const string sp_Mst_GetTenantFamilyRelations = "dbo.sp_Mst_GetTenantFamilyRelations";

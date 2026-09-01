@@ -11,4 +11,8 @@ namespace FEMOS.Rentora.Domain.Requests
     {
         public PropertyOwnerInfo objPropertyOwnerInfo { get; set; }
     }
+    public class UpdatePropertyCoOwnerRequestInfo : BaseRequestInfo
+    {
+        public UpdatePropertyOwnerInfo objPropertyOwnerInfo { get; set; }
+    }
 }

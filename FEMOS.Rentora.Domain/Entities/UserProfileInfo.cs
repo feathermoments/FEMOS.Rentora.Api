@@ -13,6 +13,9 @@ namespace FEMOS.Rentora.Domain.Entities
         public string? EmailAddress { get; set; } = string.Empty;
         public string? MobileNumber { get; set; } = string.Empty;
         public string? ProfilePhoto { get; set; }
+        public string GenderId { get; set; } = string.Empty;
+        public string Gender { get; set; } = string.Empty;
+        public DateTime DateOfBirth { get; set; }
 
         public string? EmailHash { get; set; }
         public string? EmailEncrypted { get; set; }

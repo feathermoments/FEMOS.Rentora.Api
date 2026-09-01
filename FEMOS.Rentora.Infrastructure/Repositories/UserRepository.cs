@@ -34,20 +34,20 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
 
             var ds = await _dbHelper.GetDataSetBySQLCommandAsync(cmd);
-
-            // result set 0 — core profile
-            if (ds.Tables.Count == 0 || ds.Tables[0].Rows.Count == 0)
+            List<UserProfileInfo> objUserProfiles = _dbHelper.ConvertDataTable<UserProfileInfo>(ds.Tables[0]);
+            if(objUserProfiles == null || objUserProfiles.Count == 0)
                 return null;
-
-            var row = ds.Tables[0].Rows[0];
-
+            var objUserProfileInfo = objUserProfiles[0];
             var response = new UserProfileResponseInfo
             {
-                UserPublicId = row.Table.Columns.Contains("UserPublicId") ? (Guid)row["UserPublicId"] : Guid.Empty,
-                Name = row.Table.Columns.Contains("Name") ? row["Name"]?.ToString() ?? string.Empty : string.Empty,
-                ProfilePhoto = row.Table.Columns.Contains("ProfilePhoto") ? row["ProfilePhoto"]?.ToString() ?? string.Empty : string.Empty,
-                EmailAddress = row.Table.Columns.Contains("EmailAddress") ? row["EmailAddress"]?.ToString() ?? string.Empty : string.Empty,
-                MobileNumber = row.Table.Columns.Contains("MobileNumber") ? row["MobileNumber"]?.ToString() ?? string.Empty : string.Empty
+                UserPublicId = objUserProfileInfo.UserPublicId,
+                Name = objUserProfileInfo.Name,
+                ProfilePhoto = objUserProfileInfo.ProfilePhoto,
+                EmailAddress = objUserProfileInfo.EmailAddress,
+                MobileNumber = objUserProfileInfo.MobileNumber,
+                GenderId = objUserProfileInfo.GenderId,
+                DateOfBirth = objUserProfileInfo.DateOfBirth,
+                Gender = objUserProfileInfo.Gender,
             };
 
             return response;
@@ -55,31 +55,18 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
 
         public async Task<DBResponseInfo> UpdateUserProfileAsync(UserProfileInfo model)
         {
-            var cmd = new SqlCommand(DBConstants.sp_UpdateUserProfile);
+            var cmd = new SqlCommand(DBConstants.sp_SaveUserProfile);
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@UserPublicId", model.UserPublicId);
             cmd.Parameters.AddWithValue("@Name", (object?)model.Name ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@EmailHash", (object?)model.EmailHash);
-            cmd.Parameters.AddWithValue("@MobileHash", (object?)model.MobileHash);
-            cmd.Parameters.AddWithValue("@EmailEncrypted", (object?)model.EmailEncrypted);
-            cmd.Parameters.AddWithValue("@MobileEncrypted", (object?)model.MobileEncrypted);
             cmd.Parameters.AddWithValue("@ProfilePhoto", (object?)model.ProfilePhoto ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@GenderId", (object?)model.GenderId ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@DateOfBirth", (object?)model.DateOfBirth ?? DBNull.Value);
 
             var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
             var dbResponse = await _dbHelper.GetDBResponse(result);
 
-            return dbResponse;
-        }
-
-        public async Task<DBResponseInfo> DeleteUserAccountAsync(Guid userPublicId)
-        {
-            var cmd = new SqlCommand(DBConstants.sp_DeleteUserAccount);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
-
-            var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
-            var dbResponse = await _dbHelper.GetDBResponse(result);
             return dbResponse;
         }
     }

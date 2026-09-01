@@ -11,5 +11,7 @@ namespace FEMOS.Rentora.Infrastructure.Interfaces
     public interface IAccountRepository
     {
         Task<UserAccountResponseInfo> CreateUserAccountAsync(UserAccountInfo objRequestInfo);
+        Task<UserAccountResponseInfo> SaveUserAccountAsync(UserProfileInfo model);
+        Task<DBResponseInfo> DeleteUserAccountAsync(Guid userPublicId);
     }
 }

@@ -1,5 +1,4 @@
 using FEMOS.Rentora.Application.Interfaces;
-using FEMOS.Rentora.Application.Interfaces;
 using FEMOS.Rentora.Domain.Requests;
 using FEMOS.Rentora.Shared.Utilities;
 using Microsoft.AspNetCore.Authorization;
@@ -73,7 +72,7 @@ namespace FEMOS.Rentora.Api.Controllers
             request.UserPublicId = userPublicId;
             request.objPropertyOwnerInfo.PropertyPublicId = propertyPublicId;
 
-            var result = await _peopleService.SavePropertyCoOwnerAsync(request);
+            var result = await _peopleService.AddPropertyCoOwnerAsync(request);
 
             if (result.Status == "Failure")
                 return BadRequest(result);
@@ -86,8 +85,8 @@ namespace FEMOS.Rentora.Api.Controllers
         /// Adds an existing Rentora user as a co-owner of the property.
         /// Requires authentication.
         /// </summary>
-        [HttpPost("properties/{propertyPublicId}/co-owners/{propertyOwnerPublicId}")]
-        public async Task<IActionResult> UpdatePropertyOwner(Guid propertyPublicId, Guid propertyOwnerPublicId, [FromBody] PropertyCoOwnerRequestInfo request)
+        [HttpPut("properties/{propertyPublicId}/co-owners/{propertyOwnerPublicId}")]
+        public async Task<IActionResult> UpdatePropertyOwner(Guid propertyPublicId, Guid propertyOwnerPublicId, [FromBody] UpdatePropertyCoOwnerRequestInfo request)
         {
             if (request == null)
                 return BadRequest(new { Status = "Failure", Message = "Request body is required." });
@@ -103,12 +102,12 @@ namespace FEMOS.Rentora.Api.Controllers
             request.objPropertyOwnerInfo.PropertyPublicId = propertyPublicId;
             request.objPropertyOwnerInfo.PropertyOwnerPublicId = propertyOwnerPublicId;
 
-            var result = await _peopleService.SavePropertyCoOwnerAsync(request);
+            var result = await _peopleService.UpdatePropertyCoOwnerAsync(request);
 
             if (result.Status == "Failure")
                 return BadRequest(result);
 
-            return CreatedAtAction(nameof(GetPropertyOwners), new { propertyOwnerPublicId }, result);
+            return CreatedAtAction(nameof(GetPropertyOwners), new { propertyPublicId }, result);
         }
 
         /// <summary>
@@ -168,8 +167,8 @@ namespace FEMOS.Rentora.Api.Controllers
             if (request.objTenantFamilyMemberInfo.TenantFamilyRelationId <= 0)
                 return BadRequest(new { Status = "Failure", Message = "TenantFamilyRelationId must be greater than 0." });
 
-            if (request.objTenantFamilyMemberInfo.GenderId <= 0)
-                return BadRequest(new { Status = "Failure", Message = "GenderId must be greater than 0." });
+            if (string.IsNullOrWhiteSpace(request.objTenantFamilyMemberInfo.GenderId))
+                return BadRequest(new { Status = "Failure", Message = "GenderId is required." });
 
             var userPublicId = User.GetUserPublicId();
             request.UserPublicId = userPublicId;
@@ -206,8 +205,8 @@ namespace FEMOS.Rentora.Api.Controllers
             if (request.objTenantFamilyMemberInfo.TenantFamilyRelationId <= 0)
                 return BadRequest(new { Status = "Failure", Message = "TenantFamilyRelationId must be greater than 0." });
 
-            if (request.objTenantFamilyMemberInfo.GenderId <= 0)
-                return BadRequest(new { Status = "Failure", Message = "GenderId must be greater than 0." });
+            if (string.IsNullOrWhiteSpace(request.objTenantFamilyMemberInfo.GenderId))
+                return BadRequest(new { Status = "Failure", Message = "GenderId is required." });
 
             var userPublicId = User.GetUserPublicId();
             request.UserPublicId = userPublicId;
@@ -241,6 +240,26 @@ namespace FEMOS.Rentora.Api.Controllers
                 return BadRequest(result);
 
             return NoContent();
+        }
+
+        #endregion
+
+        #region Search
+
+        /// <summary>
+        /// GET /api/people/search-user/{searchText}
+        /// Searches for a user by name, email, or phone number.
+        /// Requires authentication.
+        /// </summary>
+        [HttpGet("search-user/{searchText}")]
+        public async Task<IActionResult> SearchUser(string searchText)
+        {
+            if (string.IsNullOrWhiteSpace(searchText))
+                return BadRequest(new { Status = "Failure", Message = "Search text is required." });
+
+            var userPublicId = User.GetUserPublicId();
+            var result = await _peopleService.SearchUserAsync(userPublicId, searchText);
+            return Ok(result);
         }
 
         #endregion

@@ -11,9 +11,6 @@ namespace FEMOS.Rentora.Infrastructure.Interfaces
     public interface IUserRepository
     {
         Task<UserProfileResponseInfo?> GetUserProfileAsync(Guid userPublicId);
-
         Task<DBResponseInfo> UpdateUserProfileAsync(UserProfileInfo model);
-
-        Task<DBResponseInfo> DeleteUserAccountAsync(Guid userPublicId);
     }
 }

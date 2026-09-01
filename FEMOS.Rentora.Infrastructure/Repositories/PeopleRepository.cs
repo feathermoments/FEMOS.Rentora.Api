@@ -104,9 +104,9 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             return response;
         }
 
-        public async Task<BaseResponseInfo> SavePropertyCoOwnerAsync(PropertyCoOwnerRequestInfo objRequestInfo)
+        public async Task<BaseResponseInfo> AddPropertyCoOwnerAsync(PropertyCoOwnerRequestInfo objRequestInfo)
         {
-            var cmd = new SqlCommand(DBConstants.usp_PropertyCoOwner_Save);
+            var cmd = new SqlCommand(DBConstants.usp_PropertyCoOwner_Add);
             cmd.CommandType = CommandType.StoredProcedure;
 			cmd.Parameters.AddWithValue("@PropertyOwnerPublicId", objRequestInfo.objPropertyOwnerInfo.PropertyOwnerPublicId);
 			cmd.Parameters.AddWithValue("@PropertyPublicId", objRequestInfo.objPropertyOwnerInfo.PropertyPublicId);
@@ -119,6 +119,28 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@GenderId", objRequestInfo.objPropertyOwnerInfo.GenderId);
             cmd.Parameters.AddWithValue("@DateOfBirth", objRequestInfo.objPropertyOwnerInfo.DateOfBirth);
             cmd.Parameters.AddWithValue("@ProfilePhoto", objRequestInfo.objPropertyOwnerInfo.ProfilePhoto);
+            cmd.Parameters.AddWithValue("@OwnershipPercentage", objRequestInfo.objPropertyOwnerInfo.OwnershipPercentage);
+            cmd.Parameters.AddWithValue("@OwnershipStartDate", objRequestInfo.objPropertyOwnerInfo.OwnershipStartDate);
+            cmd.Parameters.AddWithValue("@OwnershipEndDate", objRequestInfo.objPropertyOwnerInfo.OwnershipEndDate);
+            cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
+
+            var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            var dbResponse = await _dbHelper.GetDBResponse(result);
+
+            return new BaseResponseInfo
+            {
+                Status = dbResponse.Status,
+                Message = dbResponse.Message
+            };
+        }
+
+        public async Task<BaseResponseInfo> UpdatePropertyCoOwnerAsync(UpdatePropertyCoOwnerRequestInfo objRequestInfo)
+        {
+            var cmd = new SqlCommand(DBConstants.usp_PropertyCoOwner_Update);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@PropertyOwnerPublicId", objRequestInfo.objPropertyOwnerInfo.PropertyOwnerPublicId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", objRequestInfo.objPropertyOwnerInfo.PropertyPublicId);
+            cmd.Parameters.AddWithValue("@MemberUserPublicId", objRequestInfo.objPropertyOwnerInfo.MemberUserPublicId);
             cmd.Parameters.AddWithValue("@OwnershipPercentage", objRequestInfo.objPropertyOwnerInfo.OwnershipPercentage);
             cmd.Parameters.AddWithValue("@OwnershipStartDate", objRequestInfo.objPropertyOwnerInfo.OwnershipStartDate);
             cmd.Parameters.AddWithValue("@OwnershipEndDate", objRequestInfo.objPropertyOwnerInfo.OwnershipEndDate);
@@ -238,6 +260,31 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                 Status = dbResponse.Status,
                 Message = dbResponse.Message
             };
+        }
+
+        public async Task<List<MemberUserInfo>> SearchUserAsync(Guid userPublicId, string searchText, string searchTextHash)
+        {
+            var response = new SearchUserResponseInfo();
+
+            var cmd = new SqlCommand(DBConstants.usp_Search_User);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@SearchText", searchText);
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@SearchTextHash", searchTextHash);
+
+            try
+            {
+                var dt = await _dbHelper.GetDataTableBySQLCommandAsync(cmd);
+                List<MemberUserInfo> objMembers = _dbHelper.ConvertDataTable<MemberUserInfo>(dt);
+                return objMembers;
+            }
+            catch (Exception)
+            {
+                response.Status = StatusConstants.Failure;
+                response.Message = "Error searching for user.";
+            }
+
+            return new List<MemberUserInfo>();
         }
     }
 }
