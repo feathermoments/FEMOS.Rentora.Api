@@ -157,7 +157,7 @@ namespace FEMOS.Rentora.Domain.Constants
 
         // People - Tenant Family Members
         public const string usp_TenantFamilyMembers_Get = "dbo.usp_TenantFamilyMembers_Get";
-        public const string usp_TenantFamilyMember_Save = "dbo.usp_TenantFamilyMember_Save";
+        public const string usp_TenantFamilyMember_Add = "dbo.usp_TenantFamilyMember_Add";
         public const string usp_TenantFamilyMember_Update = "dbo.usp_TenantFamilyMember_Update";
         public const string usp_TenantFamilyMember_Remove = "dbo.usp_TenantFamilyMember_Remove";
 

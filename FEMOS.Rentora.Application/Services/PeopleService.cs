@@ -63,7 +63,7 @@ namespace FEMOS.Rentora.Application.Services
             return await _peopleRepository.GetTenantFamilyMembersAsync(rentAgreementPublicId, userPublicId);
         }
 
-        public async Task<BaseResponseInfo> SaveTenantFamilyMemberAsync(TenantFamilyMemberRequestInfo objRequestInfo)
+        public async Task<BaseResponseInfo> AddTenantFamilyMemberAsync(TenantFamilyMemberRequestInfo objRequestInfo)
         {
             if (!string.IsNullOrEmpty(objRequestInfo.objTenantFamilyMemberInfo.MobileNumber))
             {
@@ -75,7 +75,12 @@ namespace FEMOS.Rentora.Application.Services
                 objRequestInfo.objTenantFamilyMemberInfo.EmailEncrypted = _encryptDecryptService.Encrypt(objRequestInfo.objTenantFamilyMemberInfo.EmailAddress);
                 objRequestInfo.objTenantFamilyMemberInfo.EmailHash = _encryptDecryptService.ComputeHash(objRequestInfo.objTenantFamilyMemberInfo.EmailAddress);
             }
-            return await _peopleRepository.SaveTenantFamilyMemberAsync(objRequestInfo);
+            return await _peopleRepository.AddTenantFamilyMemberAsync(objRequestInfo);
+        }
+
+        public async Task<BaseResponseInfo> UpdateTenantFamilyMemberAsync(UpdateTenantFamilyMemberRequestInfo objRequestInfo)
+        {
+            return await _peopleRepository.UpdateTenantFamilyMemberAsync(objRequestInfo);
         }
 
         public async Task<BaseResponseInfo> RemoveTenantFamilyMemberAsync(Guid rentAgreementPublicId, Guid familyMemberPublicId, Guid userPublicId)

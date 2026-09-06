@@ -11,7 +11,17 @@ namespace FEMOS.Rentora.Domain.Entities
         public Guid? RentAgreementPublicId { get; set; }
         public Guid? FamilyMemberPublicId { get; set; }
         public int TenantFamilyRelationId { get; set; }
-        public string RelationName { get; set; }
+        public string? RelationName { get; set; }
+        public bool IsPrimaryContact { get; set; }
+    }
+
+    public class UpdateTenantFamilyMemberInfo
+    {
+        public Guid? RentAgreementPublicId { get; set; }
+        public Guid? FamilyMemberPublicId { get; set; }
+        public Guid? MemberUserPublicId { get; set; }
+        public int TenantFamilyRelationId { get; set; }
+        public string? RelationName { get; set; }
         public bool IsPrimaryContact { get; set; }
     }
 }

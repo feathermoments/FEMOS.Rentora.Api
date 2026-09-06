@@ -44,6 +44,8 @@ namespace FEMOS.Rentora.Domain.Entities
         /// The role name (e.g., "OWNER", "TENANT")
         /// </summary>
         public string RoleName { get; set; } = string.Empty;
+
+        public string RoleCode { get; set; } = string.Empty;
     }
 
     /// <summary>

@@ -211,7 +211,7 @@ namespace FEMOS.Rentora.Application.Services
             var relations = await _masterRepository.GetTenantFamilyRelationsAsync();
             return new TenantFamilyRelationsResponseInfo
             {
-                Data = relations,
+                objTenantFamilyRelations = relations,
                 Status = StatusConstants.Success,
                 Message = "Tenant family relations retrieved successfully."
             };

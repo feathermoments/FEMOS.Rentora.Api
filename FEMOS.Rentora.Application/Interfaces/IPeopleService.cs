@@ -19,8 +19,10 @@ namespace FEMOS.Rentora.Application.Interfaces
 
         // Tenant Family Members
         Task<TenantFamilyMembersResponseInfo> GetTenantFamilyMembersAsync(Guid rentAgreementPublicId, Guid userPublicId);
-        Task<BaseResponseInfo> SaveTenantFamilyMemberAsync(TenantFamilyMemberRequestInfo objRequestInfo);
-        Task<BaseResponseInfo> RemoveTenantFamilyMemberAsync(Guid rentAgreementPublicId, Guid familyMemberPublicId, Guid userPublicId);
+        Task<BaseResponseInfo> AddTenantFamilyMemberAsync(TenantFamilyMemberRequestInfo objRequestInfo);
+        Task<BaseResponseInfo> UpdateTenantFamilyMemberAsync(UpdateTenantFamilyMemberRequestInfo objRequestInfo);
+
+		Task<BaseResponseInfo> RemoveTenantFamilyMemberAsync(Guid rentAgreementPublicId, Guid familyMemberPublicId, Guid userPublicId);
 
         // Search
         Task<SearchUserResponseInfo> SearchUserAsync(Guid userPublicId, string searchText);

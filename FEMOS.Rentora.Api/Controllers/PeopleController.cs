@@ -174,7 +174,7 @@ namespace FEMOS.Rentora.Api.Controllers
             request.UserPublicId = userPublicId;
             request.objTenantFamilyMemberInfo.RentAgreementPublicId = rentAgreementPublicId;
 
-            var result = await _peopleService.SaveTenantFamilyMemberAsync(request);
+            var result = await _peopleService.AddTenantFamilyMemberAsync(request);
 
             if (result.Status == "Failure")
                 return BadRequest(result);
@@ -188,7 +188,7 @@ namespace FEMOS.Rentora.Api.Controllers
         /// Requires authentication.
         /// </summary>
         [HttpPut("agreements/{rentAgreementPublicId}/family-members/{familyMemberPublicId}")]
-        public async Task<IActionResult> UpdateFamilyMember(Guid rentAgreementPublicId, Guid familyMemberPublicId, [FromBody] TenantFamilyMemberRequestInfo request)
+        public async Task<IActionResult> UpdateFamilyMember(Guid rentAgreementPublicId, Guid familyMemberPublicId, [FromBody] UpdateTenantFamilyMemberRequestInfo request)
         {
             if (rentAgreementPublicId == Guid.Empty || familyMemberPublicId == Guid.Empty)
                 return BadRequest(new { Status = "Failure", Message = "RentAgreementPublicId and FamilyMemberPublicId must be valid GUIDs." });
@@ -199,14 +199,8 @@ namespace FEMOS.Rentora.Api.Controllers
             if (request.objTenantFamilyMemberInfo == null)
                 return BadRequest(new { Status = "Failure", Message = "Family member information is required." });
 
-            if (string.IsNullOrWhiteSpace(request.objTenantFamilyMemberInfo.FullName))
-                return BadRequest(new { Status = "Failure", Message = "FullName is required." });
-
             if (request.objTenantFamilyMemberInfo.TenantFamilyRelationId <= 0)
                 return BadRequest(new { Status = "Failure", Message = "TenantFamilyRelationId must be greater than 0." });
-
-            if (string.IsNullOrWhiteSpace(request.objTenantFamilyMemberInfo.GenderId))
-                return BadRequest(new { Status = "Failure", Message = "GenderId is required." });
 
             var userPublicId = User.GetUserPublicId();
             request.UserPublicId = userPublicId;
@@ -214,7 +208,7 @@ namespace FEMOS.Rentora.Api.Controllers
             request.objTenantFamilyMemberInfo.FamilyMemberPublicId = familyMemberPublicId;
 
             // Note: This would require a dedicated update method in the service if it's separate from Save
-            var result = await _peopleService.SaveTenantFamilyMemberAsync(request);
+            var result = await _peopleService.UpdateTenantFamilyMemberAsync(request);
 
             if (result.Status == "Failure")
                 return BadRequest(result);

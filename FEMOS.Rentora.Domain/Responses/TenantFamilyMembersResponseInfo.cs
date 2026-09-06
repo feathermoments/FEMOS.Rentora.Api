@@ -9,6 +9,6 @@ namespace FEMOS.Rentora.Domain.Responses
 {
     public class TenantFamilyMembersResponseInfo : BaseResponseInfo
     {
-        public List<TenantFamilyMemberInfo> Data { get; set; } = new List<TenantFamilyMemberInfo>();
+        public List<TenantFamilyMemberInfo> objTenantFamilyMembers { get; set; } = new List<TenantFamilyMemberInfo>();
     }
 }

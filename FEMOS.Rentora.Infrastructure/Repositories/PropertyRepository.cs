@@ -66,8 +66,8 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                 return objResponseInfo;
             }
 
-            var hasOwnerRole = roles.Any(r => r.RoleName?.ToUpper() == "OWNER");
-            var hasTenantRole = roles.Any(r => r.RoleName?.ToUpper() == "TENANT");
+            var hasOwnerRole = roles.Any(r => r.RoleCode?.ToUpper() == "OWNER" || r.RoleCode?.ToUpper() == "CO_OWNER");
+            var hasTenantRole = roles.Any(r => r.RoleCode?.ToUpper() == "TENANT" || r.RoleCode?.ToUpper() == "FAMILY_MEMBER");
 
             int tableIndex = 1;
 

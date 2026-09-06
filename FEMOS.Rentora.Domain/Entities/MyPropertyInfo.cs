@@ -29,7 +29,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public Guid TenantAssignmentPublicId { get; set; }
         public Guid UnitPublicId { get; set; }
         public string UnitNumber { get; set; }
-        public Guid RentAgreementId { get; set; }
+        public Guid RentAgreementPublicId { get; set; }
         public bool RentAgreementIsActive { get; set; }
         public bool TenantAssignmentIsActive { get; set; }
         public DateTime CreatedOn { get; set; }

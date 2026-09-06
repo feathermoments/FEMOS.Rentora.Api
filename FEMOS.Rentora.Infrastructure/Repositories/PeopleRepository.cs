@@ -190,7 +190,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                 // Result set 1: Tenant family members data
                 if (ds.Tables.Count > 0)
                 {
-                    response.Data = _dbHelper.ConvertDataTable<TenantFamilyMemberInfo>(ds.Tables[0]);
+                    response.objTenantFamilyMembers = _dbHelper.ConvertDataTable<TenantFamilyMemberInfo>(ds.Tables[0]);
                 }
 
                 // Result set 2: Status and Message
@@ -215,9 +215,9 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             return response;
         }
 
-        public async Task<BaseResponseInfo> SaveTenantFamilyMemberAsync(TenantFamilyMemberRequestInfo objRequestInfo)
+        public async Task<BaseResponseInfo> AddTenantFamilyMemberAsync(TenantFamilyMemberRequestInfo objRequestInfo)
         {
-            var cmd = new SqlCommand(DBConstants.usp_TenantFamilyMember_Save);
+            var cmd = new SqlCommand(DBConstants.usp_TenantFamilyMember_Add);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@RentAgreementPublicId", objRequestInfo.objTenantFamilyMemberInfo.RentAgreementPublicId);
             cmd.Parameters.AddWithValue("@FamilyMemberPublicId", objRequestInfo.objTenantFamilyMemberInfo.FamilyMemberPublicId.HasValue ? (object)objRequestInfo.objTenantFamilyMemberInfo.FamilyMemberPublicId.Value : DBNull.Value);
@@ -235,6 +235,27 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
 			cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
 
 			var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            var dbResponse = await _dbHelper.GetDBResponse(result);
+
+            return new BaseResponseInfo
+            {
+                Status = dbResponse.Status,
+                Message = dbResponse.Message
+            };
+        }
+
+        public async Task<BaseResponseInfo> UpdateTenantFamilyMemberAsync(UpdateTenantFamilyMemberRequestInfo objRequestInfo)
+        {
+            var cmd = new SqlCommand(DBConstants.usp_TenantFamilyMember_Update);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@RentAgreementPublicId", objRequestInfo.objTenantFamilyMemberInfo.RentAgreementPublicId);
+            cmd.Parameters.AddWithValue("@FamilyMemberPublicId", objRequestInfo.objTenantFamilyMemberInfo.FamilyMemberPublicId.HasValue ? (object)objRequestInfo.objTenantFamilyMemberInfo.FamilyMemberPublicId.Value : DBNull.Value);
+            cmd.Parameters.AddWithValue("@TenantFamilyRelationId", objRequestInfo.objTenantFamilyMemberInfo.TenantFamilyRelationId);
+            cmd.Parameters.AddWithValue("@MemberUserPublicId", objRequestInfo.objTenantFamilyMemberInfo.MemberUserPublicId);
+            cmd.Parameters.AddWithValue("@IsPrimaryContact", objRequestInfo.objTenantFamilyMemberInfo.IsPrimaryContact);
+            cmd.Parameters.AddWithValue("@UserPublicId", objRequestInfo.UserPublicId);
+
+            var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
             var dbResponse = await _dbHelper.GetDBResponse(result);
 
             return new BaseResponseInfo
