@@ -88,11 +88,11 @@ namespace FEMOS.Rentora.Application.Services
             return await _peopleRepository.RemoveTenantFamilyMemberAsync(rentAgreementPublicId, familyMemberPublicId, userPublicId);
         }
 
-        public async Task<SearchUserResponseInfo> SearchUserAsync(Guid userPublicId, string searchText)
+        public async Task<SearchUserResponseInfo> SearchUser(Guid userPublicId, string searchText)
         {
             SearchUserResponseInfo objResponseInfo = new SearchUserResponseInfo();
             string searchTextHash = _encryptDecryptService.ComputeHash(searchText);
-            List<MemberUserInfo> objMemberUsers = await _peopleRepository.SearchUserAsync(userPublicId, searchText, searchTextHash);
+            List<MemberUserInfo> objMemberUsers = await _peopleRepository.SearchUser(userPublicId, searchText, searchTextHash);
             foreach (MemberUserInfo memberUserInfo   in objMemberUsers)
             {
                 memberUserInfo.MobileNumber = _encryptDecryptService.Decrypt(memberUserInfo.MobileNumber);
@@ -110,6 +110,26 @@ namespace FEMOS.Rentora.Application.Services
                 objResponseInfo.Message = "No members found.";
             }
             return objResponseInfo;
+        }
+
+        public async Task<SearchUserResponseInfo> SearchUserForPropertyRoleAsync(string searchText, Guid userPublicId, Guid propertyPublicId, Guid rentAgreementPublicId, string memberRoleCode)
+        {
+			string searchTextHash = _encryptDecryptService.ComputeHash(searchText);
+			var response = await _peopleRepository.SearchUserForPropertyRoleAsync(searchText, userPublicId, propertyPublicId, rentAgreementPublicId, memberRoleCode, searchTextHash);
+
+            if (response?.objMemberInfo != null)
+            {
+                if (!string.IsNullOrEmpty(response.objMemberInfo.MobileNumber))
+                {
+                    response.objMemberInfo.MobileNumber = _encryptDecryptService.Decrypt(response.objMemberInfo.MobileNumber);
+                }
+                if (!string.IsNullOrEmpty(response.objMemberInfo.EmailAddress))
+                {
+                    response.objMemberInfo.EmailAddress = _encryptDecryptService.Decrypt(response.objMemberInfo.EmailAddress);
+                }
+            }
+
+            return response;
         }
     }
 }

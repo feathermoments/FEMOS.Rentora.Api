@@ -1,4 +1,5 @@
 using FEMOS.Rentora.Domain.Constants;
+using FEMOS.Rentora.Domain.Constants;
 using FEMOS.Rentora.Domain.Entities;
 using FEMOS.Rentora.Domain.Requests;
 using FEMOS.Rentora.Domain.Responses;
@@ -283,7 +284,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             };
         }
 
-        public async Task<List<MemberUserInfo>> SearchUserAsync(Guid userPublicId, string searchText, string searchTextHash)
+        public async Task<List<MemberUserInfo>> SearchUser(Guid userPublicId, string searchText, string searchTextHash)
         {
             var response = new SearchUserResponseInfo();
 
@@ -306,6 +307,52 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             }
 
             return new List<MemberUserInfo>();
+        }
+
+        public async Task<SearchUserResponseInfo> SearchUserForPropertyRoleAsync(string searchText, Guid userPublicId, Guid propertyPublicId, Guid rentAgreementPublicId, string memberRoleCode, string searchTextHash)
+        {
+            var response = new SearchUserResponseInfo();
+
+            var cmd = new SqlCommand(DBConstants.usp_Search_UserForPropertyRole);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@SearchText", searchText);
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
+            cmd.Parameters.AddWithValue("@RentAgreementPublicId", rentAgreementPublicId);
+            cmd.Parameters.AddWithValue("@MemberRoleCode", memberRoleCode);
+            cmd.Parameters.AddWithValue("@SearchTextHash", searchTextHash);
+
+			try
+            {
+                var ds = await _dbHelper.GetDataSetBySQLCommandAsync(cmd);
+
+                // Result set 1: Member info data
+                if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    var memberList = _dbHelper.ConvertDataTable<MemberUserInfo>(ds.Tables[0]);
+                    response.objMemberInfo = memberList?.FirstOrDefault();
+                }
+
+                // Result set 2: Status and Message
+                if (ds.Tables.Count > 1 && ds.Tables[1].Rows.Count > 0)
+                {
+                    var statusRow = ds.Tables[1].Rows[0];
+                    response.Status = statusRow["Status"]?.ToString() ?? StatusConstants.Success;
+                    response.Message = statusRow["Message"]?.ToString() ?? "User search completed successfully.";
+                }
+                else
+                {
+                    response.Status = StatusConstants.Success;
+                    response.Message = "User search completed successfully.";
+                }
+            }
+            catch (Exception)
+            {
+                response.Status = StatusConstants.Failure;
+                response.Message = "Error searching for user.";
+            }
+
+            return response;
         }
     }
 }

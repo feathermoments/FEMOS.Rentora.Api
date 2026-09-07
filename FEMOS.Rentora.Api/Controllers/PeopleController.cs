@@ -245,14 +245,36 @@ namespace FEMOS.Rentora.Api.Controllers
         /// Searches for a user by name, email, or phone number.
         /// Requires authentication.
         /// </summary>
-        [HttpGet("search-user/{searchText}")]
+        [HttpGet("search-user-for-property-role/{searchText}")]
         public async Task<IActionResult> SearchUser(string searchText)
         {
             if (string.IsNullOrWhiteSpace(searchText))
                 return BadRequest(new { Status = "Failure", Message = "Search text is required." });
 
             var userPublicId = User.GetUserPublicId();
-            var result = await _peopleService.SearchUserAsync(userPublicId, searchText);
+            var result = await _peopleService.SearchUser(userPublicId, searchText);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// GET /api/people/search-user-for-property-role/{searchText}/{propertyPublicId}/{rentAgreementPublicId}/{memberRoleCode}
+        /// Searches for a user by name, email, or phone number with property role filter.
+        /// Requires authentication.
+        /// </summary>
+        [HttpGet("search-user-for-property-role/{propertyPublicId}/{rentAgreementPublicId}/{memberRoleCode}/{searchText}")]
+        public async Task<IActionResult> SearchUserForPropertyRoleWithFilter(string searchText, Guid propertyPublicId, Guid rentAgreementPublicId, string memberRoleCode)
+        {
+            if (string.IsNullOrWhiteSpace(searchText))
+                return BadRequest(new { Status = "Failure", Message = "Search text is required." });
+
+            if (propertyPublicId == Guid.Empty)
+                return BadRequest(new { Status = "Failure", Message = "PropertyPublicId must be a valid GUID." });
+
+            if (string.IsNullOrWhiteSpace(memberRoleCode))
+                return BadRequest(new { Status = "Failure", Message = "MemberRoleCode is required." });
+
+            var userPublicId = User.GetUserPublicId();
+            var result = await _peopleService.SearchUserForPropertyRoleAsync(searchText, userPublicId, propertyPublicId, rentAgreementPublicId, memberRoleCode);
             return Ok(result);
         }
 

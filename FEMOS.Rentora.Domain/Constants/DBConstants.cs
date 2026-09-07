@@ -58,7 +58,7 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string USP_PropertyTenant_Details = "dbo.USP_PropertyTenant_Details";
         public const string sp_SaveTenantAssignment = "dbo.sp_SaveTenantAssignment";
         public const string usp_GetTenantAssignment = "dbo.usp_GetTenantAssignment";
-        public const string usp_PropertyTenant_Search = "dbo.usp_PropertyTenant_Search";
+        public const string usp_Search_PropertyTenant = "dbo.usp_Search_PropertyTenant";
         public const string usp_PropertyTenant_Delete = "dbo.usp_PropertyTenant_Delete";
         public const string usp_DeleteTenantAssignment = "dbo.usp_DeleteTenantAssignment";
 
@@ -163,6 +163,7 @@ namespace FEMOS.Rentora.Domain.Constants
 
         // People - Search
         public const string usp_Search_User = "dbo.usp_Search_User";
+        public const string usp_Search_UserForPropertyRole = "dbo.usp_Search_UserForPropertyRole";
 
         // Master Data
         public const string sp_Mst_GetTenantFamilyRelations = "dbo.sp_Mst_GetTenantFamilyRelations";

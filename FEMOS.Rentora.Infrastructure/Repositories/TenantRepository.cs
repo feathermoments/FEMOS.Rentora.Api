@@ -149,7 +149,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
 
         public async Task<List<TenantInfo>> SearchTenantAsync(Guid userPublicId, string searchText, string searchTextHash)
         {
-            var cmd = new SqlCommand(DBConstants.usp_PropertyTenant_Search);
+            var cmd = new SqlCommand(DBConstants.usp_Search_PropertyTenant);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
             cmd.Parameters.AddWithValue("@SearchText", searchText);

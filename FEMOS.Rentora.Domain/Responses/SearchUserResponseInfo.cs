@@ -11,5 +11,6 @@ namespace FEMOS.Rentora.Domain.Responses
     public class SearchUserResponseInfo : BaseResponseInfo
     {
         public List<MemberUserInfo> objMemberUsers { get; set; }
+        public MemberUserInfo objMemberInfo { get; set; }
     }
 }

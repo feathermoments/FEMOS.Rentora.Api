@@ -26,6 +26,7 @@ namespace FEMOS.Rentora.Infrastructure.Interfaces
 		Task<BaseResponseInfo> RemoveTenantFamilyMemberAsync(Guid rentAgreementPublicId, Guid familyMemberPublicId, Guid userPublicId);
 
         // Search
-        Task<List<MemberUserInfo>> SearchUserAsync(Guid userPublicId, string searchText, string searchTextHash);
+        Task<List<MemberUserInfo>> SearchUser(Guid userPublicId, string searchText, string searchTextHash);
+        Task<SearchUserResponseInfo> SearchUserForPropertyRoleAsync(string searchText, Guid userPublicId, Guid propertyPublicId, Guid rentAgreementPublicId, string memberRoleCode, string searchTextHash);
     }
 }
