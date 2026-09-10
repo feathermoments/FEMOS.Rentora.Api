@@ -25,12 +25,24 @@ namespace FEMOS.Rentora.Application.Services
 
         public async Task<PropertyMembersResponseInfo> GetPropertyMembersAsync(Guid propertyPublicId, Guid userPublicId)
         {
-            return await _peopleRepository.GetPropertyMembersAsync(propertyPublicId, userPublicId);
+            PropertyMembersResponseInfo objResponseInfo = await _peopleRepository.GetPropertyMembersAsync(propertyPublicId, userPublicId);
+            foreach (MemberUserInfo memberUserInfo in objResponseInfo.objPropertyMembers)
+            {
+                memberUserInfo.MobileNumber = _encryptDecryptService.Decrypt(memberUserInfo.MobileNumber);
+                memberUserInfo.EmailAddress = _encryptDecryptService.Decrypt(memberUserInfo.EmailAddress);
+            }
+            return objResponseInfo;
         }
 
         public async Task<PropertyOwnersResponseInfo> GetPropertyOwnersAsync(Guid propertyPublicId, Guid userPublicId)
         {
-            return await _peopleRepository.GetPropertyOwnersAsync(propertyPublicId, userPublicId);
+            PropertyOwnersResponseInfo objResponseInfo = await _peopleRepository.GetPropertyOwnersAsync(propertyPublicId, userPublicId);
+            foreach (MemberUserInfo memberUserInfo in objResponseInfo.objPropertyOwners)
+            {
+                memberUserInfo.MobileNumber = _encryptDecryptService.Decrypt(memberUserInfo.MobileNumber);
+                memberUserInfo.EmailAddress = _encryptDecryptService.Decrypt(memberUserInfo.EmailAddress);
+            }
+            return objResponseInfo;
         }
 
         public async Task<BaseResponseInfo> AddPropertyCoOwnerAsync(PropertyCoOwnerRequestInfo objRequestInfo)
@@ -60,7 +72,13 @@ namespace FEMOS.Rentora.Application.Services
 
         public async Task<TenantFamilyMembersResponseInfo> GetTenantFamilyMembersAsync(Guid rentAgreementPublicId, Guid userPublicId)
         {
-            return await _peopleRepository.GetTenantFamilyMembersAsync(rentAgreementPublicId, userPublicId);
+            TenantFamilyMembersResponseInfo objResponseInfo = await _peopleRepository.GetTenantFamilyMembersAsync(rentAgreementPublicId, userPublicId);
+            foreach (TenantFamilyMemberInfo tenantFamilyMemberInfo in objResponseInfo.objTenantFamilyMembers)
+            {
+                tenantFamilyMemberInfo.MobileNumber = _encryptDecryptService.Decrypt(tenantFamilyMemberInfo.MobileNumber);
+                tenantFamilyMemberInfo.EmailAddress = _encryptDecryptService.Decrypt(tenantFamilyMemberInfo.EmailAddress);
+            }
+            return objResponseInfo;
         }
 
         public async Task<BaseResponseInfo> AddTenantFamilyMemberAsync(TenantFamilyMemberRequestInfo objRequestInfo)

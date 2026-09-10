@@ -136,6 +136,8 @@ namespace FEMOS.Rentora.Domain.Entities
         /// </summary>
         public decimal RentPaid { get; set; }
 
+        public decimal TotalRentPaid { get; set; }
+
         /// <summary>
         /// Number of rental payments that are due
         /// </summary>
@@ -150,6 +152,8 @@ namespace FEMOS.Rentora.Domain.Entities
         /// Total outstanding amount owed by the tenant
         /// </summary>
         public decimal TotalOutstandingAmount { get; set; }
+
+        public int TotalFamilyMembers { get; set; }
     }
 
     /// <summary>
