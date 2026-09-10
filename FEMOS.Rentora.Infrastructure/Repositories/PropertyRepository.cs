@@ -33,14 +33,44 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             var properties = _dbHelper.ConvertDataTable<MyPropertyInfo>(ds.Tables[0]);
             var tenantAssignmentSummary = _dbHelper.ConvertDataTable<TenantAssignmentSummaryInfo>(ds.Tables[1]);
             var propertyQuickSummary = _dbHelper.ConvertDataTable<PropertyQuickSummaryInfo>(ds.Tables[2]);
-
-            foreach (var property in properties)
+            if (tenantAssignmentSummary.Any())
             {
-                property.objTenantAssignmentSummaryInfo = tenantAssignmentSummary.FirstOrDefault(t => t.PropertyPublicId == property.PropertyPublicId);
-                property.objPropertyQuickSummaryInfo = propertyQuickSummary.FirstOrDefault(p => p.PropertyPublicId == property.PropertyPublicId);
+                List<MyPropertyInfo> objProperties = new List<MyPropertyInfo>();
+                foreach (TenantAssignmentSummaryInfo tenantAssignmentSummaryInfo in tenantAssignmentSummary)
+                {
+                    MyPropertyInfo objProperty = properties.FirstOrDefault(p => p.PropertyPublicId == tenantAssignmentSummaryInfo.PropertyPublicId);
+                    if (objProperty != null)
+                    {
+                        // Create a new instance to avoid reference sharing issues
+                        MyPropertyInfo objPropertyCopy = new MyPropertyInfo
+                        {
+                            PropertyPublicId = objProperty.PropertyPublicId,
+                            PropertyName = objProperty.PropertyName,
+                            PropertyTypeId = objProperty.PropertyTypeId,
+                            PropertyType = objProperty.PropertyType,
+                            City = objProperty.City,
+                            State = objProperty.State,
+                            AddressLine1 = objProperty.AddressLine1,
+                            RoleId = objProperty.RoleId,
+                            UserRole = objProperty.UserRole,
+                            CoverImageUrl = objProperty.CoverImageUrl,
+                            objTenantAssignmentSummaryInfo = tenantAssignmentSummaryInfo,
+                            objPropertyQuickSummaryInfo = propertyQuickSummary.FirstOrDefault(p => p.PropertyPublicId == objProperty.PropertyPublicId)
+                        };
+                        objProperties.Add(objPropertyCopy);
+                    }
+                }
+                return objProperties;
             }
-
-            return properties;
+            else
+            {
+                foreach (var property in properties)
+                {
+                    property.objTenantAssignmentSummaryInfo = tenantAssignmentSummary.FirstOrDefault(t => t.PropertyPublicId == property.PropertyPublicId);
+                    property.objPropertyQuickSummaryInfo = propertyQuickSummary.FirstOrDefault(p => p.PropertyPublicId == property.PropertyPublicId);
+                }
+                return properties;
+            }
         }
 
         public async Task<MyPropertiesSummaryResponseInfo> GetMyPropertiesSummaryAsync(Guid userPublicId)
