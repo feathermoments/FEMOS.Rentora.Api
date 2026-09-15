@@ -167,6 +167,9 @@ namespace FEMOS.Rentora.Domain.Constants
 
         // Master Data
         public const string sp_Mst_GetTenantFamilyRelations = "dbo.sp_Mst_GetTenantFamilyRelations";
+
+        // Subscriptions
+        public const string usp_SUB_Subscription_GetEntitlements = "dbo.usp_SUB_Subscription_GetEntitlements";
     }
 }
 

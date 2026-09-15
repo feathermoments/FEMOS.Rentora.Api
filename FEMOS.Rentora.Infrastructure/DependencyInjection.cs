@@ -41,6 +41,7 @@ namespace FEMOS.Rentora.Infrastructure
             services.AddScoped<IMenuRepository, MenuRepository>();
             services.AddScoped<IDashboardRepository, DashboardRepository>();
             services.AddScoped<IPeopleRepository, PeopleRepository>();
+            services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
             return services;
         }
     }
