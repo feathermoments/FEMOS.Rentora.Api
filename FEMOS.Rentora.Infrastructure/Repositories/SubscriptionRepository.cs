@@ -20,7 +20,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
 
         public async Task<SubscriptionEntitlementsResponseInfo> GetEntitlementsAsync(Guid userPublicId)
         {
-            var cmd = new SqlCommand(DBConstants.usp_SUB_Subscription_GetEntitlements);
+            var cmd = new SqlCommand(DBConstants.usp_Subscription_GetEntitlements);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
 
