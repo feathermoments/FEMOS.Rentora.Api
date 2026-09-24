@@ -1,4 +1,5 @@
-﻿using FEMOS.Rentora.Application.Interfaces;
+﻿using FEMOS.Rentora.Api.Authorization;
+using FEMOS.Rentora.Application.Interfaces;
 using FEMOS.Rentora.Domain.Entities;
 using FEMOS.Rentora.Domain.Requests;
 using Microsoft.AspNetCore.Http;
@@ -62,6 +63,29 @@ namespace FEMOS.Rentora.Api.Controllers
 
             var vacantUnits = await _unitService.GetVacantUnitsAsync(userPublicId, propertyPublicId);
             return Ok(vacantUnits);
+        }
+
+        /// <summary>
+        /// DELETE /api/unit/{unitPublicId}
+        /// Deletes a property unit. The unit must not have any active tenants or financial history.
+        /// Requires authentication.
+        /// 
+        /// Response: { status, message }
+        /// </summary>
+        [HttpDelete("{propertyPublicId}/{unitPublicId}")]
+        [RequirePermission("UNIT.DELETE", requirePropertyContext: true)]
+        public async Task<IActionResult> DeletePropertyUnit(Guid propertyPublicId, Guid unitPublicId)
+        {
+            // Validate GUID
+            if (unitPublicId == Guid.Empty)
+                return BadRequest(new { Status = "Failure", Message = "Invalid unit ID." });
+
+            var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
+            if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
+                return Unauthorized();
+
+            var result = await _unitService.DeletePropertyUnitAsync(userPublicId, propertyPublicId, unitPublicId);
+            return Ok(result);
         }
     }
 }

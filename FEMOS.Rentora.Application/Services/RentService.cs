@@ -85,5 +85,17 @@ namespace FEMOS.Rentora.Application.Services
         {
             return await _rentRepository.GetTenantSecurityDepositTransactionsAsync(userPublicId, tenantSecurityDepositId, rentAgreementPublicId, tenantAssignmentPublicId);
         }
+
+        // API #2: Cancel single invoice
+        public async Task<BaseResponseInfo> CancelRentInvoiceAsync(Guid userPublicId, Guid rentInvoicePublicId, string cancelReason)
+        {
+            return await _rentRepository.CancelRentInvoiceAsync(rentInvoicePublicId, cancelReason, userPublicId);
+        }
+
+        // API #3: Reverse rent payment
+        public async Task<BaseResponseInfo> ReverseRentPaymentAsync(Guid userPublicId, long rentPaymentId, Guid transactionGuid, string reverseReason)
+        {
+            return await _rentRepository.ReverseRentPaymentAsync(rentPaymentId, transactionGuid, reverseReason, userPublicId);
+        }
     }
 }

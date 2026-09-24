@@ -14,5 +14,6 @@ namespace FEMOS.Rentora.Application.Interfaces
         Task<PropertyUnitResponseInfo> SavePropertyUnitAsync(PropertyUnitRequestInfo objRequestInfo);
         Task<PropertyUnitResponseInfo> GetPropertyUnitDetailsAsync(Guid userPublicId, Guid propertyPublicId, Guid unitPublicId);
         Task<PropertyUnitResponseInfo> GetVacantUnitsAsync(Guid userPublicId, Guid propertyPublicId);
+        Task<BaseResponseInfo> DeletePropertyUnitAsync(Guid userPublicId, Guid propertyPublicId, Guid unitPublicId);
     }
 }

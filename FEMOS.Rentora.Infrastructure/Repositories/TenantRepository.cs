@@ -178,7 +178,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
 
         public async Task<BaseResponseInfo> DeleteTenantAssignmentAsync(Guid userPublicId, Guid propertyPublicId, Guid tenantAssignmentPublicId)
         {
-            var cmd = new SqlCommand(DBConstants.usp_DeleteTenantAssignment);
+            var cmd = new SqlCommand(DBConstants.usp_TenantAssignment_Delete);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
             cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);

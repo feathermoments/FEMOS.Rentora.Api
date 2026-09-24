@@ -50,5 +50,10 @@ namespace FEMOS.Rentora.Application.Services
         {
             return await _unitRepository.SavePropertyUnitAsync(objRequestInfo);
         }
+
+        public async Task<BaseResponseInfo> DeletePropertyUnitAsync(Guid userPublicId, Guid propertyPublicId, Guid unitPublicId)
+        {
+            return await _unitRepository.DeletePropertyUnitAsync(userPublicId, propertyPublicId, unitPublicId);
+        }
     }
 }

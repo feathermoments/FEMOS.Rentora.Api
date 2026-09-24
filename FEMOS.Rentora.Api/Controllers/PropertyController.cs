@@ -142,5 +142,34 @@ namespace FEMOS.Rentora.Api.Controllers
             var propertyDetails = await _propertyService.GetPropertyDetailsAsync(userPublicId, propertyPublicId);
             return Ok(propertyDetails);
         }
+
+        /// <summary>
+        /// DELETE /api/property/{propertyPublicId}
+        /// Deletes a property. The property must not have any active agreements or financial history.
+        /// Requires: X-Property-Public-Id header and PROPERTY.DELETE permission
+        /// 
+        /// Response: { status, message }
+        /// </summary>
+        [HttpDelete("{propertyPublicId}")]
+        [RequirePermission("PROPERTY.DELETE", requirePropertyContext: true)]
+        public async Task<IActionResult> DeleteProperty(Guid propertyPublicId)
+        {
+            // Validate GUID
+            if (propertyPublicId == Guid.Empty)
+                return BadRequest(new { Status = "Failure", Message = "Invalid property ID." });
+
+            // Verify property context is valid
+            if (!_authContext.IsValid)
+                return Forbid("Property context is required.");
+
+            // Verify user has permission
+            if (!_authContext.HasPermission("PROPERTY.DELETE"))
+                return Forbid("You do not have permission to delete properties.");
+
+            var userPublicId = User.GetUserPublicId();
+
+            var result = await _propertyService.DeletePropertyAsync(userPublicId, propertyPublicId);
+            return Ok(result);
+        }
     }
 }

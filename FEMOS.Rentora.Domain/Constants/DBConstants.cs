@@ -40,6 +40,7 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string sp_SaveProperty = "dbo.sp_SaveProperty";
         public const string sp_GetPropertyDetails = "dbo.sp_GetPropertyDetails";
         public const string sp_GetUserPropertyRole = "dbo.sp_GetUserPropertyRole";
+        public const string USP_Property_Delete = "dbo.USP_Property_Delete";
 
         // Authorization - Property Roles & Permissions
         public const string sp_GetUserPropertyRoles = "dbo.sp_GetUserPropertyRoles";
@@ -51,6 +52,7 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string USP_PropertyUnit_Save = "dbo.USP_PropertyUnit_Save";
         public const string USP_PropertyUnit_Details = "dbo.USP_PropertyUnit_Details";
         public const string USP_PropertyUnit_GetVacantUnits = "dbo.USP_PropertyUnit_GetVacantUnits";
+        public const string USP_PropertyUnit_Delete = "dbo.USP_PropertyUnit_Delete";
 
         // Tenant
         public const string USP_PropertyTenant_List = "dbo.USP_PropertyTenant_List";
@@ -60,7 +62,7 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string usp_GetTenantAssignment = "dbo.usp_GetTenantAssignment";
         public const string usp_Search_PropertyTenant = "dbo.usp_Search_PropertyTenant";
         public const string usp_PropertyTenant_Delete = "dbo.usp_PropertyTenant_Delete";
-        public const string usp_DeleteTenantAssignment = "dbo.usp_DeleteTenantAssignment";
+        public const string usp_TenantAssignment_Delete = "dbo.usp_TenantAssignment_Delete";
 
         // Notification
         public const string sp_SaveUserToken = "dbo.sp_SaveUserToken";
@@ -87,12 +89,15 @@ namespace FEMOS.Rentora.Domain.Constants
         // Rent
         public const string usp_RentAgreement_Save = "dbo.usp_RentAgreement_Save";
         public const string usp_RentAgreement_Details = "dbo.usp_RentAgreement_Details";
-        public const string usp_DeleteRentAgreement = "dbo.usp_DeleteRentAgreement";
+        public const string usp_RentAgreement_Delete = "dbo.usp_RentAgreement_Delete";
         public const string USP_RentPayment_Save = "dbo.USP_RentPayment_Save";
         public const string USP_RentInvoice_List = "dbo.USP_RentInvoice_List";
         public const string USP_RentInvoice_Details = "USP_RentInvoice_Details";
+        public const string USP_RentInvoice_Cancel = "dbo.USP_RentInvoice_Cancel";
+        public const string USP_RentInvoice_CancelFutureInvoices = "dbo.USP_RentInvoice_CancelFutureInvoices";
         public const string USP_RentPayment_List = "dbo.USP_RentPayment_List";
         public const string USP_RentPayment_Action = "dbo.USP_RentPayment_Action";
+        public const string USP_RentPayment_Reverse = "dbo.USP_RentPayment_Reverse";
         public const string USP_RentPayment_Details = "USP_RentPayment_Details";
         public const string USP_RentAgreement_List = "dbo.USP_RentAgreement_List";
         public const string USP_TenantSecurityDeposit_List = "dbo.USP_TenantSecurityDeposit_List";

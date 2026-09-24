@@ -276,5 +276,44 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                 objDepositTransactions = objDepositTransactions ?? new List<DepositTransactionInfo>()
             };
         }
+
+        // API #2: Cancel single invoice
+        public async Task<BaseResponseInfo> CancelRentInvoiceAsync(Guid rentInvoicePublicId, string cancelReason, Guid userPublicId)
+        {
+            var cmd = new SqlCommand(DBConstants.USP_RentInvoice_Cancel);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@RentInvoicePublicId", rentInvoicePublicId);
+            cmd.Parameters.AddWithValue("@CancelReason", cancelReason);
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+
+            var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            var dbResponse = await _dbHelper.GetDBResponse(result);
+
+            return new BaseResponseInfo
+            {
+                Status = dbResponse.Status,
+                Message = dbResponse.Message
+            };
+        }
+
+        // API #3: Reverse rent payment
+        public async Task<BaseResponseInfo> ReverseRentPaymentAsync(long rentPaymentId, Guid transactionGuid, string reverseReason, Guid userPublicId)
+        {
+            var cmd = new SqlCommand(DBConstants.USP_RentPayment_Reverse);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@RentPaymentId", rentPaymentId);
+            cmd.Parameters.AddWithValue("@TransactionGuid", transactionGuid);
+            cmd.Parameters.AddWithValue("@ReverseReason", reverseReason);
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+
+            var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            var dbResponse = await _dbHelper.GetDBResponse(result);
+
+            return new BaseResponseInfo
+            {
+                Status = dbResponse.Status,
+                Message = dbResponse.Message
+            };
+        }
     }
 }

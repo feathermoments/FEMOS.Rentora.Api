@@ -20,5 +20,11 @@ namespace FEMOS.Rentora.Infrastructure.Interfaces
         Task<FilterResponseInfo> GetTenantSecurityDepositsAsync(FilterRequestInfo objRequestInfo);
         Task<TenantSecurityDepositResponseInfo> GetTenantSecurityDepositDetailsAsync(Guid userPublicId, long tenantSecurityDepositId, Guid rentAgreementPublicId, Guid tenantAssignmentPublicId);
         Task<DepositTransactionListResponseInfo> GetTenantSecurityDepositTransactionsAsync(Guid userPublicId, long tenantSecurityDepositId, Guid rentAgreementPublicId, Guid tenantAssignmentPublicId);
+
+        // API #2: Cancel single invoice
+        Task<BaseResponseInfo> CancelRentInvoiceAsync(Guid rentInvoicePublicId, string cancelReason, Guid userPublicId);
+
+        // API #3: Reverse rent payment
+        Task<BaseResponseInfo> ReverseRentPaymentAsync(long rentPaymentId, Guid transactionGuid, string reverseReason, Guid userPublicId);
     }
 }

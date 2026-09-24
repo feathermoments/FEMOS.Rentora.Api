@@ -151,5 +151,73 @@ namespace FEMOS.Rentora.Api.Controllers
             var result = await _rentService.GetTenantSecurityDepositTransactionsAsync(userPublicId, tenantSecurityDepositId, rentAgreementPublicId, tenantAssignmentPublicId);
             return Ok(result);
         }
+
+        /// <summary>
+        /// POST /api/rent/rent-invoices/{rentInvoicePublicId}/cancel
+        /// Cancel a single rent invoice.
+        /// 
+        /// Request: { "cancelReason": "Duplicate invoice generated" }
+        /// Response: { "status": "Success/Failure", "message": "..." }
+        /// </summary>
+        [HttpPost("rent-invoices/{rentInvoicePublicId}/cancel")]
+        public async Task<IActionResult> CancelRentInvoice(Guid rentInvoicePublicId, [FromBody] CancelRentInvoiceRequest request)
+        {
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+
+            // Validate GUID
+            if (rentInvoicePublicId == Guid.Empty)
+                return BadRequest(new { Status = "Failure", Message = "Invalid rent invoice ID." });
+
+            // Validate request
+            if (string.IsNullOrWhiteSpace(request.CancelReason))
+                return BadRequest(new { Status = "Failure", Message = "Cancel reason is required." });
+
+            if (request.CancelReason.Length > 500)
+                return BadRequest(new { Status = "Failure", Message = "Cancel reason cannot exceed 500 characters." });
+
+            var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
+            if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
+                return Unauthorized();
+
+            var result = await _rentService.CancelRentInvoiceAsync(userPublicId, rentInvoicePublicId, request.CancelReason);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// POST /api/rent/rent-payments/{rentPaymentId}/reverse
+        /// Reverse a rent payment and reverse its financial allocations, receipt and ledger impact.
+        /// 
+        /// Request: { "transactionGuid": "GUID", "reverseReason": "Payment entered incorrectly" }
+        /// Response: { "status": "Success/Failure", "message": "..." }
+        /// </summary>
+        [HttpPost("rent-payments/{rentPaymentId}/reverse")]
+        public async Task<IActionResult> ReverseRentPayment(long rentPaymentId, [FromBody] ReverseRentPaymentRequest request)
+        {
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+
+            // Validate route parameter
+            if (rentPaymentId <= 0)
+                return BadRequest(new { Status = "Failure", Message = "Rent payment ID must be greater than zero." });
+
+            // Validate GUID
+            if (request.TransactionGuid == Guid.Empty)
+                return BadRequest(new { Status = "Failure", Message = "Invalid transaction GUID." });
+
+            // Validate request
+            if (string.IsNullOrWhiteSpace(request.ReverseReason))
+                return BadRequest(new { Status = "Failure", Message = "Reverse reason is required." });
+
+            if (request.ReverseReason.Length > 500)
+                return BadRequest(new { Status = "Failure", Message = "Reverse reason cannot exceed 500 characters." });
+
+            var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
+            if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
+                return Unauthorized();
+
+            var result = await _rentService.ReverseRentPaymentAsync(userPublicId, rentPaymentId, request.TransactionGuid, request.ReverseReason);
+            return Ok(result);
+        }
     }
 }

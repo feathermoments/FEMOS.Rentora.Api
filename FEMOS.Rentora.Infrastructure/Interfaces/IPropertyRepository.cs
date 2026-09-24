@@ -1,5 +1,4 @@
 ﻿using FEMOS.Rentora.Domain.Entities;
-using FEMOS.Rentora.Domain.Entities;
 using FEMOS.Rentora.Domain.Requests;
 using FEMOS.Rentora.Domain.Responses;
 using System;
@@ -17,5 +16,8 @@ namespace FEMOS.Rentora.Infrastructure.Interfaces
         Task<UserPropertyResponseInfo> SavePropertyAsync(UserPropertyRequestInfo objRequestInfo);
         Task<UserPropertyInfo> GetPropertyDetailsAsync(Guid userPublicId, Guid PropertyPublicId);
         Task<UserPropertyMemberInfo> GetUserPropertyRole(Guid userPublicId, Guid PropertyPublicId);
+
+        // API #4: Delete property
+        Task<BaseResponseInfo> DeletePropertyAsync(Guid userPublicId, Guid propertyPublicId);
     }
 }

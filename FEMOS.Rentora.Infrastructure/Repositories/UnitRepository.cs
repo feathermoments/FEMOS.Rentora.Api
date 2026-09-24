@@ -3,7 +3,6 @@ using FEMOS.Rentora.Domain.Entities;
 using FEMOS.Rentora.Domain.Requests;
 using FEMOS.Rentora.Domain.Responses;
 using FEMOS.Rentora.Infrastructure.Interfaces;
-using FEMOS.Rentora.Infrastructure.Persistance;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -104,6 +103,25 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                 Status = dbResponse.Status,
                 Message = dbResponse.Message,
                 UnitPublicId = returnedUnitPublicId
+            };
+        }
+
+        // API #9: Delete unit
+        public async Task<BaseResponseInfo> DeletePropertyUnitAsync(Guid userPublicId, Guid propertyPublicId, Guid unitPublicId)
+        {
+            var cmd = new SqlCommand(DBConstants.USP_PropertyUnit_Delete);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UnitPublicId", unitPublicId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+
+            var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            var dbResponse = await _dbHelper.GetDBResponse(result);
+
+            return new BaseResponseInfo
+            {
+                Status = dbResponse.Status,
+                Message = dbResponse.Message
             };
         }
     }

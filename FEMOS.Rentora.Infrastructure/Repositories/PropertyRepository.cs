@@ -255,5 +255,23 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                 PropertyPublicId = returnedPropertyPublicId
             };
         }
+
+        // API #4: Delete property
+        public async Task<BaseResponseInfo> DeletePropertyAsync(Guid userPublicId, Guid propertyPublicId)
+        {
+            var cmd = new SqlCommand(DBConstants.USP_Property_Delete);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@PropertyPublicId", propertyPublicId);
+
+            var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
+            var dbResponse = await _dbHelper.GetDBResponse(result);
+
+            return new BaseResponseInfo
+            {
+                Status = dbResponse.Status,
+                Message = dbResponse.Message
+            };
+        }
     }
 }
