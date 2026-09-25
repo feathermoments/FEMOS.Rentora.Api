@@ -1,6 +1,7 @@
 namespace FEMOS.Rentora.Infrastructure.Interfaces
 {
     using FEMOS.Rentora.Domain.Entities;
+    using FEMOS.Rentora.Domain.Responses;
 
     /// <summary>
     /// Repository interface for dashboard-related operations.
@@ -69,5 +70,10 @@ namespace FEMOS.Rentora.Infrastructure.Interfaces
         /// Retrieves security deposit summary data.
         /// </summary>
         Task<SecurityDepositSummaryInfo> GetSecurityDepositSummaryAsync(Guid PropertyPublicId, Guid userPublicId);
+        
+        /// <summary>
+        /// Retrieves expense summary data.
+        /// </summary>
+        Task<ExpenseSummaryResponseInfo> GetExpenseSummaryAsync(Guid propertyPublicId, Guid userPublicId);
     }
 }

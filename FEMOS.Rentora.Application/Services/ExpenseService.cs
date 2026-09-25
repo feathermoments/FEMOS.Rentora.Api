@@ -43,10 +43,5 @@ namespace FEMOS.Rentora.Application.Services
         {
             return await _expenseRepository.DeleteExpenseAsync(userPublicId, expensePublicId);
         }
-
-        public async Task<ExpenseSummaryResponseInfo> GetExpenseSummaryAsync(Guid userPublicId, Guid? propertyPublicId, Guid? unitPublicId, DateTime? fromDate, DateTime? toDate)
-        {
-            return await _expenseRepository.GetExpenseSummaryAsync(userPublicId, propertyPublicId, unitPublicId, fromDate, toDate);
-        }
     }
 }

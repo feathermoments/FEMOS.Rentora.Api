@@ -42,25 +42,6 @@ namespace FEMOS.Rentora.Api.Controllers
         }
 
         /// <summary>
-        /// Get expense summary
-        /// GET /api/expenses/summary?propertyPublicId=...&unitPublicId=...&fromDate=...&toDate=...
-        /// </summary>
-        [HttpGet("summary")]
-        public async Task<IActionResult> GetExpenseSummary(
-            [FromQuery] Guid? propertyPublicId,
-            [FromQuery] Guid? unitPublicId,
-            [FromQuery] DateTime? fromDate,
-            [FromQuery] DateTime? toDate)
-        {
-            var userPublicIdClaim = HttpContext.Items["UserPublicId"]?.ToString();
-            if (!Guid.TryParse(userPublicIdClaim, out var userPublicId))
-                return Unauthorized();
-
-            var result = await _expenseService.GetExpenseSummaryAsync(userPublicId, propertyPublicId, unitPublicId, fromDate, toDate);
-            return Ok(result);
-        }
-
-        /// <summary>
         /// List expenses with optional filters
         /// POST /api/expenses/list
         /// </summary>

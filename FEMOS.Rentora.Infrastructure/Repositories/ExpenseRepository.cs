@@ -203,53 +203,5 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
                 Message = "Failed to delete expense."
             };
         }
-
-        public async Task<ExpenseSummaryResponseInfo> GetExpenseSummaryAsync(Guid userPublicId, Guid? propertyPublicId, Guid? unitPublicId, DateTime? fromDate, DateTime? toDate)
-        {
-            var cmd = new SqlCommand(DBConstants.USP_Dashboard_ExpenseSummary);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
-            cmd.Parameters.AddWithValue("@PropertyPublicId", (object?)propertyPublicId ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@UnitPublicId", (object?)unitPublicId ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@FromDate", (object?)fromDate ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@ToDate", (object?)toDate ?? DBNull.Value);
-
-            var ds = await _dbHelper.GetDataSetBySQLCommandAsync(cmd);
-
-            var response = new ExpenseSummaryResponseInfo()
-            {
-                Status = StatusConstants.Success,
-                Message = "Expense summary retrieved successfully."
-            };
-
-            // Result Set 1: Overall Summary
-            if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-            {
-                response.TotalExpense = Convert.ToDecimal(ds.Tables[0].Rows[0]["TotalExpense"] ?? 0);
-                response.ExpenseCount = Convert.ToInt32(ds.Tables[0].Rows[0]["ExpenseCount"] ?? 0);
-            }
-
-            // Result Set 2: Category Summary
-            if (ds.Tables.Count > 1 && ds.Tables[1].Rows.Count > 0)
-            {
-                var categories = _dbHelper.ConvertDataTable<ExpenseCategorySummaryInfo>(ds.Tables[1]);
-                if (categories != null)
-                {
-                    response.Categories = categories;
-                }
-            }
-
-            // Result Set 3: Monthly Trend
-            if (ds.Tables.Count > 2 && ds.Tables[2].Rows.Count > 0)
-            {
-                var monthlyTrend = _dbHelper.ConvertDataTable<ExpenseMonthlyTrendInfo>(ds.Tables[2]);
-                if (monthlyTrend != null)
-                {
-                    response.MonthlyTrend = monthlyTrend;
-                }
-            }
-
-            return response;
-        }
     }
 }
