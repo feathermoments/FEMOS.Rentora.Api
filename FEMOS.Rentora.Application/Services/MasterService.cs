@@ -216,5 +216,16 @@ namespace FEMOS.Rentora.Application.Services
                 Message = "Tenant family relations retrieved successfully."
             };
         }
+
+        public async Task<ExpenseCategoryResponseInfo> GetExpenseCategoriesAsync()
+        {
+            List<ExpenseCategoryInfo> objExpenseCategories = await _masterRepository.GetExpenseCategoriesAsync();
+            return new ExpenseCategoryResponseInfo
+            {
+                objExpenseCategories = objExpenseCategories,
+                Status = StatusConstants.Success,
+                Message = "Expense categories retrieved successfully."
+            };
+        }
     }
 }

@@ -38,6 +38,10 @@ namespace FEMOS.Rentora.Domain.Entities
         public Guid? UniqueId { get; set; }
         public short? SettlementStatusId { get; set; }
 
+        // Expense Filter
+        public Guid? TenantPublicId { get; set; }
+        public int? ExpenseCategoryId { get; set; }
+
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 20;
     }

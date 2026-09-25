@@ -152,6 +152,7 @@ namespace FEMOS.Rentora.Domain.Constants
         public const string USP_Dashboard_StaffSummary = "dbo.USP_Dashboard_StaffSummary";
         public const string USP_Dashboard_ReportSummary = "dbo.USP_Dashboard_ReportSummary";
         public const string USP_Dashboard_SecurityDepositSummary = "dbo.USP_Dashboard_SecurityDepositSummary";
+        public const string USP_Dashboard_ExpenseSummary = "dbo.USP_Dashboard_ExpenseSummary";
 
         // People - Property Members
         public const string usp_PropertyMembers_Get = "dbo.usp_PropertyMembers_Get";
@@ -172,9 +173,18 @@ namespace FEMOS.Rentora.Domain.Constants
 
         // Master Data
         public const string sp_Mst_GetTenantFamilyRelations = "dbo.sp_Mst_GetTenantFamilyRelations";
+        public const string sp_Mst_GetExpenseCategories = "dbo.sp_Mst_GetExpenseCategories";
 
         // Subscriptions
         public const string usp_Subscription_GetEntitlements = "dbo.usp_Subscription_GetEntitlements";
+
+        // Expenses
+        public const string USP_PropertyExpense_Add = "dbo.USP_PropertyExpense_Add";
+        public const string USP_PropertyExpense_Get = "dbo.USP_PropertyExpense_Get";
+        public const string USP_PropertyExpense_List = "dbo.USP_PropertyExpense_List";
+        public const string USP_PropertyExpense_Update = "dbo.USP_PropertyExpense_Update";
+        public const string USP_PropertyExpense_Delete = "dbo.USP_PropertyExpense_Delete";
     }
 }
+
 

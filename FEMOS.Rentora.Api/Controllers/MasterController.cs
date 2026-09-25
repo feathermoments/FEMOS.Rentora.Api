@@ -141,6 +141,13 @@ namespace FEMOS.Rentora.Api.Controllers
             var result = await _masterService.GetTenantFamilyRelationsAsync();
             return Ok(result);
         }
+
+        [HttpGet("getExpenseCategories")]
+        public async Task<IActionResult> GetExpenseCategories()
+        {
+            var result = await _masterService.GetExpenseCategoriesAsync();
+            return Ok(result);
+        }
     }
 }
 
