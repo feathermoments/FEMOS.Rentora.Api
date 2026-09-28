@@ -73,13 +73,15 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             }
         }
 
-        public async Task<MyPropertiesSummaryResponseInfo> GetMyPropertiesSummaryAsync(Guid userPublicId)
+        public async Task<MyPropertiesSummaryResponseInfo> GetMyPropertiesSummaryAsync(Guid userPublicId, int? year = null, int? month = null)
         {
             MyPropertiesSummaryResponseInfo objResponseInfo = new MyPropertiesSummaryResponseInfo();
 
             var cmd = new SqlCommand(DBConstants.sp_GetMyPropertiesSummary);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserPublicId", userPublicId);
+            cmd.Parameters.AddWithValue("@Year", (object?)year ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@Month", (object?)month ?? DBNull.Value);
 
             var ds = await _dbHelper.GetDataSetBySQLCommandAsync(cmd);
 

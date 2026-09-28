@@ -76,14 +76,14 @@ namespace FEMOS.Rentora.Application.Services
             return await _rentRepository.GetTenantSecurityDepositsAsync(objRequestInfo);
         }
 
-        public async Task<TenantSecurityDepositResponseInfo> GetTenantSecurityDepositDetailsAsync(Guid userPublicId, long tenantSecurityDepositId, Guid rentAgreementPublicId, Guid tenantAssignmentPublicId)
+        public async Task<TenantSecurityDepositResponseInfo> GetTenantSecurityDepositDetailsAsync(Guid userPublicId, Guid tenantSecurityDepositPublicId, Guid rentAgreementPublicId, Guid tenantAssignmentPublicId)
         {
-            return await _rentRepository.GetTenantSecurityDepositDetailsAsync(userPublicId, tenantSecurityDepositId, rentAgreementPublicId, tenantAssignmentPublicId);
+            return await _rentRepository.GetTenantSecurityDepositDetailsAsync(userPublicId, tenantSecurityDepositPublicId, rentAgreementPublicId, tenantAssignmentPublicId);
         }
 
-        public async Task<DepositTransactionListResponseInfo> GetTenantSecurityDepositTransactionsAsync(Guid userPublicId, long tenantSecurityDepositId, Guid rentAgreementPublicId, Guid tenantAssignmentPublicId)
+        public async Task<DepositTransactionListResponseInfo> GetTenantSecurityDepositTransactionsAsync(Guid userPublicId, Guid tenantSecurityDepositPublicId, Guid rentAgreementPublicId, Guid tenantAssignmentPublicId)
         {
-            return await _rentRepository.GetTenantSecurityDepositTransactionsAsync(userPublicId, tenantSecurityDepositId, rentAgreementPublicId, tenantAssignmentPublicId);
+            return await _rentRepository.GetTenantSecurityDepositTransactionsAsync(userPublicId, tenantSecurityDepositPublicId, rentAgreementPublicId, tenantAssignmentPublicId);
         }
 
         // API #2: Cancel single invoice

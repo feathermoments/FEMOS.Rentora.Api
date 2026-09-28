@@ -22,8 +22,8 @@ namespace FEMOS.Rentora.Application.Interfaces
         Task<BaseResponseInfo> UpdateRentPaymentActionAsync(RentPaymentActionRequestInfo objRequestInfo);
         Task<RentPaymentResponseInfo> GetRentPaymentDetailsAsync(Guid userPublicId, Guid PropertyPublicId, Guid rentPaymentPublicId);
         Task<FilterResponseInfo> GetTenantSecurityDepositsAsync(FilterRequestInfo objRequestInfo);
-        Task<TenantSecurityDepositResponseInfo> GetTenantSecurityDepositDetailsAsync(Guid userPublicId, long tenantSecurityDepositId, Guid rentAgreementPublicId, Guid tenantAssignmentPublicId);
-        Task<DepositTransactionListResponseInfo> GetTenantSecurityDepositTransactionsAsync(Guid userPublicId, long tenantSecurityDepositId, Guid rentAgreementPublicId, Guid tenantAssignmentPublicId);
+        Task<TenantSecurityDepositResponseInfo> GetTenantSecurityDepositDetailsAsync(Guid userPublicId, Guid tenantSecurityDepositPublicId, Guid rentAgreementPublicId, Guid tenantAssignmentPublicId);
+        Task<DepositTransactionListResponseInfo> GetTenantSecurityDepositTransactionsAsync(Guid userPublicId, Guid tenantSecurityDepositPublicId, Guid rentAgreementPublicId, Guid tenantAssignmentPublicId);
 
         // API #2: Cancel single invoice
         Task<BaseResponseInfo> CancelRentInvoiceAsync(Guid userPublicId, Guid rentInvoicePublicId, string cancelReason);

@@ -46,9 +46,13 @@ namespace FEMOS.Rentora.Api.Controllers
         }
 
         /// <summary>
-        /// GET /api/property/my-properties-summary
+        /// GET /api/property/my-properties-summary?year=2026&month=9
         /// Returns comprehensive summary of properties for the authenticated user.
         /// Dynamically returns different summary objects based on user roles (Owner/Tenant).
+        /// 
+        /// Query Parameters:
+        ///   - year (optional): Billing year for monthly trends
+        ///   - month (optional): Billing month for monthly trends
         /// 
         /// Response: 
         ///   - Owner only: { ownerSummary, monthlyTrends }
@@ -57,11 +61,11 @@ namespace FEMOS.Rentora.Api.Controllers
         /// </summary>
         [HttpGet("my-properties-summary")]
         [RequirePermission("MY.PROPERTIES", requirePropertyContext: false)]
-        public async Task<IActionResult> GetMyPropertiesSummary()
+        public async Task<IActionResult> GetMyPropertiesSummary([FromQuery] int? year, [FromQuery] int? month)
         {
             var userPublicId = User.GetUserPublicId();
 
-            var summary = await _propertyService.GetMyPropertiesSummaryAsync(userPublicId);
+            var summary = await _propertyService.GetMyPropertiesSummaryAsync(userPublicId, year, month);
             return Ok(summary);
         }
 

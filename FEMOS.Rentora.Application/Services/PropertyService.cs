@@ -30,9 +30,9 @@ namespace FEMOS.Rentora.Application.Services
             return objResponseInfo;
         }
 
-        public async Task<MyPropertiesSummaryResponseInfo> GetMyPropertiesSummaryAsync(Guid userPublicId)
+        public async Task<MyPropertiesSummaryResponseInfo> GetMyPropertiesSummaryAsync(Guid userPublicId, int? year = null, int? month = null)
         {
-            return await _propertyRepository.GetMyPropertiesSummaryAsync(userPublicId);
+            return await _propertyRepository.GetMyPropertiesSummaryAsync(userPublicId, year, month);
         }
 
         public async Task<UserPropertyResponseInfo> GetPropertyDetailsAsync(Guid userPublicId, Guid propertyPublicId)

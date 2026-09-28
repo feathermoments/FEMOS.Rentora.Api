@@ -54,70 +54,33 @@ namespace FEMOS.Rentora.Domain.Entities
     /// </summary>
     public class OwnerSummaryInfo
     {
-        /// <summary>
-        /// Total number of properties owned
-        /// </summary>
         public int PropertyCount { get; set; }
 
-        /// <summary>
-        /// Total number of units across all properties
-        /// </summary>
         public int TotalUnits { get; set; }
 
-        /// <summary>
-        /// Number of currently occupied units
-        /// </summary>
         public int OccupiedUnits { get; set; }
 
-        /// <summary>
-        /// Number of vacant units
-        /// </summary>
         public int VacantUnits { get; set; }
 
-        /// <summary>
-        /// Total earnings (typically monthly)
-        /// </summary>
         public decimal Earnings { get; set; }
 
-        /// <summary>
-        /// Total expenses (typically monthly)
-        /// </summary>
         public decimal Expenses { get; set; }
 
-        /// <summary>
-        /// Net income (Earnings - Expenses)
-        /// </summary>
         public decimal NetIncome { get; set; }
 
-        /// <summary>
-        /// Total amount billed in the current month
-        /// </summary>
-        public decimal CurrentMonthBilled { get; set; }
-
-        /// <summary>
-        /// Total amount collected in the current month
-        /// </summary>
-        public decimal CurrentMonthCollected { get; set; }
-
-        /// <summary>
-        /// Percentage of current month billed amount that has been collected (0-100)
-        /// </summary>
         public int CollectionPercentage { get; set; }
 
-        /// <summary>
-        /// Number of rental payments that are due
-        /// </summary>
         public int RentDueCount { get; set; }
 
-        /// <summary>
-        /// Total amount of rent that is due
-        /// </summary>
         public decimal RentDueAmount { get; set; }
 
-        /// <summary>
-        /// Total outstanding amount across all invoices
-        /// </summary>
         public decimal TotalOutstandingAmount { get; set; }
+
+        public decimal RentBilled { get; set; }
+        public decimal RentCollected { get; set; }
+        public decimal TotalRentCollectedTillDate { get; set; }
+        public decimal TotalExpensesTillDate { get; set; }
+        public decimal TotalNetIncomeTillDate { get; set; }
     }
 
     /// <summary>
@@ -126,33 +89,13 @@ namespace FEMOS.Rentora.Domain.Entities
     /// </summary>
     public class TenantSummaryInfo
     {
-        /// <summary>
-        /// Number of active rental agreements/assignments
-        /// </summary>
+
         public int ActiveRentalCount { get; set; }
-
-        /// <summary>
-        /// Total rent paid by the tenant
-        /// </summary>
         public decimal RentPaid { get; set; }
-
-        public decimal TotalRentPaid { get; set; }
-
-        /// <summary>
-        /// Number of rental payments that are due
-        /// </summary>
         public int RentDueCount { get; set; }
-
-        /// <summary>
-        /// Total amount of rent that is due
-        /// </summary>
         public decimal RentDueAmount { get; set; }
-
-        /// <summary>
-        /// Total outstanding amount owed by the tenant
-        /// </summary>
         public decimal TotalOutstandingAmount { get; set; }
-
+        public decimal TotalRentPaidTillDate { get; set; }
         public int TotalFamilyMembers { get; set; }
     }
 

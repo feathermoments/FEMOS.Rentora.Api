@@ -12,7 +12,7 @@ namespace FEMOS.Rentora.Infrastructure.Interfaces
     public interface IPropertyRepository
     {
         Task<List<MyPropertyInfo>> GetMyPropertiesAsync(Guid userPublicId);
-        Task<MyPropertiesSummaryResponseInfo> GetMyPropertiesSummaryAsync(Guid userPublicId);
+        Task<MyPropertiesSummaryResponseInfo> GetMyPropertiesSummaryAsync(Guid userPublicId, int? year = null, int? month = null);
         Task<UserPropertyResponseInfo> SavePropertyAsync(UserPropertyRequestInfo objRequestInfo);
         Task<UserPropertyInfo> GetPropertyDetailsAsync(Guid userPublicId, Guid PropertyPublicId);
         Task<UserPropertyMemberInfo> GetUserPropertyRole(Guid userPublicId, Guid PropertyPublicId);
