@@ -63,6 +63,7 @@ namespace FEMOS.Rentora.Domain.Entities
         public string? EmailAddress { get; set; }
         public short PaymentStatusId { get; set; }
         public string? PaymentTypeName { get; set; }
+        public string? CollectionMode { get; set; } = "TENANT";
     }
 
     public class RentPaymentInvoiceInfo

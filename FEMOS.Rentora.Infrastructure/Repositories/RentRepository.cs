@@ -126,6 +126,7 @@ namespace FEMOS.Rentora.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@IsOnlinePayment", objRequestInfo.obRentPaymentInfo.IsOnlinePayment);
             cmd.Parameters.AddWithValue("@Remarks", objRequestInfo.obRentPaymentInfo.Remarks);
             cmd.Parameters.AddWithValue("@RentAgreementPublicId", objRequestInfo.obRentPaymentInfo.RentAgreementPublicId);
+            cmd.Parameters.AddWithValue("@CollectionMode", objRequestInfo.obRentPaymentInfo.CollectionMode);
 
             var result = await _dbHelper.ExecuteScalarBySQLCommand(cmd);
             var dbResponse = await _dbHelper.GetDBResponse(result);
